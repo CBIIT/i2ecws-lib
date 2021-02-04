@@ -1,0 +1,16 @@
+.idea
+wwwroot/*.js
+node_modules
+typings
+api.module.ts
+configuration.ts
+encoder.ts
+git_push.sh
+index.ts
+variables.ts
+.swagger-codegen
+tsconfig.json
+typings.json
+package-lock.json
+./api
+./model

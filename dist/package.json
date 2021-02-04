@@ -1,0 +1,31 @@
+{
+  "name": "i2ecws-lib",
+  "version": "2.1.0",
+  "description": "swagger client for i2ecws-lib",
+  "author": "Doug the Manificent",
+  "keywords": [
+    "swagger-client"
+  ],
+  "license": "Unlicense",
+  "main": "bundles/i2ecws-lib.umd.js",
+  "module": "fesm2015/i2ecws-lib.js",
+  "es2015": "fesm2015/i2ecws-lib.js",
+  "esm2015": "esm2015/i2ecws-lib.js",
+  "fesm2015": "fesm2015/i2ecws-lib.js",
+  "typings": "i2ecws-lib.d.ts",
+  "metadata": "i2ecws-lib.metadata.json",
+  "peerDependencies": {
+    "@angular/core": "^11.1.1",
+    "@angular/common": "^11.1.1",
+    "@angular/compiler": "^11.1.1",
+    "core-js": "^2.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "^6.4.0",
+    "rxjs-compat": "^6.6.2",
+    "zone.js": "^0.10.3"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}
