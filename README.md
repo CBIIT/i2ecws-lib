@@ -16,6 +16,11 @@ This is the swagger code generation tool.  We should be using the same version t
 the swagger.json file above, although it's probably not strictly necessary, as long as both versions support the same
 version of the OpenAPI spec.  Kept in the /bin folder.
 
+NOTE: storing the .jar in the repository can cause issues in client projects because the anti-virus software can lock
+the file while scanning, causing issues.  It's best to manually install this yourself from Nexus:
+
+```https://ncimvn.nci.nih.gov/nexus/service/local/repositories/central/content/io/swagger/swagger-codegen-cli/2.4.18/swagger-codegen-cli-2.4.18.jar```
+
 #### config.json
 
 This file has some configuration settings that are necessary to configure the build properly. These are the same 
