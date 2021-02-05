@@ -14,3 +14,4 @@ typings.json
 package-lock.json
 ./api
 ./model
+bin
