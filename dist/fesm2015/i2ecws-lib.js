@@ -3006,6 +3006,26 @@ class LookupsControllerService {
             reportProgress: reportProgress
         });
     }
+    getPiInstitutesUsingGET(observe = 'body', reportProgress = false) {
+        let headers = this.defaultHeaders;
+        // to determine the Accept header
+        let httpHeaderAccepts = [
+            'application/json',
+            'application/xml'
+        ];
+        const httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+        // to determine the Content-Type header
+        const consumes = [];
+        return this.httpClient.get(`${this.basePath}/api/v1/lookups/pi-institutes`, {
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
+    }
 }
 LookupsControllerService.decorators = [
     { type: Injectable }

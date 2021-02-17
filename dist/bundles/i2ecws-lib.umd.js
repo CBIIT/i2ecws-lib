@@ -3487,6 +3487,28 @@
                 reportProgress: reportProgress
             });
         };
+        LookupsControllerService.prototype.getPiInstitutesUsingGET = function (observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/json',
+                'application/xml'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [];
+            return this.httpClient.get(this.basePath + "/api/v1/lookups/pi-institutes", {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
         return LookupsControllerService;
     }());
     LookupsControllerService.decorators = [
