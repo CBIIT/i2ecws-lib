@@ -7,9 +7,6 @@
     "swagger-client"
   ],
   "license": "Unlicense",
-  "files": [
-    "dist/**/*"
-  ],
   "main": "dist/bundles/i2ecws-lib.umd.js",
   "module": "dist/fesm2015/i2ecws-lib.js",
   "es2015": "dist/fesm2015/i2ecws-lib.js",
