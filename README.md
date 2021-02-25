@@ -43,6 +43,9 @@ Strictly speaking, there's no reason we need to use templates instead of just ma
 I left it this way because that's how the maven plugin does it.  Just remember that if you change the generated versions,
 they will get overwritten the next time you build the API. If you want permanent changes, update the template.
 
+I should also note that in ```package.mustache```, you can see the directive ```#useNgPackagr``` this property is set
+automatically when ngVersion (in ```config.json``) is > 4.0.0.
+
 To build the API, run:
 ```
 java -jar bin\swagger-codegen-cli-2.4.18.jar generate -i swagger.json -t templates\typescript-angular -l typescript-angular -c config.json

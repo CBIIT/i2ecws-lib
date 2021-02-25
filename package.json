@@ -15,7 +15,7 @@
   "typings": "dist/i2ecws-lib.d.ts",
   "metadata": "dist/i2ecws-lib.metadata.json",
   "scripts": {
-    "build": "ng-packagr -p ng-package.json"
+      "build": "ng-packagr -p ng-package.json"
   },
   "peerDependencies": {
     "@angular/core": "^11.1.1",

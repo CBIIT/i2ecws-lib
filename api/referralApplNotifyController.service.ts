@@ -24,7 +24,7 @@ import { Configuration }                                     from '../configurat
 
 
 @Injectable()
-export class UserControllerService {
+export class ReferralApplNotifyControllerService {
 
     protected basePath = 'https://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -56,26 +56,26 @@ export class UserControllerService {
 
 
     /**
-     * getUsers
+     * getNotifyForApplId
      * 
-     * @param activeFlag activeFlag
-     * @param term term
+     * @param applId applId
+     * @param orderBy orderBy
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUsersUsingGET(activeFlag?: boolean, term?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getUsersUsingGET(activeFlag?: boolean, term?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getUsersUsingGET(activeFlag?: boolean, term?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getUsersUsingGET(activeFlag?: boolean, term?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getNotifyForApplIdUsingGET(applId: number, orderBy?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public getNotifyForApplIdUsingGET(applId: number, orderBy?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public getNotifyForApplIdUsingGET(applId: number, orderBy?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public getNotifyForApplIdUsingGET(applId: number, orderBy?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (applId === null || applId === undefined) {
+            throw new Error('Required parameter applId was null or undefined when calling getNotifyForApplIdUsingGET.');
+        }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (activeFlag !== undefined && activeFlag !== null) {
-            queryParameters = queryParameters.set('activeFlag', <any>activeFlag);
-        }
-        if (term !== undefined && term !== null) {
-            queryParameters = queryParameters.set('term', <any>term);
+        if (orderBy !== undefined && orderBy !== null) {
+            queryParameters = queryParameters.set('orderBy', <any>orderBy);
         }
 
         let headers = this.defaultHeaders;
@@ -94,7 +94,7 @@ export class UserControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/api/v1/nci-people/`,
+        return this.httpClient.get<any>(`${this.basePath}/api/v1/referral/notify/${encodeURIComponent(String(applId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

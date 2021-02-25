@@ -24,6 +24,7 @@ import { AssignRoActionDto } from '../model/assignRoActionDto';
 import { CloseReferralActionDto } from '../model/closeReferralActionDto';
 import { PdTransferActionDto } from '../model/pdTransferActionDto';
 import { ReferActionDto } from '../model/referActionDto';
+import { ReferralApplNotifyTDto } from '../model/referralApplNotifyTDto';
 import { RejectReferralActionDto } from '../model/rejectReferralActionDto';
 import { ReleaseDualActionDto } from '../model/releaseDualActionDto';
 import { ReleaseDualSpclCaseActionDto } from '../model/releaseDualSpclCaseActionDto';
@@ -281,6 +282,59 @@ export class ReferralWorkflowControllerService {
     }
 
     /**
+     * deleteNotify
+     * 
+     * @param notify notify
+     * @param userId userId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (notify === null || notify === undefined) {
+            throw new Error('Required parameter notify was null or undefined when calling deleteNotifyUsingPATCH.');
+        }
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling deleteNotifyUsingPATCH.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json',
+            'application/xml'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.patch<any>(`${this.basePath}/api/v1/referral/notify/${encodeURIComponent(String(userId))}`,
+            notify,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * getCurrentRefPssCode
      * 
      * @param applId applId
@@ -489,6 +543,59 @@ export class ReferralWorkflowControllerService {
         ];
 
         return this.httpClient.get<any>(`${this.basePath}/api/v1/referral/reopen-pss-description/${encodeURIComponent(String(applId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * notify
+     * 
+     * @param notify notify
+     * @param userId userId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (notify === null || notify === undefined) {
+            throw new Error('Required parameter notify was null or undefined when calling notifyUsingPOST.');
+        }
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling notifyUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json',
+            'application/xml'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/api/v1/referral/notify/${encodeURIComponent(String(userId))}`,
+            notify,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

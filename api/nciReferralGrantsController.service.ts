@@ -59,6 +59,7 @@ export class NciReferralGrantsControllerService {
      * exportGrantSearchResults
      * 
      * @param remainingParams remainingParams
+     * @param accessionNum 
      * @param activeSegments 
      * @param applIds 
      * @param applStatusGroupCode 
@@ -85,6 +86,7 @@ export class NciReferralGrantsControllerService {
      * @param myCancerActivities 
      * @param ncabFrom 
      * @param ncabTo 
+     * @param notifyFlag 
      * @param npnId 
      * @param orderBy orderBy
      * @param pdAssignmentSearch 
@@ -102,10 +104,10 @@ export class NciReferralGrantsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportGrantSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public exportGrantSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public exportGrantSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public exportGrantSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public exportGrantSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public exportGrantSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public exportGrantSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public exportGrantSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (remainingParams === null || remainingParams === undefined) {
             throw new Error('Required parameter remainingParams was null or undefined when calling exportGrantSearchResultsUsingGET.');
@@ -151,7 +153,12 @@ export class NciReferralGrantsControllerService {
 
 
 
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accessionNum !== undefined && accessionNum !== null) {
+            queryParameters = queryParameters.set('accessionNum', <any>accessionNum);
+        }
         if (activeSegments !== undefined && activeSegments !== null) {
             queryParameters = queryParameters.set('activeSegments', <any>activeSegments);
         }
@@ -239,6 +246,9 @@ export class NciReferralGrantsControllerService {
         }
         if (ncabTo !== undefined && ncabTo !== null) {
             queryParameters = queryParameters.set('ncabTo', <any>ncabTo);
+        }
+        if (notifyFlag !== undefined && notifyFlag !== null) {
+            queryParameters = queryParameters.set('notifyFlag', <any>notifyFlag);
         }
         if (npnId !== undefined && npnId !== null) {
             queryParameters = queryParameters.set('npnId', <any>npnId);
@@ -320,6 +330,7 @@ export class NciReferralGrantsControllerService {
      * exportSearchResults
      * 
      * @param remainingParams remainingParams
+     * @param accessionNum 
      * @param activeSegments 
      * @param applIds 
      * @param applStatusGroupCode 
@@ -346,6 +357,7 @@ export class NciReferralGrantsControllerService {
      * @param myCancerActivities 
      * @param ncabFrom 
      * @param ncabTo 
+     * @param notifyFlag 
      * @param npnId 
      * @param orderBy orderBy
      * @param pdAssignmentSearch 
@@ -363,10 +375,10 @@ export class NciReferralGrantsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public exportSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public exportSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public exportSearchResultsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public exportSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public exportSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public exportSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public exportSearchResultsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (remainingParams === null || remainingParams === undefined) {
             throw new Error('Required parameter remainingParams was null or undefined when calling exportSearchResultsUsingGET.');
@@ -412,7 +424,12 @@ export class NciReferralGrantsControllerService {
 
 
 
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accessionNum !== undefined && accessionNum !== null) {
+            queryParameters = queryParameters.set('accessionNum', <any>accessionNum);
+        }
         if (activeSegments !== undefined && activeSegments !== null) {
             queryParameters = queryParameters.set('activeSegments', <any>activeSegments);
         }
@@ -500,6 +517,9 @@ export class NciReferralGrantsControllerService {
         }
         if (ncabTo !== undefined && ncabTo !== null) {
             queryParameters = queryParameters.set('ncabTo', <any>ncabTo);
+        }
+        if (notifyFlag !== undefined && notifyFlag !== null) {
+            queryParameters = queryParameters.set('notifyFlag', <any>notifyFlag);
         }
         if (npnId !== undefined && npnId !== null) {
             queryParameters = queryParameters.set('npnId', <any>npnId);
@@ -581,6 +601,7 @@ export class NciReferralGrantsControllerService {
      * exportSearchResults
      * 
      * @param remainingParams remainingParams
+     * @param accessionNum 
      * @param activeSegments 
      * @param applIds 
      * @param applStatusGroupCode 
@@ -607,6 +628,7 @@ export class NciReferralGrantsControllerService {
      * @param myCancerActivities 
      * @param ncabFrom 
      * @param ncabTo 
+     * @param notifyFlag 
      * @param npnId 
      * @param orderBy orderBy
      * @param pdAssignmentSearch 
@@ -624,10 +646,10 @@ export class NciReferralGrantsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportSearchResultsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public exportSearchResultsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public exportSearchResultsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public exportSearchResultsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public exportSearchResultsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public exportSearchResultsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public exportSearchResultsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public exportSearchResultsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (remainingParams === null || remainingParams === undefined) {
             throw new Error('Required parameter remainingParams was null or undefined when calling exportSearchResultsUsingPOST.');
@@ -673,7 +695,12 @@ export class NciReferralGrantsControllerService {
 
 
 
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accessionNum !== undefined && accessionNum !== null) {
+            queryParameters = queryParameters.set('accessionNum', <any>accessionNum);
+        }
         if (activeSegments !== undefined && activeSegments !== null) {
             queryParameters = queryParameters.set('activeSegments', <any>activeSegments);
         }
@@ -761,6 +788,9 @@ export class NciReferralGrantsControllerService {
         }
         if (ncabTo !== undefined && ncabTo !== null) {
             queryParameters = queryParameters.set('ncabTo', <any>ncabTo);
+        }
+        if (notifyFlag !== undefined && notifyFlag !== null) {
+            queryParameters = queryParameters.set('notifyFlag', <any>notifyFlag);
         }
         if (npnId !== undefined && npnId !== null) {
             queryParameters = queryParameters.set('npnId', <any>npnId);
@@ -923,6 +953,7 @@ export class NciReferralGrantsControllerService {
      * searchGrantsForPDAssignment
      * 
      * @param remainingParams remainingParams
+     * @param accessionNum 
      * @param activeSegments 
      * @param applId applId
      * @param applIds 
@@ -950,6 +981,7 @@ export class NciReferralGrantsControllerService {
      * @param myCancerActivities 
      * @param ncabFrom 
      * @param ncabTo 
+     * @param notifyFlag 
      * @param npnId 
      * @param orderBy orderBy
      * @param pdAssignmentSearch 
@@ -967,10 +999,10 @@ export class NciReferralGrantsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public searchGrantsForPDAssignmentUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applId?: Array<number>, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (remainingParams === null || remainingParams === undefined) {
             throw new Error('Required parameter remainingParams was null or undefined when calling searchGrantsForPDAssignmentUsingGET.');
@@ -1017,7 +1049,12 @@ export class NciReferralGrantsControllerService {
 
 
 
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accessionNum !== undefined && accessionNum !== null) {
+            queryParameters = queryParameters.set('accessionNum', <any>accessionNum);
+        }
         if (activeSegments !== undefined && activeSegments !== null) {
             queryParameters = queryParameters.set('activeSegments', <any>activeSegments);
         }
@@ -1111,6 +1148,9 @@ export class NciReferralGrantsControllerService {
         if (ncabTo !== undefined && ncabTo !== null) {
             queryParameters = queryParameters.set('ncabTo', <any>ncabTo);
         }
+        if (notifyFlag !== undefined && notifyFlag !== null) {
+            queryParameters = queryParameters.set('notifyFlag', <any>notifyFlag);
+        }
         if (npnId !== undefined && npnId !== null) {
             queryParameters = queryParameters.set('npnId', <any>npnId);
         }
@@ -1192,6 +1232,7 @@ export class NciReferralGrantsControllerService {
      * searchReferralGrants
      * 
      * @param remainingParams remainingParams
+     * @param accessionNum 
      * @param activeSegments 
      * @param applIds 
      * @param applStatusGroupCode 
@@ -1218,6 +1259,7 @@ export class NciReferralGrantsControllerService {
      * @param myCancerActivities 
      * @param ncabFrom 
      * @param ncabTo 
+     * @param notifyFlag 
      * @param npnId 
      * @param orderBy orderBy
      * @param pdAssignmentSearch 
@@ -1235,10 +1277,10 @@ export class NciReferralGrantsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchReferralGrantsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public searchReferralGrantsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public searchReferralGrantsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public searchReferralGrantsUsingGET(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public searchReferralGrantsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public searchReferralGrantsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public searchReferralGrantsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public searchReferralGrantsUsingGET(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (remainingParams === null || remainingParams === undefined) {
             throw new Error('Required parameter remainingParams was null or undefined when calling searchReferralGrantsUsingGET.');
@@ -1284,7 +1326,12 @@ export class NciReferralGrantsControllerService {
 
 
 
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accessionNum !== undefined && accessionNum !== null) {
+            queryParameters = queryParameters.set('accessionNum', <any>accessionNum);
+        }
         if (activeSegments !== undefined && activeSegments !== null) {
             queryParameters = queryParameters.set('activeSegments', <any>activeSegments);
         }
@@ -1372,6 +1419,9 @@ export class NciReferralGrantsControllerService {
         }
         if (ncabTo !== undefined && ncabTo !== null) {
             queryParameters = queryParameters.set('ncabTo', <any>ncabTo);
+        }
+        if (notifyFlag !== undefined && notifyFlag !== null) {
+            queryParameters = queryParameters.set('notifyFlag', <any>notifyFlag);
         }
         if (npnId !== undefined && npnId !== null) {
             queryParameters = queryParameters.set('npnId', <any>npnId);
@@ -1454,6 +1504,7 @@ export class NciReferralGrantsControllerService {
      * searchReferralGrants
      * 
      * @param remainingParams remainingParams
+     * @param accessionNum 
      * @param activeSegments 
      * @param applIds 
      * @param applStatusGroupCode 
@@ -1480,6 +1531,7 @@ export class NciReferralGrantsControllerService {
      * @param myCancerActivities 
      * @param ncabFrom 
      * @param ncabTo 
+     * @param notifyFlag 
      * @param npnId 
      * @param orderBy orderBy
      * @param pdAssignmentSearch 
@@ -1497,10 +1549,10 @@ export class NciReferralGrantsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchReferralGrantsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public searchReferralGrantsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public searchReferralGrantsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public searchReferralGrantsUsingPOST(remainingParams: any, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public searchReferralGrantsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public searchReferralGrantsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public searchReferralGrantsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public searchReferralGrantsUsingPOST(remainingParams: any, accessionNum?: number, activeSegments?: boolean, applIds?: Array<number>, applStatusGroupCode?: Array<string>, araMatchStatus?: Array<string>, cancerActivities?: Array<string>, composedGrantNumber?: string, dualCas?: boolean, formerGrantNumber?: string, fyFrom?: number, fyTo?: number, grantIc?: string, grantMech?: string, grantSerial?: string, grantSuffix?: string, grantsWitCa?: boolean, grantType?: string, grantYear?: string, groupCode?: string, includeDeleted?: boolean, includeOrphans?: boolean, institution?: string, irgCode?: string, irgFlexCode?: string, myCancerActivities?: Array<string>, ncabFrom?: string, ncabTo?: string, notifyFlag?: string, npnId?: number, orderBy?: string, pdAssignmentSearch?: boolean, pdId?: number, piName?: string, referralOfficer?: number, referralStatus?: Array<string>, rfaPaNumber?: Array<string>, role?: string, roNpnId?: number, selectFrom?: string, sraDesignatorCode?: string, sraFlexCode?: string, wBSearch?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (remainingParams === null || remainingParams === undefined) {
             throw new Error('Required parameter remainingParams was null or undefined when calling searchReferralGrantsUsingPOST.');
@@ -1546,7 +1598,12 @@ export class NciReferralGrantsControllerService {
 
 
 
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accessionNum !== undefined && accessionNum !== null) {
+            queryParameters = queryParameters.set('accessionNum', <any>accessionNum);
+        }
         if (activeSegments !== undefined && activeSegments !== null) {
             queryParameters = queryParameters.set('activeSegments', <any>activeSegments);
         }
@@ -1634,6 +1691,9 @@ export class NciReferralGrantsControllerService {
         }
         if (ncabTo !== undefined && ncabTo !== null) {
             queryParameters = queryParameters.set('ncabTo', <any>ncabTo);
+        }
+        if (notifyFlag !== undefined && notifyFlag !== null) {
+            queryParameters = queryParameters.set('notifyFlag', <any>notifyFlag);
         }
         if (npnId !== undefined && npnId !== null) {
             queryParameters = queryParameters.set('npnId', <any>npnId);

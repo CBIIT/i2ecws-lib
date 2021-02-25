@@ -15,7 +15,6 @@ export interface I2ERoles {
     docAbbrev?: string;
     emailAddress?: string;
     firstName?: string;
-    fullName?: string;
     fullOrgPathAbbrev?: string;
     fullOrgPathDescription?: string;
     lastName?: string;
