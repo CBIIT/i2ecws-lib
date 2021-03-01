@@ -16,6 +16,8 @@ export interface NciPerson {
     activeFlag?: string;
     emailAddress?: string;
     firstName?: string;
+    fullName?: string;
+    fullNameLF?: string;
     inactiveDate?: Date;
     lastName?: string;
     nihNetworkId?: string;

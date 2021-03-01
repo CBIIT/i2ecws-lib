@@ -11,6 +11,7 @@
  */
 import { HttpClient, HttpHeaders, HttpResponse, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Select2ExtOrgDto } from '../model/select2ExtOrgDto';
 import { Configuration } from '../configuration';
 export declare class LookupsControllerService {
     protected httpClient: HttpClient;
@@ -50,4 +51,24 @@ export declare class LookupsControllerService {
     getPiInstitutesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<any>;
     getPiInstitutesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     getPiInstitutesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    /**
+     * searchOrganizations
+     *
+     * @param term term
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    searchOrganizationsUsingGET(term: string, observe?: 'body', reportProgress?: boolean): Observable<Select2ExtOrgDto>;
+    searchOrganizationsUsingGET(term: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Select2ExtOrgDto>>;
+    searchOrganizationsUsingGET(term: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Select2ExtOrgDto>>;
+    /**
+     * searchOrganizations
+     *
+     * @param term term
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    searchOrganizationsUsingPOST(term: string, observe?: 'body', reportProgress?: boolean): Observable<Select2ExtOrgDto>;
+    searchOrganizationsUsingPOST(term: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Select2ExtOrgDto>>;
+    searchOrganizationsUsingPOST(term: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Select2ExtOrgDto>>;
 }

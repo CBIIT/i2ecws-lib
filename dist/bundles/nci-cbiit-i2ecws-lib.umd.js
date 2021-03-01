@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common/http')) :
-    typeof define === 'function' && define.amd ? define('i2ecws-lib', ['exports', '@angular/core', '@angular/common/http'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['i2ecws-lib'] = {}, global.ng.core, global.ng.common.http));
+    typeof define === 'function' && define.amd ? define('@nci-cbiit/i2ecws-lib', ['exports', '@angular/core', '@angular/common/http'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global['nci-cbiit'] = global['nci-cbiit'] || {}, global['nci-cbiit']['i2ecws-lib'] = {}), global.ng.core, global.ng.common.http));
 }(this, (function (exports, core, http) { 'use strict';
 
     /*! *****************************************************************************
@@ -3509,6 +3509,66 @@
                 reportProgress: reportProgress
             });
         };
+        LookupsControllerService.prototype.searchOrganizationsUsingGET = function (term, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (term === null || term === undefined) {
+                throw new Error('Required parameter term was null or undefined when calling searchOrganizationsUsingGET.');
+            }
+            var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (term !== undefined && term !== null) {
+                queryParameters = queryParameters.set('term', term);
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/json'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [];
+            return this.httpClient.get(this.basePath + "/api/v1/lookups/search-pi-institutes", {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        LookupsControllerService.prototype.searchOrganizationsUsingPOST = function (term, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (term === null || term === undefined) {
+                throw new Error('Required parameter term was null or undefined when calling searchOrganizationsUsingPOST.');
+            }
+            var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (term !== undefined && term !== null) {
+                queryParameters = queryParameters.set('term', term);
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/json'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'application/json'
+            ];
+            return this.httpClient.post(this.basePath + "/api/v1/lookups/search-pi-institutes", null, {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
         return LookupsControllerService;
     }());
     LookupsControllerService.decorators = [
@@ -3558,13 +3618,16 @@
             }
             return false;
         };
-        NciReferralGrantsControllerService.prototype.exportGrantSearchResultsUsingGET = function (remainingParams, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
+        NciReferralGrantsControllerService.prototype.exportGrantSearchResultsUsingGET = function (remainingParams, accessionNum, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, notifyFlag, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
             if (remainingParams === null || remainingParams === undefined) {
                 throw new Error('Required parameter remainingParams was null or undefined when calling exportGrantSearchResultsUsingGET.');
             }
             var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (accessionNum !== undefined && accessionNum !== null) {
+                queryParameters = queryParameters.set('accessionNum', accessionNum);
+            }
             if (activeSegments !== undefined && activeSegments !== null) {
                 queryParameters = queryParameters.set('activeSegments', activeSegments);
             }
@@ -3652,6 +3715,9 @@
             }
             if (ncabTo !== undefined && ncabTo !== null) {
                 queryParameters = queryParameters.set('ncabTo', ncabTo);
+            }
+            if (notifyFlag !== undefined && notifyFlag !== null) {
+                queryParameters = queryParameters.set('notifyFlag', notifyFlag);
             }
             if (npnId !== undefined && npnId !== null) {
                 queryParameters = queryParameters.set('npnId', npnId);
@@ -3721,13 +3787,16 @@
                 reportProgress: reportProgress
             });
         };
-        NciReferralGrantsControllerService.prototype.exportSearchResultsUsingGET = function (remainingParams, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
+        NciReferralGrantsControllerService.prototype.exportSearchResultsUsingGET = function (remainingParams, accessionNum, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, notifyFlag, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
             if (remainingParams === null || remainingParams === undefined) {
                 throw new Error('Required parameter remainingParams was null or undefined when calling exportSearchResultsUsingGET.');
             }
             var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (accessionNum !== undefined && accessionNum !== null) {
+                queryParameters = queryParameters.set('accessionNum', accessionNum);
+            }
             if (activeSegments !== undefined && activeSegments !== null) {
                 queryParameters = queryParameters.set('activeSegments', activeSegments);
             }
@@ -3815,6 +3884,9 @@
             }
             if (ncabTo !== undefined && ncabTo !== null) {
                 queryParameters = queryParameters.set('ncabTo', ncabTo);
+            }
+            if (notifyFlag !== undefined && notifyFlag !== null) {
+                queryParameters = queryParameters.set('notifyFlag', notifyFlag);
             }
             if (npnId !== undefined && npnId !== null) {
                 queryParameters = queryParameters.set('npnId', npnId);
@@ -3884,13 +3956,16 @@
                 reportProgress: reportProgress
             });
         };
-        NciReferralGrantsControllerService.prototype.exportSearchResultsUsingPOST = function (remainingParams, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
+        NciReferralGrantsControllerService.prototype.exportSearchResultsUsingPOST = function (remainingParams, accessionNum, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, notifyFlag, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
             if (remainingParams === null || remainingParams === undefined) {
                 throw new Error('Required parameter remainingParams was null or undefined when calling exportSearchResultsUsingPOST.');
             }
             var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (accessionNum !== undefined && accessionNum !== null) {
+                queryParameters = queryParameters.set('accessionNum', accessionNum);
+            }
             if (activeSegments !== undefined && activeSegments !== null) {
                 queryParameters = queryParameters.set('activeSegments', activeSegments);
             }
@@ -3978,6 +4053,9 @@
             }
             if (ncabTo !== undefined && ncabTo !== null) {
                 queryParameters = queryParameters.set('ncabTo', ncabTo);
+            }
+            if (notifyFlag !== undefined && notifyFlag !== null) {
+                queryParameters = queryParameters.set('notifyFlag', notifyFlag);
             }
             if (npnId !== undefined && npnId !== null) {
                 queryParameters = queryParameters.set('npnId', npnId);
@@ -4096,13 +4174,16 @@
                 reportProgress: reportProgress
             });
         };
-        NciReferralGrantsControllerService.prototype.searchGrantsForPDAssignmentUsingGET = function (remainingParams, activeSegments, applId, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
+        NciReferralGrantsControllerService.prototype.searchGrantsForPDAssignmentUsingGET = function (remainingParams, accessionNum, activeSegments, applId, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, notifyFlag, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
             if (remainingParams === null || remainingParams === undefined) {
                 throw new Error('Required parameter remainingParams was null or undefined when calling searchGrantsForPDAssignmentUsingGET.');
             }
             var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (accessionNum !== undefined && accessionNum !== null) {
+                queryParameters = queryParameters.set('accessionNum', accessionNum);
+            }
             if (activeSegments !== undefined && activeSegments !== null) {
                 queryParameters = queryParameters.set('activeSegments', activeSegments);
             }
@@ -4196,6 +4277,9 @@
             if (ncabTo !== undefined && ncabTo !== null) {
                 queryParameters = queryParameters.set('ncabTo', ncabTo);
             }
+            if (notifyFlag !== undefined && notifyFlag !== null) {
+                queryParameters = queryParameters.set('notifyFlag', notifyFlag);
+            }
             if (npnId !== undefined && npnId !== null) {
                 queryParameters = queryParameters.set('npnId', npnId);
             }
@@ -4265,13 +4349,16 @@
                 reportProgress: reportProgress
             });
         };
-        NciReferralGrantsControllerService.prototype.searchReferralGrantsUsingGET = function (remainingParams, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
+        NciReferralGrantsControllerService.prototype.searchReferralGrantsUsingGET = function (remainingParams, accessionNum, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, notifyFlag, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
             if (remainingParams === null || remainingParams === undefined) {
                 throw new Error('Required parameter remainingParams was null or undefined when calling searchReferralGrantsUsingGET.');
             }
             var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (accessionNum !== undefined && accessionNum !== null) {
+                queryParameters = queryParameters.set('accessionNum', accessionNum);
+            }
             if (activeSegments !== undefined && activeSegments !== null) {
                 queryParameters = queryParameters.set('activeSegments', activeSegments);
             }
@@ -4359,6 +4446,9 @@
             }
             if (ncabTo !== undefined && ncabTo !== null) {
                 queryParameters = queryParameters.set('ncabTo', ncabTo);
+            }
+            if (notifyFlag !== undefined && notifyFlag !== null) {
+                queryParameters = queryParameters.set('notifyFlag', notifyFlag);
             }
             if (npnId !== undefined && npnId !== null) {
                 queryParameters = queryParameters.set('npnId', npnId);
@@ -4429,13 +4519,16 @@
                 reportProgress: reportProgress
             });
         };
-        NciReferralGrantsControllerService.prototype.searchReferralGrantsUsingPOST = function (remainingParams, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
+        NciReferralGrantsControllerService.prototype.searchReferralGrantsUsingPOST = function (remainingParams, accessionNum, activeSegments, applIds, applStatusGroupCode, araMatchStatus, cancerActivities, composedGrantNumber, dualCas, formerGrantNumber, fyFrom, fyTo, grantIc, grantMech, grantSerial, grantSuffix, grantsWitCa, grantType, grantYear, groupCode, includeDeleted, includeOrphans, institution, irgCode, irgFlexCode, myCancerActivities, ncabFrom, ncabTo, notifyFlag, npnId, orderBy, pdAssignmentSearch, pdId, piName, referralOfficer, referralStatus, rfaPaNumber, role, roNpnId, selectFrom, sraDesignatorCode, sraFlexCode, wBSearch, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
             if (remainingParams === null || remainingParams === undefined) {
                 throw new Error('Required parameter remainingParams was null or undefined when calling searchReferralGrantsUsingPOST.');
             }
             var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (accessionNum !== undefined && accessionNum !== null) {
+                queryParameters = queryParameters.set('accessionNum', accessionNum);
+            }
             if (activeSegments !== undefined && activeSegments !== null) {
                 queryParameters = queryParameters.set('activeSegments', activeSegments);
             }
@@ -4523,6 +4616,9 @@
             }
             if (ncabTo !== undefined && ncabTo !== null) {
                 queryParameters = queryParameters.set('ncabTo', ncabTo);
+            }
+            if (notifyFlag !== undefined && notifyFlag !== null) {
+                queryParameters = queryParameters.set('notifyFlag', notifyFlag);
             }
             if (npnId !== undefined && npnId !== null) {
                 queryParameters = queryParameters.set('npnId', npnId);
@@ -6595,6 +6691,548 @@
         { type: Configuration, decorators: [{ type: core.Optional }] }
     ]; };
 
+    var ReferralApplNotifyCommentsTEntityService = /** @class */ (function () {
+        function ReferralApplNotifyCommentsTEntityService(httpClient, basePath, configuration) {
+            this.httpClient = httpClient;
+            this.basePath = 'https://localhost';
+            this.defaultHeaders = new http.HttpHeaders();
+            this.configuration = new Configuration();
+            if (basePath) {
+                this.basePath = basePath;
+            }
+            if (configuration) {
+                this.configuration = configuration;
+                this.basePath = basePath || configuration.basePath || this.basePath;
+            }
+        }
+        /**
+         * @param consumes string[] mime-types
+         * @return true: consumes contains 'multipart/form-data', false: otherwise
+         */
+        ReferralApplNotifyCommentsTEntityService.prototype.canConsumeForm = function (consumes) {
+            var e_1, _a;
+            var form = 'multipart/form-data';
+            try {
+                for (var consumes_1 = __values(consumes), consumes_1_1 = consumes_1.next(); !consumes_1_1.done; consumes_1_1 = consumes_1.next()) {
+                    var consume = consumes_1_1.value;
+                    if (form === consume) {
+                        return true;
+                    }
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (consumes_1_1 && !consumes_1_1.done && (_a = consumes_1.return)) _a.call(consumes_1);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return false;
+        };
+        ReferralApplNotifyCommentsTEntityService.prototype.referralApplNotifyCommentsTNotifyUsingDELETE = function (id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyCommentsTNotifyUsingDELETE.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            return this.httpClient.delete(this.basePath + "/referralApplNotifyCommentsTs/" + encodeURIComponent(String(id)) + "/notify", {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyCommentsTEntityService.prototype.referralApplNotifyCommentsTNotifyUsingGET = function (id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyCommentsTNotifyUsingGET.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/hal+json'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [];
+            return this.httpClient.get(this.basePath + "/referralApplNotifyCommentsTs/" + encodeURIComponent(String(id)) + "/notify", {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyCommentsTEntityService.prototype.referralApplNotifyCommentsTNotifyUsingPATCH = function (body, id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (body === null || body === undefined) {
+                throw new Error('Required parameter body was null or undefined when calling referralApplNotifyCommentsTNotifyUsingPATCH.');
+            }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyCommentsTNotifyUsingPATCH.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.patch(this.basePath + "/referralApplNotifyCommentsTs/" + encodeURIComponent(String(id)) + "/notify", body, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyCommentsTEntityService.prototype.referralApplNotifyCommentsTNotifyUsingPOST = function (body, id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (body === null || body === undefined) {
+                throw new Error('Required parameter body was null or undefined when calling referralApplNotifyCommentsTNotifyUsingPOST.');
+            }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyCommentsTNotifyUsingPOST.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.post(this.basePath + "/referralApplNotifyCommentsTs/" + encodeURIComponent(String(id)) + "/notify", body, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyCommentsTEntityService.prototype.referralApplNotifyCommentsTNotifyUsingPUT = function (body, id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (body === null || body === undefined) {
+                throw new Error('Required parameter body was null or undefined when calling referralApplNotifyCommentsTNotifyUsingPUT.');
+            }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyCommentsTNotifyUsingPUT.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.put(this.basePath + "/referralApplNotifyCommentsTs/" + encodeURIComponent(String(id)) + "/notify", body, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        return ReferralApplNotifyCommentsTEntityService;
+    }());
+    ReferralApplNotifyCommentsTEntityService.decorators = [
+        { type: core.Injectable }
+    ];
+    ReferralApplNotifyCommentsTEntityService.ctorParameters = function () { return [
+        { type: http.HttpClient },
+        { type: String, decorators: [{ type: core.Optional }, { type: core.Inject, args: [BASE_PATH,] }] },
+        { type: Configuration, decorators: [{ type: core.Optional }] }
+    ]; };
+
+    var ReferralApplNotifyControllerService = /** @class */ (function () {
+        function ReferralApplNotifyControllerService(httpClient, basePath, configuration) {
+            this.httpClient = httpClient;
+            this.basePath = 'https://localhost';
+            this.defaultHeaders = new http.HttpHeaders();
+            this.configuration = new Configuration();
+            if (basePath) {
+                this.basePath = basePath;
+            }
+            if (configuration) {
+                this.configuration = configuration;
+                this.basePath = basePath || configuration.basePath || this.basePath;
+            }
+        }
+        /**
+         * @param consumes string[] mime-types
+         * @return true: consumes contains 'multipart/form-data', false: otherwise
+         */
+        ReferralApplNotifyControllerService.prototype.canConsumeForm = function (consumes) {
+            var e_1, _a;
+            var form = 'multipart/form-data';
+            try {
+                for (var consumes_1 = __values(consumes), consumes_1_1 = consumes_1.next(); !consumes_1_1.done; consumes_1_1 = consumes_1.next()) {
+                    var consume = consumes_1_1.value;
+                    if (form === consume) {
+                        return true;
+                    }
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (consumes_1_1 && !consumes_1_1.done && (_a = consumes_1.return)) _a.call(consumes_1);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return false;
+        };
+        ReferralApplNotifyControllerService.prototype.getNotifyForApplIdUsingGET = function (applId, orderBy, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (applId === null || applId === undefined) {
+                throw new Error('Required parameter applId was null or undefined when calling getNotifyForApplIdUsingGET.');
+            }
+            var queryParameters = new http.HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+            if (orderBy !== undefined && orderBy !== null) {
+                queryParameters = queryParameters.set('orderBy', orderBy);
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/json',
+                'application/xml'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [];
+            return this.httpClient.get(this.basePath + "/api/v1/referral/notify/" + encodeURIComponent(String(applId)), {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        return ReferralApplNotifyControllerService;
+    }());
+    ReferralApplNotifyControllerService.decorators = [
+        { type: core.Injectable }
+    ];
+    ReferralApplNotifyControllerService.ctorParameters = function () { return [
+        { type: http.HttpClient },
+        { type: String, decorators: [{ type: core.Optional }, { type: core.Inject, args: [BASE_PATH,] }] },
+        { type: Configuration, decorators: [{ type: core.Optional }] }
+    ]; };
+
+    var ReferralApplNotifyTEntityService = /** @class */ (function () {
+        function ReferralApplNotifyTEntityService(httpClient, basePath, configuration) {
+            this.httpClient = httpClient;
+            this.basePath = 'https://localhost';
+            this.defaultHeaders = new http.HttpHeaders();
+            this.configuration = new Configuration();
+            if (basePath) {
+                this.basePath = basePath;
+            }
+            if (configuration) {
+                this.configuration = configuration;
+                this.basePath = basePath || configuration.basePath || this.basePath;
+            }
+        }
+        /**
+         * @param consumes string[] mime-types
+         * @return true: consumes contains 'multipart/form-data', false: otherwise
+         */
+        ReferralApplNotifyTEntityService.prototype.canConsumeForm = function (consumes) {
+            var e_1, _a;
+            var form = 'multipart/form-data';
+            try {
+                for (var consumes_1 = __values(consumes), consumes_1_1 = consumes_1.next(); !consumes_1_1.done; consumes_1_1 = consumes_1.next()) {
+                    var consume = consumes_1_1.value;
+                    if (form === consume) {
+                        return true;
+                    }
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (consumes_1_1 && !consumes_1_1.done && (_a = consumes_1.return)) _a.call(consumes_1);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return false;
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingDELETE = function (id, referralapplnotifycommentstId, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingDELETE.');
+            }
+            if (referralapplnotifycommentstId === null || referralapplnotifycommentstId === undefined) {
+                throw new Error('Required parameter referralapplnotifycommentstId was null or undefined when calling referralApplNotifyTCommentsUsingDELETE.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            return this.httpClient.delete(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments/" + encodeURIComponent(String(referralapplnotifycommentstId)), {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingDELETE1 = function (id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingDELETE1.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            return this.httpClient.delete(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments", {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingGET = function (id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingGET.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/hal+json'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [];
+            return this.httpClient.get(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments", {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingGET1 = function (id, referralapplnotifycommentstId, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingGET1.');
+            }
+            if (referralapplnotifycommentstId === null || referralapplnotifycommentstId === undefined) {
+                throw new Error('Required parameter referralapplnotifycommentstId was null or undefined when calling referralApplNotifyTCommentsUsingGET1.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'application/hal+json'
+            ];
+            return this.httpClient.get(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments/" + encodeURIComponent(String(referralapplnotifycommentstId)), {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingPATCH = function (body, id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (body === null || body === undefined) {
+                throw new Error('Required parameter body was null or undefined when calling referralApplNotifyTCommentsUsingPATCH.');
+            }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingPATCH.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.patch(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments", body, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingPOST = function (body, id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (body === null || body === undefined) {
+                throw new Error('Required parameter body was null or undefined when calling referralApplNotifyTCommentsUsingPOST.');
+            }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingPOST.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.post(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments", body, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralApplNotifyTEntityService.prototype.referralApplNotifyTCommentsUsingPUT = function (body, id, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (body === null || body === undefined) {
+                throw new Error('Required parameter body was null or undefined when calling referralApplNotifyTCommentsUsingPUT.');
+            }
+            if (id === null || id === undefined) {
+                throw new Error('Required parameter id was null or undefined when calling referralApplNotifyTCommentsUsingPUT.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                '*/*'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'text/uri-list',
+                'application/x-spring-data-compact+json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.put(this.basePath + "/referralApplNotifyTs/" + encodeURIComponent(String(id)) + "/comments", body, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        return ReferralApplNotifyTEntityService;
+    }());
+    ReferralApplNotifyTEntityService.decorators = [
+        { type: core.Injectable }
+    ];
+    ReferralApplNotifyTEntityService.ctorParameters = function () { return [
+        { type: http.HttpClient },
+        { type: String, decorators: [{ type: core.Optional }, { type: core.Inject, args: [BASE_PATH,] }] },
+        { type: Configuration, decorators: [{ type: core.Optional }] }
+    ]; };
+
     var ReferralMessagesControllerService = /** @class */ (function () {
         function ReferralMessagesControllerService(httpClient, basePath, configuration) {
             this.httpClient = httpClient;
@@ -7371,6 +8009,40 @@
                 reportProgress: reportProgress
             });
         };
+        ReferralWorkflowControllerService.prototype.deleteNotifyUsingPATCH = function (notify, userId, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (notify === null || notify === undefined) {
+                throw new Error('Required parameter notify was null or undefined when calling deleteNotifyUsingPATCH.');
+            }
+            if (userId === null || userId === undefined) {
+                throw new Error('Required parameter userId was null or undefined when calling deleteNotifyUsingPATCH.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/json',
+                'application/xml'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'application/json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.patch(this.basePath + "/api/v1/referral/notify/" + encodeURIComponent(String(userId)), notify, {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
         ReferralWorkflowControllerService.prototype.getCurrentRefPssCodeUsingGET = function (applId, observe, reportProgress) {
             if (observe === void 0) { observe = 'body'; }
             if (reportProgress === void 0) { reportProgress = false; }
@@ -7495,6 +8167,40 @@
             // to determine the Content-Type header
             var consumes = [];
             return this.httpClient.get(this.basePath + "/api/v1/referral/reopen-pss-description/" + encodeURIComponent(String(applId)), {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            });
+        };
+        ReferralWorkflowControllerService.prototype.notifyUsingPOST = function (notify, userId, observe, reportProgress) {
+            if (observe === void 0) { observe = 'body'; }
+            if (reportProgress === void 0) { reportProgress = false; }
+            if (notify === null || notify === undefined) {
+                throw new Error('Required parameter notify was null or undefined when calling notifyUsingPOST.');
+            }
+            if (userId === null || userId === undefined) {
+                throw new Error('Required parameter userId was null or undefined when calling notifyUsingPOST.');
+            }
+            var headers = this.defaultHeaders;
+            // to determine the Accept header
+            var httpHeaderAccepts = [
+                'application/json',
+                'application/xml'
+            ];
+            var httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+            if (httpHeaderAcceptSelected != undefined) {
+                headers = headers.set('Accept', httpHeaderAcceptSelected);
+            }
+            // to determine the Content-Type header
+            var consumes = [
+                'application/json'
+            ];
+            var httpContentTypeSelected = this.configuration.selectHeaderContentType(consumes);
+            if (httpContentTypeSelected != undefined) {
+                headers = headers.set('Content-Type', httpContentTypeSelected);
+            }
+            return this.httpClient.post(this.basePath + "/api/v1/referral/notify/" + encodeURIComponent(String(userId)), notify, {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -8479,8 +9185,9 @@
         { type: Configuration, decorators: [{ type: core.Optional }] }
     ]; };
 
-    var APIS = [ActivitiesCodeControllerService, ApiQueueEntityService, AppNavigationTControllerService, AppNavigationTEntityService, AraControllerService, AraReasonsControllerService, BoardsControllerService, CancerActivityControllerService, CancerActivityRolesControllerService, CgRefCodControllerService, EmControllerService, ExportControllerService, GwbLinksControllerService, I2eUserActiveRolesControllerService, IcDataControllerService, JasperReportControllerService, LookupsControllerService, NciReferralGrantsControllerService, PaylineCertificationsTEntityService, PaylineControllerService, PaylineStatusesTEntityService, PaylistControllerService, PaylistGrantsControllerService, PaylistUtilControllerService, PdControllerService, PropertiesControllerService, ReferralMessagesControllerService, ReferralMessagesTEntityService, ReferralSearchCriteriaControllerService, ReferralWorkflowControllerService, RoAssignmentControllerService, UserControllerService, WorkbenchControllerService];
+    var APIS = [ActivitiesCodeControllerService, ApiQueueEntityService, AppNavigationTControllerService, AppNavigationTEntityService, AraControllerService, AraReasonsControllerService, BoardsControllerService, CancerActivityControllerService, CancerActivityRolesControllerService, CgRefCodControllerService, EmControllerService, ExportControllerService, GwbLinksControllerService, I2eUserActiveRolesControllerService, IcDataControllerService, JasperReportControllerService, LookupsControllerService, NciReferralGrantsControllerService, PaylineCertificationsTEntityService, PaylineControllerService, PaylineStatusesTEntityService, PaylistControllerService, PaylistGrantsControllerService, PaylistUtilControllerService, PdControllerService, PropertiesControllerService, ReferralApplNotifyCommentsTEntityService, ReferralApplNotifyControllerService, ReferralApplNotifyTEntityService, ReferralMessagesControllerService, ReferralMessagesTEntityService, ReferralSearchCriteriaControllerService, ReferralWorkflowControllerService, RoAssignmentControllerService, UserControllerService, WorkbenchControllerService];
 
+    exports.ModelAndView = void 0;
     (function (ModelAndView) {
         ModelAndView.StatusEnum = {
             ACCEPTED: 'ACCEPTED',
@@ -8554,6 +9261,7 @@
         };
     })(exports.ModelAndView || (exports.ModelAndView = {}));
 
+    exports.Payload = void 0;
     (function (Payload) {
         Payload.StatusEnum = {
             ACCEPTED: 'ACCEPTED',
@@ -8638,6 +9346,7 @@
      * https://github.com/swagger-api/swagger-codegen.git
      * Do not edit the class manually.
      */
+    exports.ResponseEntity = void 0;
     (function (ResponseEntity) {
         ResponseEntity.StatusCodeEnum = {
             ACCEPTED: 'ACCEPTED',
@@ -8722,6 +9431,7 @@
      * https://github.com/swagger-api/swagger-codegen.git
      * Do not edit the class manually.
      */
+    exports.TemplateVariable = void 0;
     (function (TemplateVariable) {
         TemplateVariable.TypeEnum = {
             COMPOSITEPARAM: 'COMPOSITE_PARAM',
@@ -8783,6 +9493,9 @@
                         PaylistUtilControllerService,
                         PdControllerService,
                         PropertiesControllerService,
+                        ReferralApplNotifyCommentsTEntityService,
+                        ReferralApplNotifyControllerService,
+                        ReferralApplNotifyTEntityService,
                         ReferralMessagesControllerService,
                         ReferralMessagesTEntityService,
                         ReferralSearchCriteriaControllerService,
@@ -8833,6 +9546,9 @@
     exports.PaylistUtilControllerService = PaylistUtilControllerService;
     exports.PdControllerService = PdControllerService;
     exports.PropertiesControllerService = PropertiesControllerService;
+    exports.ReferralApplNotifyCommentsTEntityService = ReferralApplNotifyCommentsTEntityService;
+    exports.ReferralApplNotifyControllerService = ReferralApplNotifyControllerService;
+    exports.ReferralApplNotifyTEntityService = ReferralApplNotifyTEntityService;
     exports.ReferralMessagesControllerService = ReferralMessagesControllerService;
     exports.ReferralMessagesTEntityService = ReferralMessagesTEntityService;
     exports.ReferralSearchCriteriaControllerService = ReferralSearchCriteriaControllerService;
@@ -8844,4 +9560,4 @@
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=i2ecws-lib.umd.js.map
+//# sourceMappingURL=nci-cbiit-i2ecws-lib.umd.js.map

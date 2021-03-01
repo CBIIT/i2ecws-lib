@@ -17,6 +17,7 @@ import { AssignRoActionDto } from '../model/assignRoActionDto';
 import { CloseReferralActionDto } from '../model/closeReferralActionDto';
 import { PdTransferActionDto } from '../model/pdTransferActionDto';
 import { ReferActionDto } from '../model/referActionDto';
+import { ReferralApplNotifyTDto } from '../model/referralApplNotifyTDto';
 import { RejectReferralActionDto } from '../model/rejectReferralActionDto';
 import { ReleaseDualActionDto } from '../model/releaseDualActionDto';
 import { ReleaseDualSpclCaseActionDto } from '../model/releaseDualSpclCaseActionDto';
@@ -81,6 +82,17 @@ export declare class ReferralWorkflowControllerService {
     closeReferralUsingPOST(referrals: Array<CloseReferralActionDto>, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     closeReferralUsingPOST(referrals: Array<CloseReferralActionDto>, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     /**
+     * deleteNotify
+     *
+     * @param notify notify
+     * @param userId userId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    deleteNotifyUsingPATCH(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    /**
      * getCurrentRefPssCode
      *
      * @param applId applId
@@ -131,6 +143,17 @@ export declare class ReferralWorkflowControllerService {
     getReopenPssDescriptionUsingGET(applId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
     getReopenPssDescriptionUsingGET(applId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     getReopenPssDescriptionUsingGET(applId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    /**
+     * notify
+     *
+     * @param notify notify
+     * @param userId userId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    notifyUsingPOST(notify: Array<ReferralApplNotifyTDto>, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     /**
      * refer
      *

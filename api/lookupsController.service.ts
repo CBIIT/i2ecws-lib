@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { Select2ExtOrgDto } from '../model/select2ExtOrgDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -130,15 +131,62 @@ export class LookupsControllerService {
     }
 
     /**
-     * getReviewLocuses
+     * getPiInstitutes
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getReviewLocusesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getReviewLocusesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getReviewLocusesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getReviewLocusesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getPiInstitutesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public getPiInstitutesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public getPiInstitutesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public getPiInstitutesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json',
+            'application/xml'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/api/v1/lookups/pi-institutes`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * searchOrganizations
+     * 
+     * @param term term
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public searchOrganizationsUsingGET(term: string, observe?: 'body', reportProgress?: boolean): Observable<Select2ExtOrgDto>;
+    public searchOrganizationsUsingGET(term: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Select2ExtOrgDto>>;
+    public searchOrganizationsUsingGET(term: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Select2ExtOrgDto>>;
+    public searchOrganizationsUsingGET(term: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (term === null || term === undefined) {
+            throw new Error('Required parameter term was null or undefined when calling searchOrganizationsUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (term !== undefined && term !== null) {
+            queryParameters = queryParameters.set('term', <any>term);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -155,8 +203,58 @@ export class LookupsControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/api/v1/lookups/review-locuses`,
+        return this.httpClient.get<Select2ExtOrgDto>(`${this.basePath}/api/v1/lookups/search-pi-institutes`,
             {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * searchOrganizations
+     * 
+     * @param term term
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public searchOrganizationsUsingPOST(term: string, observe?: 'body', reportProgress?: boolean): Observable<Select2ExtOrgDto>;
+    public searchOrganizationsUsingPOST(term: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Select2ExtOrgDto>>;
+    public searchOrganizationsUsingPOST(term: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Select2ExtOrgDto>>;
+    public searchOrganizationsUsingPOST(term: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (term === null || term === undefined) {
+            throw new Error('Required parameter term was null or undefined when calling searchOrganizationsUsingPOST.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (term !== undefined && term !== null) {
+            queryParameters = queryParameters.set('term', <any>term);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.post<Select2ExtOrgDto>(`${this.basePath}/api/v1/lookups/search-pi-institutes`,
+            null,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
