@@ -3,6 +3,12 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noImplicitAny": false,
+        "paths": {
+          "i2ecws-lib": [
+            "dist/i2ecws-lib/i2ecws-lib",
+            "dist/i2ecws-lib"
+          ]
+        },
         "suppressImplicitAnyIndexErrors": true,
         "target": "es5",
         "module": "commonjs",
@@ -13,6 +19,12 @@
         "noLib": false,
         "declaration": true,
         "lib": [ "es6", "dom" ]
+    },
+    "angularCompilerOptions": {
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "enableResourceInlining": true,
+        "enableIvy": true
     },
     "exclude": [
         "node_modules",

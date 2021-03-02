@@ -1,0 +1,49 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "960e06c1-8e86-4c5a-a811-0d623e9a5a3d"
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "i2ecui-lib": {
+    "projectType": "library",
+    "root": "projects/i2ecws-lib",
+    "sourceRoot": "projects/i2ecws-lib",
+    "prefix": "lib",
+    "architect": {
+      "build": {
+        "builder": "@angular-devkit/build-angular:ng-packagr",
+        "options": {
+          "tsConfig": "projects/i2ecws-lib/tsconfig.json",
+          "project": "projects/i2ecws-lib/ng-package.json"
+        },
+        "configurations": {
+          "production": {
+            "tsConfig": "projects/i2ecws-lib/tsconfig.lib.prod.json"
+          }
+        }
+      },
+      "test": {
+        "builder": "@angular-devkit/build-angular:karma",
+        "options": {
+          "main": "projects/i2ecws-lib/src/test.ts",
+          "tsConfig": "projects/i2ecws-lib/tsconfig.spec.json",
+          "karmaConfig": "projects/i2ecws-lib/karma.conf.js"
+        }
+      },
+      "lint": {
+        "builder": "@angular-devkit/build-angular:tslint",
+        "options": {
+          "tsConfig": [
+            "projects/i2ecws-lib/tsconfig.lib.json",
+            "projects/i2ecws-lib/tsconfig.spec.json"
+          ],
+          "exclude": [
+            "**/node_modules/**"
+          ]
+        }
+      }
+    }
+  },
+  "defaultProject": "i2ecws-lib"
+}
