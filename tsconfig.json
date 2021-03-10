@@ -6,6 +6,8 @@
         "paths": {
           "i2ecws-lib": [
             "dist/i2ecws-lib/i2ecws-lib",
+            "dist/i2ecws-lib",
+            "dist/i2ecws-lib/i2ecws-lib",
             "dist/i2ecws-lib"
           ]
         },
