@@ -1,6 +1,6 @@
 {
   "name": "@nci-cbiit/i2ecws-lib",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "swagger client for @nci-cbiit/i2ecws-lib",
   "author": "Doug the Magnificent",
   "keywords": [
