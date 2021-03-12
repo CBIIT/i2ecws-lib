@@ -1,5 +1,6 @@
 {
     "ngVersion":"11.1.1",
     "npmName": "@nci-cbiit/i2ecws-lib",
-    "npmVersion": "2.1.2"
+    "npmVersion": "2.1.4",
+    "snapshot": "true"
 }

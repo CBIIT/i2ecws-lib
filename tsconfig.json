@@ -1,39 +1,36 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+    "compileOnSave": false,
     "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "noImplicitAny": false,
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitReturns": true,
         "paths": {
-          "i2ecws-lib": [
-            "dist/i2ecws-lib/i2ecws-lib",
-            "dist/i2ecws-lib",
-            "dist/i2ecws-lib/i2ecws-lib",
-            "dist/i2ecws-lib"
-          ]
+            "i2ecws-lib": [
+                "dist/i2ecws-lib/i2ecws-lib",
+                "dist/i2ecws-lib"
+            ]
         },
-        "suppressImplicitAnyIndexErrors": true,
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "removeComments": true,
+        "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
-        "outDir": "./dist",
-        "noLib": false,
-        "declaration": true,
-        "lib": [ "es6", "dom" ]
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "es2020",
+        "lib": [
+            "es2018",
+            "dom"
+        ]
     },
     "angularCompilerOptions": {
-        "skipTemplateCodegen": true,
-        "strictMetadataEmit": true,
-        "enableResourceInlining": true,
-        "enableIvy": true
-    },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ],
-    "filesGlob": [
-        "./model/*.ts",
-        "./api/*.ts"
-    ]
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    }
 }

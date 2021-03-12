@@ -46,17 +46,19 @@ they will get overwritten the next time you build the API. If you want permanent
 I should also note that in ```package.mustache```, you can see the directive ```#useNgPackagr``` this property is set
 automatically when ngVersion (in ```config.json``) is > 4.0.0.
 
-To build the API, run:
+**NOTE:** the generated versions of package.json and ng-package.json go in the output directory specified in the 
+build-api.cmd script below.  The versions in the root of the project are not used.  
+
+To build the API:
 ```
-java -jar bin\swagger-codegen-cli-2.4.18.jar generate -i swagger.json -t templates\typescript-angular -l typescript-angular -c config.json
-(or just execute the build-api.cmd script)
+execute the build-api.cmd script
 
 ```
 
 To install the required dependencies and to build the typescript sources run:
 ```
 npm install
-npm run build
+ng build i2ecws-lib
 ```
 
 At this point, you can commit, tag, and push everything to github. This is all that's strictly necessary to distribute
