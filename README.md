@@ -22,6 +22,14 @@ the bin folder.
 
 ```https://ncimvn.nci.nih.gov/nexus/service/local/repositories/central/content/io/swagger/swagger-codegen-cli/2.4.18/swagger-codegen-cli-2.4.18.jar```
 
+```
+npm login --scope=@nci-cbiit --registry=https://npm.pkg.github.com
+
+> Username: USERNAME
+> Password: TOKEN
+> Email: PUBLIC-EMAIL-ADDRESS
+```
+
 #### config.json
 
 This file has some configuration settings that are necessary to configure the build properly. These are the same 
