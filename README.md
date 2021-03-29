@@ -1,3 +1,5 @@
+TEST
+
 ## i2ecws-lib@2.1.0
 
 ### Building
