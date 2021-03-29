@@ -133,9 +133,12 @@ package to release status.
 disabling it here.  Not sure why this works...
 * The angular.json file in the project root doesn't seem to do anything and may not be necessary.
 * The project was configured as an angular library project (hence angular.json), but that doesn't seem to be strictly
-necessary either.
+necessary either. However, if we ever do break the API into microservices, the various pieces could be broken into
+individual libraries here.  
 * I'm pretty sure that if we had a package.json in the root of the project with the proper dependencies, we could use
-  ```ng build i2ecws-lib``` to build the project. I need to investigate and confirm that.
+  ```ng build i2ecws-lib``` to build the project. I need to investigate and confirm that
+* I still need to confirm that snapshots are properly loaded in client projects
+* What about Swagger V3?  Do we want to upgrade?
 
 #### General usage
 
