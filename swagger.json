@@ -76,6 +76,10 @@
 			"description": "Cg Ref Cod Controller"
 		},
 		{
+			"name": "documents-controller",
+			"description": "Documents Controller"
+		},
+		{
 			"name": "em-controller",
 			"description": "Em Controller"
 		},
@@ -84,12 +88,16 @@
 			"description": "Export Controller"
 		},
 		{
-			"name": "fs-controller",
-			"description": "Fs Controller"
-		},
-		{
 			"name": "fs-lookup-controller",
 			"description": "Fs Lookup Controller"
+		},
+		{
+			"name": "fs-request-controller",
+			"description": "Fs Request Controller"
+		},
+		{
+			"name": "fs-search-controller",
+			"description": "Fs Search Controller"
 		},
 		{
 			"name": "gwb-links-controller",
@@ -138,10 +146,6 @@
 		{
 			"name": "properties-controller",
 			"description": "Properties Controller"
-		},
-		{
-			"name": "referral-appl-notify-controller",
-			"description": "Referral Appl Notify Controller"
 		},
 		{
 			"name": "referral-messages-controller",
@@ -547,7 +551,7 @@
 				}
 			}
 		},
-		"/api/v1/ara-reasons/{code}": {
+		"/api/v1/ara-reasons/code/{code}": {
 			"get": {
 				"tags": [
 					"ara-reasons-controller"
@@ -593,7 +597,7 @@
 				}
 			}
 		},
-		"/api/v1/ara-reasons/{id}": {
+		"/api/v1/ara-reasons/id/{id}": {
 			"patch": {
 				"tags": [
 					"ara-reasons-controller"
@@ -641,10 +645,104 @@
 				}
 			}
 		},
+		"/api/v1/ara-reasons/{code}": {
+			"get": {
+				"tags": [
+					"ara-reasons-controller"
+				],
+				"summary": "getAraReasons",
+				"operationId": "getAraReasonsUsingGET_2",
+				"produces": [
+					"application/json",
+					"application/xml"
+				],
+				"parameters": [
+					{
+						"name": "activeFlag",
+						"in": "query",
+						"description": "activeFlag",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "code",
+						"in": "path",
+						"description": "code",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/ara-reasons/{id}": {
+			"patch": {
+				"tags": [
+					"ara-reasons-controller"
+				],
+				"summary": "Activate or deactivate the specified ARA Reason",
+				"operationId": "activateOrDeactivateAraReasonUsingPATCH_1",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"application/xml"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "paramsHolder",
+						"description": "paramsHolder",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/ActivationParamsHolder"
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			}
+		},
 		"/api/v1/ara-statuses/": {
 			"get": {
 				"tags": [
-					"referral-search-criteria-controller"
+					"ara-controller"
 				],
 				"summary": "getAraMatchStatuses",
 				"operationId": "getAraMatchStatusesUsingGET",
@@ -1203,10 +1301,7 @@
 					"200": {
 						"description": "OK",
 						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/CaAssignmentRulesDto"
-							}
+							"type": "object"
 						}
 					},
 					"401": {
@@ -1292,10 +1387,7 @@
 					"200": {
 						"description": "OK",
 						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/CaAssignmentRulesDto"
-							}
+							"type": "object"
 						}
 					},
 					"401": {
@@ -1688,6 +1780,251 @@
 				}
 			}
 		},
+		"/api/v1/documents/add": {
+			"post": {
+				"tags": [
+					"documents-controller"
+				],
+				"summary": "addDocument",
+				"operationId": "addDocumentUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "docType",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "file",
+						"in": "query",
+						"required": false,
+						"type": "file"
+					},
+					{
+						"name": "keyId",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "keyType",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/documents/delete/{docId}": {
+			"get": {
+				"tags": [
+					"documents-controller"
+				],
+				"summary": "deleteDocument",
+				"operationId": "deleteDocumentUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "docId",
+						"in": "path",
+						"description": "docId",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/documents/echo": {
+			"post": {
+				"tags": [
+					"documents-controller"
+				],
+				"summary": "echoByteStream",
+				"operationId": "echoByteStreamUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "echoBytes",
+						"description": "echoBytes",
+						"required": true,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "file"
+							}
+						}
+					},
+					{
+						"name": "echoFileName",
+						"in": "query",
+						"description": "echoFileName",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/documents/{docId}": {
+			"get": {
+				"tags": [
+					"documents-controller"
+				],
+				"summary": "downloadDocument",
+				"operationId": "downloadDocumentUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "docId",
+						"in": "path",
+						"description": "docId",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/documents/{keyId}/{keyType}": {
+			"get": {
+				"tags": [
+					"documents-controller"
+				],
+				"summary": "loadDocuments",
+				"operationId": "loadDocumentsUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "keyId",
+						"in": "path",
+						"description": "keyId",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "keyType",
+						"in": "path",
+						"description": "keyType",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/DocumentsDto"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/api/v1/era-ara-reasons": {
 			"get": {
 				"tags": [
@@ -1797,18 +2134,6 @@
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
-					},
-					{
-						"name": "requestParams",
-						"in": "query",
-						"description": "requestParams",
-						"required": true,
-						"items": {
-							"type": "object",
-							"additionalProperties": {
-								"type": "string"
-							}
-						}
 					}
 				],
 				"responses": {
@@ -1883,18 +2208,6 @@
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
-					},
-					{
-						"name": "requestParams",
-						"in": "query",
-						"description": "requestParams",
-						"required": true,
-						"items": {
-							"type": "object",
-							"additionalProperties": {
-								"type": "string"
-							}
-						}
 					}
 				],
 				"responses": {
@@ -1982,10 +2295,60 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "columns[0].data",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "columns[0].name",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].orderable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "composedGrantNumber",
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "draw",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "dualCas",
@@ -2062,6 +2425,12 @@
 						"type": "string"
 					},
 					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "includeDeleted",
 						"in": "query",
 						"required": false,
@@ -2090,6 +2459,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "length",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "myCancerActivities",
@@ -2127,11 +2503,44 @@
 						"format": "int32"
 					},
 					{
+						"name": "order[0].column",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "order[0].direction",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "order[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
 						"name": "orderBy",
 						"in": "query",
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "orderByClause",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "pdAssignmentSearch",
@@ -2192,6 +2601,12 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "RO",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
 						"name": "role",
 						"in": "query",
 						"required": false,
@@ -2203,6 +2618,18 @@
 						"required": false,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
 					},
 					{
 						"name": "selectFrom",
@@ -2221,6 +2648,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "start",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "WBSearch",
@@ -2315,10 +2749,60 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "columns[0].data",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "columns[0].name",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].orderable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "composedGrantNumber",
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "draw",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "dualCas",
@@ -2395,6 +2879,12 @@
 						"type": "string"
 					},
 					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "includeDeleted",
 						"in": "query",
 						"required": false,
@@ -2423,6 +2913,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "length",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "myCancerActivities",
@@ -2460,11 +2957,44 @@
 						"format": "int32"
 					},
 					{
+						"name": "order[0].column",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "order[0].direction",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "order[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
 						"name": "orderBy",
 						"in": "query",
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "orderByClause",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "pdAssignmentSearch",
@@ -2525,6 +3055,12 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "RO",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
 						"name": "role",
 						"in": "query",
 						"required": false,
@@ -2536,6 +3072,18 @@
 						"required": false,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
 					},
 					{
 						"name": "selectFrom",
@@ -2554,6 +3102,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "start",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "WBSearch",
@@ -2650,10 +3205,60 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "columns[0].data",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "columns[0].name",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].orderable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "composedGrantNumber",
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "draw",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "dualCas",
@@ -2730,6 +3335,12 @@
 						"type": "string"
 					},
 					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "includeDeleted",
 						"in": "query",
 						"required": false,
@@ -2758,6 +3369,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "length",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "myCancerActivities",
@@ -2795,11 +3413,44 @@
 						"format": "int32"
 					},
 					{
+						"name": "order[0].column",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "order[0].direction",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "order[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
 						"name": "orderBy",
 						"in": "query",
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "orderByClause",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "pdAssignmentSearch",
@@ -2860,6 +3511,12 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "RO",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
 						"name": "role",
 						"in": "query",
 						"required": false,
@@ -2871,6 +3528,18 @@
 						"required": false,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
 					},
 					{
 						"name": "selectFrom",
@@ -2889,6 +3558,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "start",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "WBSearch",
@@ -2969,18 +3645,6 @@
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
-					},
-					{
-						"name": "requestParams",
-						"in": "query",
-						"description": "requestParams",
-						"required": true,
-						"items": {
-							"type": "object",
-							"additionalProperties": {
-								"type": "string"
-							}
-						}
 					}
 				],
 				"responses": {
@@ -3113,6 +3777,363 @@
 				}
 			}
 		},
+		"/api/v1/fs-document-type": {
+			"get": {
+				"tags": [
+					"cg-ref-cod-controller"
+				],
+				"summary": "getPfrDocType",
+				"operationId": "getPfrDocTypeUsingGET",
+				"produces": [
+					"application/json",
+					"application/xml"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/CgRefCodesDto"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/funding-requests/approvers": {
+			"post": {
+				"tags": [
+					"fs-request-controller"
+				],
+				"summary": "saveAdditionalApprovers",
+				"operationId": "saveAdditionalApproversUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "request",
+						"description": "request",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/FundingRequestDtoReq"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/funding-requests/chain": {
+			"get": {
+				"tags": [
+					"fs-request-controller"
+				],
+				"summary": "isApproverInChain",
+				"operationId": "isApproverInChainUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "fprId",
+						"in": "query",
+						"description": "fprId",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "frqId",
+						"in": "query",
+						"description": "frqId",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "ldapId",
+						"in": "query",
+						"description": "ldapId",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "npnId",
+						"in": "query",
+						"description": "npnId",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/funding-requests/delete/{frqId}": {
+			"delete": {
+				"tags": [
+					"fs-request-controller"
+				],
+				"summary": "deleteRequest",
+				"operationId": "deleteRequestUsingDELETE",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "frqId",
+						"in": "path",
+						"description": "frqId",
+						"required": true,
+						"type": "integer",
+						"format": "int32"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					"204": {
+						"description": "No Content"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/funding-requests/save": {
+			"post": {
+				"tags": [
+					"fs-request-controller"
+				],
+				"summary": "saveRequest",
+				"operationId": "saveRequestUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "request",
+						"description": "request",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/FundingRequestDtoReq"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/FundingRequestDtoRes"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/funding-requests/submit": {
+			"post": {
+				"tags": [
+					"fs-request-controller"
+				],
+				"summary": "submitRequest",
+				"operationId": "submitRequestUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "request",
+						"description": "request",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/FundingRequestDtoReq"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/FundingRequestDtoRes"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/lookup/funding-plan-histories": {
+			"get": {
+				"tags": [
+					"fs-lookup-controller"
+				],
+				"summary": "getPlanHistory",
+				"operationId": "getPlanHistoryUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "fprId",
+						"in": "query",
+						"description": "fprId",
+						"required": true,
+						"type": "integer",
+						"format": "int32"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/FundingReqStatusHistoryDto"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/lookup/funding-request-histories": {
+			"get": {
+				"tags": [
+					"fs-lookup-controller"
+				],
+				"summary": "getRequestHistory",
+				"operationId": "getRequestHistoryUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "frqId",
+						"in": "query",
+						"description": "frqId",
+						"required": true,
+						"type": "integer",
+						"format": "int32"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/FundingReqStatusHistoryDto"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/api/v1/fs/lookup/request-types": {
 			"get": {
 				"tags": [
@@ -3142,10 +4163,56 @@
 				}
 			}
 		},
+		"/api/v1/fs/lookup/request-types-with-flag": {
+			"get": {
+				"tags": [
+					"fs-lookup-controller"
+				],
+				"summary": "getRequestTypesWithFlag",
+				"operationId": "getRequestTypesWithFlagUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "fullGrantNum",
+						"in": "query",
+						"description": "fullGrantNum",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "npnId",
+						"in": "query",
+						"description": "npnId",
+						"required": true,
+						"type": "integer",
+						"format": "int32"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/FundingRequestTypeRulesWithFlagDto"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/api/v1/fs/search-funding-requests": {
 			"post": {
 				"tags": [
-					"fs-controller"
+					"fs-search-controller"
 				],
 				"summary": "searchFundingRequests",
 				"operationId": "searchFundingRequestsUsingPOST",
@@ -3162,7 +4229,7 @@
 						"description": "criteria",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/FundSelectSearchCriteria"
+							"$ref": "#/definitions/FundSelectSearchCriteriaReq"
 						}
 					}
 				],
@@ -3170,7 +4237,56 @@
 					"200": {
 						"description": "OK",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/FundingRequestQueryDatatableDto"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/fs/search-grants": {
+			"post": {
+				"tags": [
+					"fs-request-controller"
+				],
+				"summary": "searchGrants",
+				"operationId": "searchGrantsUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "criteria",
+						"description": "criteria",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/GrantsSearchCriteriaDto"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/NciPfrGrantQueryDto"
+							}
 						}
 					},
 					"201": {
@@ -3816,6 +4932,35 @@
 				"produces": [
 					"application/json",
 					"application/xml"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/lookups/review-locuses": {
+			"get": {
+				"tags": [
+					"lookups-controller"
+				],
+				"summary": "getReviewLocuses",
+				"operationId": "getReviewLocusesUsingGET",
+				"produces": [
+					"application/json"
 				],
 				"responses": {
 					"200": {
@@ -5492,10 +6637,60 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "columns[0].data",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "columns[0].name",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].orderable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "composedGrantNumber",
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "draw",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "dualCas",
@@ -5572,6 +6767,12 @@
 						"type": "string"
 					},
 					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "includeDeleted",
 						"in": "query",
 						"required": false,
@@ -5600,6 +6801,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "length",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "myCancerActivities",
@@ -5637,11 +6845,44 @@
 						"format": "int32"
 					},
 					{
+						"name": "order[0].column",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "order[0].direction",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "order[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
 						"name": "orderBy",
 						"in": "query",
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "orderByClause",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "pdAssignmentSearch",
@@ -5702,6 +6943,12 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "RO",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
 						"name": "role",
 						"in": "query",
 						"required": false,
@@ -5713,6 +6960,18 @@
 						"required": false,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
 					},
 					{
 						"name": "selectFrom",
@@ -5731,6 +6990,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "start",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "WBSearch",
@@ -6041,7 +7307,7 @@
 					"properties-controller"
 				],
 				"summary": "getProperties",
-				"operationId": "getPropertiesUsingGET_1",
+				"operationId": "getPropertiesUsingGET",
 				"produces": [
 					"application/json",
 					"application/xml"
@@ -6071,7 +7337,7 @@
 					"properties-controller"
 				],
 				"summary": "getProperties",
-				"operationId": "getPropertiesUsingGET",
+				"operationId": "getPropertiesUsingGET_1",
 				"produces": [
 					"application/json",
 					"application/xml"
@@ -6541,10 +7807,60 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "columns[0].data",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "columns[0].name",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].orderable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "composedGrantNumber",
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "draw",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "dualCas",
@@ -6621,6 +7937,12 @@
 						"type": "string"
 					},
 					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "includeDeleted",
 						"in": "query",
 						"required": false,
@@ -6649,6 +7971,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "length",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "myCancerActivities",
@@ -6686,11 +8015,44 @@
 						"format": "int32"
 					},
 					{
+						"name": "order[0].column",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "order[0].direction",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "order[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
 						"name": "orderBy",
 						"in": "query",
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "orderByClause",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "pdAssignmentSearch",
@@ -6751,6 +8113,12 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "RO",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
 						"name": "role",
 						"in": "query",
 						"required": false,
@@ -6762,6 +8130,18 @@
 						"required": false,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
 					},
 					{
 						"name": "selectFrom",
@@ -6780,6 +8160,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "start",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "WBSearch",
@@ -6875,10 +8262,60 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "columns[0].data",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "columns[0].name",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].orderable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchable",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "columns[0].searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "columns[0].searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "composedGrantNumber",
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "draw",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "dualCas",
@@ -6955,6 +8392,12 @@
 						"type": "string"
 					},
 					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"name": "includeDeleted",
 						"in": "query",
 						"required": false,
@@ -6983,6 +8426,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "length",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "myCancerActivities",
@@ -7020,11 +8470,44 @@
 						"format": "int32"
 					},
 					{
+						"name": "order[0].column",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"name": "order[0].direction",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "order[0].index",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
 						"name": "orderBy",
 						"in": "query",
 						"description": "orderBy",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "orderByClause",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "pdAssignmentSearch",
@@ -7085,6 +8568,12 @@
 						"collectionFormat": "multi"
 					},
 					{
+						"name": "RO",
+						"in": "query",
+						"required": false,
+						"type": "boolean"
+					},
+					{
 						"name": "role",
 						"in": "query",
 						"required": false,
@@ -7096,6 +8585,18 @@
 						"required": false,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "searchRegex",
+						"in": "query",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchValue",
+						"in": "query",
+						"required": false,
+						"type": "string"
 					},
 					{
 						"name": "selectFrom",
@@ -7114,6 +8615,13 @@
 						"in": "query",
 						"required": false,
 						"type": "string"
+					},
+					{
+						"name": "start",
+						"in": "query",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
 					},
 					{
 						"name": "WBSearch",
@@ -7722,54 +9230,6 @@
 				],
 				"summary": "getMessagesForApplId",
 				"operationId": "getMessagesForApplIdUsingGET",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"name": "applId",
-						"in": "path",
-						"description": "applId",
-						"required": true,
-						"type": "integer",
-						"format": "int32"
-					},
-					{
-						"name": "orderBy",
-						"in": "query",
-						"description": "orderBy",
-						"required": false,
-						"type": "string",
-						"default": "createDate"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK",
-						"schema": {
-							"type": "object"
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"403": {
-						"description": "Forbidden"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			}
-		},
-		"/api/v1/referral/notify/{applId}": {
-			"get": {
-				"tags": [
-					"referral-appl-notify-controller"
-				],
-				"summary": "getNotifyForApplId",
-				"operationId": "getNotifyForApplIdUsingGET",
 				"produces": [
 					"application/json",
 					"application/xml"
@@ -11627,49 +13087,94 @@
 			},
 			"title": "BoardsDto"
 		},
-		"CaAssignmentRulesDto": {
+		"CanCcxVw": {
 			"type": "object",
 			"properties": {
-				"activityCode": {
+				"can": {
 					"type": "string"
 				},
-				"cayCode": {
+				"canActiveCode": {
 					"type": "string"
 				},
-				"createDate": {
+				"canCfdaCode": {
+					"type": "string"
+				},
+				"canDescrip": {
+					"type": "string"
+				},
+				"canPhsOrgCode": {
+					"type": "string"
+				},
+				"canReimburseableCode": {
+					"type": "string"
+				},
+				"ccxBaoBmmCcrCode": {
+					"type": "string"
+				},
+				"ccxBaoBmmCode": {
+					"type": "string"
+				},
+				"ccxBaoBmmScnCode": {
+					"type": "string"
+				},
+				"ccxBaoStartDate": {
 					"type": "string",
 					"format": "date-time"
 				},
-				"createUserId": {
+				"ccxBaoXActActivityCode": {
 					"type": "string"
 				},
-				"endDate": {
+				"ccxBaoXActMajorCode": {
+					"type": "string"
+				},
+				"ccxEndDate": {
 					"type": "string",
 					"format": "date-time"
 				},
-				"id": {
+				"ccxId": {
 					"type": "integer",
 					"format": "int32"
 				},
-				"lastChangeDate": {
+				"ccxStartDate": {
 					"type": "string",
 					"format": "date-time"
 				},
-				"lastChangeUserId": {
+				"ccxStatusFlag": {
 					"type": "string"
 				},
-				"majorActivityCode": {
+				"ccxThtCode": {
 					"type": "string"
 				},
-				"noticeNumber": {
+				"ccxXCanCan": {
 					"type": "string"
 				},
-				"updateStamp": {
+				"orgId": {
 					"type": "integer",
 					"format": "int32"
 				}
 			},
-			"title": "CaAssignmentRulesDto"
+			"title": "CanCcxVw"
+		},
+		"CgRefCodesDto": {
+			"type": "object",
+			"properties": {
+				"rvAbbreviation": {
+					"type": "string"
+				},
+				"rvDomain": {
+					"type": "string"
+				},
+				"rvHighValue": {
+					"type": "string"
+				},
+				"rvLowValue": {
+					"type": "string"
+				},
+				"rvMeaning": {
+					"type": "string"
+				}
+			},
+			"title": "CgRefCodesDto"
 		},
 		"CloseReferralActionDto": {
 			"type": "object",
@@ -11764,6 +13269,254 @@
 				"wrapped": false
 			},
 			"description": "Resources of ReferralMessagesReadT"
+		},
+		"DataTablesColumnsDto": {
+			"type": "object",
+			"properties": {
+				"data": {
+					"type": "string"
+				},
+				"index": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"name": {
+					"type": "string"
+				},
+				"orderable": {
+					"type": "boolean"
+				},
+				"searchRegex": {
+					"type": "string"
+				},
+				"searchValue": {
+					"type": "string"
+				},
+				"searchable": {
+					"type": "boolean"
+				}
+			},
+			"title": "DataTablesColumnsDto"
+		},
+		"DataTablesOrderDto": {
+			"type": "object",
+			"properties": {
+				"column": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"direction": {
+					"type": "string"
+				},
+				"index": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "DataTablesOrderDto"
+		},
+		"DataTablesParamsDtoReq": {
+			"type": "object",
+			"properties": {
+				"columns": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesColumnsDto"
+					}
+				},
+				"draw": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"id": {
+					"type": "string"
+				},
+				"length": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"order": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesOrderDto"
+					}
+				},
+				"searchRegex": {
+					"type": "string"
+				},
+				"searchValue": {
+					"type": "string"
+				},
+				"start": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "DataTablesParamsDtoReq"
+		},
+		"DataTablesParamsDtoRes": {
+			"type": "object",
+			"properties": {
+				"columns": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesColumnsDto"
+					}
+				},
+				"draw": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"id": {
+					"type": "string"
+				},
+				"length": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"order": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesOrderDto"
+					}
+				},
+				"orderByClause": {
+					"type": "string"
+				},
+				"page": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"searchRegex": {
+					"type": "string"
+				},
+				"searchValue": {
+					"type": "string"
+				},
+				"start": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "DataTablesParamsDtoRes"
+		},
+		"DocumentsDto": {
+			"type": "object",
+			"properties": {
+				"createDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"createUserId": {
+					"type": "string"
+				},
+				"deletedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"doc": {
+					"type": "string",
+					"format": "byte"
+				},
+				"docDescription": {
+					"type": "string"
+				},
+				"docFilename": {
+					"type": "string"
+				},
+				"docType": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"keyId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"keyType": {
+					"type": "string"
+				},
+				"lastChangeDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"lastChangeUserId": {
+					"type": "string"
+				},
+				"updateStamp": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"uploadByEmail": {
+					"type": "string"
+				},
+				"uploadByName": {
+					"type": "string"
+				},
+				"uploadedByNpnId": {
+					"type": "integer",
+					"format": "int64"
+				}
+			},
+			"title": "DocumentsDto"
+		},
+		"DocumentsT": {
+			"type": "object",
+			"properties": {
+				"createDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"createUserId": {
+					"type": "string"
+				},
+				"deletedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"doc": {
+					"type": "string",
+					"format": "byte"
+				},
+				"docDescription": {
+					"type": "string"
+				},
+				"docFilename": {
+					"type": "string"
+				},
+				"docType": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"keyId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"keyType": {
+					"type": "string"
+				},
+				"lastChangeDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"lastChangeUserId": {
+					"type": "string"
+				},
+				"updateStamp": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"uploadedByNpnId": {
+					"type": "integer",
+					"format": "int64"
+				}
+			},
+			"title": "DocumentsT"
 		},
 		"EmbeddedCollectionÂ«PaylineStatusesTÂ»": {
 			"type": "object",
@@ -12133,6 +13886,576 @@
 			},
 			"title": "EntityModelÂ«ReferralMessagesReadTÂ»"
 		},
+		"FinancialInfoDtoReq": {
+			"type": "object",
+			"properties": {
+				"applId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"bpelTaskId": {
+					"type": "string"
+				},
+				"bpelTaskNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"dcAmount0": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"dcAmount1": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"dcAmount2": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"dcAmounts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				},
+				"dcTotal": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"deleteSources": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"errorMessage": {
+					"type": "string"
+				},
+				"fundingCertCode": {
+					"type": "string"
+				},
+				"fundingRequestCanVw": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestCanVw"
+					}
+				},
+				"fundingRequestFundsSources": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestFundsSrcVw"
+					}
+				},
+				"fundingRequestId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fundingSourceId": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"fundingSourceNames": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"fundingSources": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"fy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"grantAwarded": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/GrantAwardedDto"
+					}
+				},
+				"id0": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"id1": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"id2": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"ids": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				},
+				"justification": {
+					"type": "string"
+				},
+				"loaId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"newInvestigatorFlag": {
+					"type": "string"
+				},
+				"otherDocFlag": {
+					"type": "string"
+				},
+				"otherDocText": {
+					"type": "string"
+				},
+				"p30PostAwardAdminAdjustmentFlag": {
+					"type": "boolean"
+				},
+				"parent": {
+					"$ref": "#/definitions/FundingRequestDtoReq"
+				},
+				"parentRequestTypeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestBudgetVWs": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingReqBudgetsVw"
+					}
+				},
+				"requestName": {
+					"type": "string"
+				},
+				"requestTypeDisplayName": {
+					"type": "string"
+				},
+				"requestTypeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestTypeName": {
+					"type": "string"
+				},
+				"requestorCayCode": {
+					"type": "string"
+				},
+				"requestorNpeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestorNpnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"selectedFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"skipRequest": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"status": {
+					"type": "string"
+				},
+				"statusFlag": {
+					"type": "string"
+				},
+				"suppAddYearFlag": {
+					"type": "string"
+				},
+				"suppNewFlag": {
+					"type": "string"
+				},
+				"supplementType": {
+					"type": "string"
+				},
+				"tcAmount0": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"tcAmount1": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"tcAmount2": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"tcAmounts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				},
+				"tcTotal": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"totalDirectRequested": {
+					"type": "number",
+					"format": "float"
+				},
+				"type3SuppAwardFlag": {
+					"type": "string"
+				},
+				"year": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"title": "FinancialInfoDtoReq"
+		},
+		"FinancialInfoDtoRes": {
+			"type": "object",
+			"properties": {
+				"applId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"bpelTaskId": {
+					"type": "string"
+				},
+				"bpelTaskNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"dcAmount0": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"dcAmount1": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"dcAmount2": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"dcAmounts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				},
+				"dcTotal": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"defaultCan": {
+					"$ref": "#/definitions/FundingRequestGrantCanVw"
+				},
+				"defaultCans": {
+					"type": "string"
+				},
+				"deleteSources": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"displayCategory": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"errorMessage": {
+					"type": "string"
+				},
+				"fundingCertCode": {
+					"type": "string"
+				},
+				"fundingRequestCanVw": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestCanVw"
+					}
+				},
+				"fundingRequestId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fundingSourceId": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"fundingSourceNames": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"fundingSources": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"fy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"grantAwarded": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/GrantAwardedDto"
+					}
+				},
+				"id0": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"id1": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"id2": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"ids": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				},
+				"justification": {
+					"type": "string"
+				},
+				"loaId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"newInvestigatorFlag": {
+					"type": "string"
+				},
+				"otherDocFlag": {
+					"type": "string"
+				},
+				"otherDocText": {
+					"type": "string"
+				},
+				"p30PostAwardAdminAdjustmentFlag": {
+					"type": "boolean"
+				},
+				"parent": {
+					"$ref": "#/definitions/FundingRequestDtoRes"
+				},
+				"parentRequestTypeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"projectedCan": {
+					"$ref": "#/definitions/CanCcxVw"
+				},
+				"requestBudgetVWs": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingReqBudgetsVw"
+					}
+				},
+				"requestName": {
+					"type": "string"
+				},
+				"requestTypeDisplayName": {
+					"type": "string"
+				},
+				"requestTypeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestTypeName": {
+					"type": "string"
+				},
+				"requestorCayCode": {
+					"type": "string"
+				},
+				"requestorNpeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestorNpnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"selectedFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"skipRequest": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"skippedRequest": {
+					"type": "boolean"
+				},
+				"status": {
+					"type": "string"
+				},
+				"statusFlag": {
+					"type": "string"
+				},
+				"suppAddYearFlag": {
+					"type": "string"
+				},
+				"suppNewFlag": {
+					"type": "string"
+				},
+				"supplementType": {
+					"type": "string"
+				},
+				"tcAmount0": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"tcAmount1": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"tcAmount2": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"tcAmounts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				},
+				"tcTotal": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"totalDirectRequested": {
+					"type": "number",
+					"format": "float"
+				},
+				"type3SuppAwardFlag": {
+					"type": "string"
+				},
+				"year": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"title": "FinancialInfoDtoRes"
+		},
 		"FindPaylistCriteriaDto": {
 			"type": "object",
 			"properties": {
@@ -12185,7 +14508,7 @@
 			},
 			"title": "FindPaylistCriteriaDto"
 		},
-		"FundSelectSearchCriteria": {
+		"FundSelectSearchCriteriaReq": {
 			"type": "object",
 			"properties": {
 				"accessionNum": {
@@ -12220,11 +14543,21 @@
 						"type": "string"
 					}
 				},
+				"columns": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesColumnsDto"
+					}
+				},
 				"doc": {
 					"type": "array",
 					"items": {
 						"type": "string"
 					}
+				},
+				"draw": {
+					"type": "integer",
+					"format": "int32"
 				},
 				"dualCas": {
 					"type": "boolean"
@@ -12276,6 +14609,9 @@
 				"groupCode": {
 					"type": "string"
 				},
+				"id": {
+					"type": "string"
+				},
 				"includeDeleted": {
 					"type": "boolean"
 				},
@@ -12297,6 +14633,10 @@
 				"irgFlexCode": {
 					"type": "string"
 				},
+				"length": {
+					"type": "integer",
+					"format": "int32"
+				},
 				"myCancerActivities": {
 					"type": "array",
 					"items": {
@@ -12315,6 +14655,15 @@
 				"npnId": {
 					"type": "integer",
 					"format": "int32"
+				},
+				"order": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesOrderDto"
+					}
+				},
+				"params": {
+					"$ref": "#/definitions/DataTablesParamsDtoReq"
 				},
 				"pdAssignmentSearch": {
 					"type": "boolean"
@@ -12369,11 +14718,20 @@
 						"type": "string"
 					}
 				},
+				"ro": {
+					"type": "boolean"
+				},
 				"roNpnId": {
 					"type": "integer",
 					"format": "int32"
 				},
 				"role": {
+					"type": "string"
+				},
+				"searchRegex": {
+					"type": "string"
+				},
+				"searchValue": {
 					"type": "string"
 				},
 				"searchWithIn": {
@@ -12388,6 +14746,10 @@
 				"sraFlexCode": {
 					"type": "string"
 				},
+				"start": {
+					"type": "integer",
+					"format": "int32"
+				},
 				"statusCodes": {
 					"type": "array",
 					"items": {
@@ -12398,7 +14760,1945 @@
 					"type": "boolean"
 				}
 			},
-			"title": "FundSelectSearchCriteria"
+			"title": "FundSelectSearchCriteriaReq"
+		},
+		"FundSelectSearchCriteriaRes": {
+			"type": "object",
+			"properties": {
+				"accessionNum": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"activeSegments": {
+					"type": "boolean"
+				},
+				"applIds": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"applStatusGroupCode": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"araMatchStatus": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"cancerActivities": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"columns": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesColumnsDto"
+					}
+				},
+				"composedGrantNumber": {
+					"type": "string"
+				},
+				"doc": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"draw": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"dualCas": {
+					"type": "boolean"
+				},
+				"formerGrantNumber": {
+					"type": "string"
+				},
+				"fsStatus": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"fundingSource": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"fyFrom": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"fyTo": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"grantIc": {
+					"type": "string"
+				},
+				"grantMech": {
+					"type": "string"
+				},
+				"grantSerial": {
+					"type": "string"
+				},
+				"grantSuffix": {
+					"type": "string"
+				},
+				"grantType": {
+					"type": "string"
+				},
+				"grantYear": {
+					"type": "string"
+				},
+				"grantsWitCa": {
+					"type": "boolean"
+				},
+				"groupCode": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"includeDeleted": {
+					"type": "boolean"
+				},
+				"includeOrphans": {
+					"type": "boolean"
+				},
+				"institution": {
+					"type": "string"
+				},
+				"institutionCity": {
+					"type": "string"
+				},
+				"institutionState": {
+					"type": "string"
+				},
+				"irgCode": {
+					"type": "string"
+				},
+				"irgFlexCode": {
+					"type": "string"
+				},
+				"length": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"myCancerActivities": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"ncabFrom": {
+					"type": "string"
+				},
+				"ncabTo": {
+					"type": "string"
+				},
+				"notifyFlag": {
+					"type": "string"
+				},
+				"npnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"order": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DataTablesOrderDto"
+					}
+				},
+				"orderByClause": {
+					"type": "string"
+				},
+				"page": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"params": {
+					"$ref": "#/definitions/DataTablesParamsDtoRes"
+				},
+				"pdAssignmentSearch": {
+					"type": "boolean"
+				},
+				"pdId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"pdNpnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"piName": {
+					"type": "string"
+				},
+				"referralOfficer": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"referralStatus": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"requestId": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int32"
+					}
+				},
+				"requestType": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"requestingDoc": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"requestingPdNpnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"rfaPaNumber": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"ro": {
+					"type": "boolean"
+				},
+				"roNpnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"role": {
+					"type": "string"
+				},
+				"searchRegex": {
+					"type": "string"
+				},
+				"searchValue": {
+					"type": "string"
+				},
+				"searchWithIn": {
+					"type": "string"
+				},
+				"selectFrom": {
+					"type": "string"
+				},
+				"sraDesignatorCode": {
+					"type": "string"
+				},
+				"sraFlexCode": {
+					"type": "string"
+				},
+				"start": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"statusCodes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"wbsearch": {
+					"type": "boolean"
+				}
+			},
+			"title": "FundSelectSearchCriteriaRes"
+		},
+		"FundingReqBudgetsVw": {
+			"type": "object",
+			"properties": {
+				"dcRecAmt": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fseId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"name": {
+					"type": "string"
+				},
+				"supportYear": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"tcRecAmt": {
+					"type": "integer",
+					"format": "int64"
+				}
+			},
+			"title": "FundingReqBudgetsVw"
+		},
+		"FundingReqStatusHistoryDto": {
+			"type": "object",
+			"properties": {
+				"activeFlag": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"createUserId": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"endDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"fprId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"officialRoleCode": {
+					"type": "string"
+				},
+				"performedBy": {
+					"type": "string"
+				},
+				"startDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"statusCode": {
+					"type": "string"
+				},
+				"statusDescrip": {
+					"type": "string"
+				},
+				"statusId": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "FundingReqStatusHistoryDto"
+		},
+		"FundingRequestCanVw": {
+			"type": "object",
+			"properties": {
+				"approvedFutureYrs": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"approvedTc": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"can": {
+					"type": "string"
+				},
+				"canDescription": {
+					"type": "string"
+				},
+				"defaultOefiaTypeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fseId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fundingSourceName": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"nciSourceFlag": {
+					"type": "string"
+				},
+				"oefiaCreateCode": {
+					"type": "string"
+				},
+				"oefiaTypeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"oefiaTypeIds": {
+					"type": "string"
+				},
+				"phsOrgCode": {
+					"type": "string"
+				},
+				"reimburseableCode": {
+					"type": "string"
+				},
+				"requestedFutureYrs": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestedTc": {
+					"type": "integer",
+					"format": "int64"
+				}
+			},
+			"title": "FundingRequestCanVw"
+		},
+		"FundingRequestDtoReq": {
+			"type": "object",
+			"properties": {
+				"actionType": {
+					"type": "string"
+				},
+				"activityCode": {
+					"type": "string"
+				},
+				"additionalApprovers": {
+					"type": "string"
+				},
+				"adminPhsOrgCode": {
+					"type": "string"
+				},
+				"applId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"applStatusCode": {
+					"type": "string"
+				},
+				"applStatusGroupCode": {
+					"type": "string"
+				},
+				"applStatusGroupDescrip": {
+					"type": "string"
+				},
+				"applTypeCode": {
+					"type": "string"
+				},
+				"approvalChain": {
+					"type": "string"
+				},
+				"arcFundsApprover": {
+					"type": "string"
+				},
+				"arraEcApprvrdYrs": {
+					"type": "boolean"
+				},
+				"arraEligibleFlag": {
+					"type": "string"
+				},
+				"awdNoticeIssuedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"bkupSpecNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bmmCode": {
+					"type": "string"
+				},
+				"bpelInstNumber": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bpelTaskId": {
+					"type": "string"
+				},
+				"bpelTaskNumber": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bpelVersion": {
+					"type": "string"
+				},
+				"bpelWfErrorFlag": {
+					"type": "string"
+				},
+				"budgetEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"budgetStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"cayCode": {
+					"type": "string"
+				},
+				"ccrCode": {
+					"type": "string"
+				},
+				"certCode": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"councilMeetingDate": {
+					"type": "string"
+				},
+				"defaultActionType": {
+					"type": "string"
+				},
+				"defaultOefiaCreateCode": {
+					"type": "string"
+				},
+				"divSuppAddYearFlag": {
+					"type": "string"
+				},
+				"divSuppNewFlag": {
+					"type": "string"
+				},
+				"doc": {
+					"type": "string"
+				},
+				"documents": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DocumentsT"
+					}
+				},
+				"errorMessage": {
+					"type": "string"
+				},
+				"esiApplEligFlag": {
+					"type": "string"
+				},
+				"financialInfoVO": {
+					"$ref": "#/definitions/FinancialInfoDtoReq"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"formattedCouncilMeetingDate": {
+					"type": "string"
+				},
+				"formerNum": {
+					"type": "string"
+				},
+				"fprId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frtId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fullGrantNum": {
+					"type": "string"
+				},
+				"fundingRequestFundsSources": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestFundsSrcVw"
+					}
+				},
+				"fundingRequestSkipVw": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestSkipVw"
+					}
+				},
+				"fundsCertificationCode": {
+					"type": "string"
+				},
+				"fy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"gmsCode": {
+					"type": "string"
+				},
+				"gmsFirstName": {
+					"type": "string"
+				},
+				"gmsLastName": {
+					"type": "string"
+				},
+				"gmsMiName": {
+					"type": "string"
+				},
+				"gpmatsErrorFlag": {
+					"type": "string"
+				},
+				"gpmatsErrorMsg": {
+					"type": "string"
+				},
+				"grantAwarded": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/GrantAwardedDto"
+					}
+				},
+				"grantCans": {
+					"type": "array",
+					"uniqueItems": true,
+					"items": {
+						"$ref": "#/definitions/FundingRequestGrantCanVw"
+					}
+				},
+				"institutionCity": {
+					"type": "string"
+				},
+				"institutionState": {
+					"type": "string"
+				},
+				"ipf": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"irgPercentileNum": {
+					"type": "number"
+				},
+				"isJustificationUploaded": {
+					"type": "boolean"
+				},
+				"justification": {
+					"type": "string"
+				},
+				"justificationUploaded": {
+					"type": "boolean"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"latestEncumbranceDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"line1Addr": {
+					"type": "string"
+				},
+				"line2Addr": {
+					"type": "string"
+				},
+				"line3Addr": {
+					"type": "string"
+				},
+				"line4Addr": {
+					"type": "string"
+				},
+				"line5Addr": {
+					"type": "string"
+				},
+				"loaCode": {
+					"type": "string"
+				},
+				"loaId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"loaName": {
+					"type": "string"
+				},
+				"miName": {
+					"type": "string"
+				},
+				"newInvestigatorCode": {
+					"type": "string"
+				},
+				"newInvestigatorFlag": {
+					"type": "string"
+				},
+				"nihGuideAddr": {
+					"type": "string"
+				},
+				"notSelectableReason": {
+					"type": "string"
+				},
+				"oefiaCreateCode": {
+					"type": "string"
+				},
+				"officialPayStatus": {
+					"type": "string"
+				},
+				"orgName": {
+					"type": "string"
+				},
+				"otherDocsFlag": {
+					"type": "string"
+				},
+				"otherDocsText": {
+					"type": "string"
+				},
+				"packageSubmissionVO": {
+					"$ref": "#/definitions/PackageSubmissionDto"
+				},
+				"parentFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pdEmailAddress": {
+					"type": "string"
+				},
+				"pdFirstName": {
+					"type": "string"
+				},
+				"pdFullName": {
+					"type": "string"
+				},
+				"pdLastName": {
+					"type": "string"
+				},
+				"pdMiName": {
+					"type": "string"
+				},
+				"pdName": {
+					"type": "string"
+				},
+				"pdNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pdNpnId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pfrBkupSpecFullName": {
+					"type": "string"
+				},
+				"pfrBkupSpecNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pfrSpecFullName": {
+					"type": "string"
+				},
+				"piEmail": {
+					"type": "string"
+				},
+				"piFullName": {
+					"type": "string"
+				},
+				"prevFprId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"prevFrqId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"priorityScoreNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"projectPeriodEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectPeriodStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectTitle": {
+					"type": "string"
+				},
+				"projectedCan": {
+					"$ref": "#/definitions/CanCcxVw"
+				},
+				"projectedCans": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/CanCcxVw"
+					}
+				},
+				"requestCount": {
+					"type": "number"
+				},
+				"requestCreateUserId": {
+					"type": "string"
+				},
+				"requestFy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestName": {
+					"type": "string"
+				},
+				"requestStatus": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestStatusCode": {
+					"type": "string"
+				},
+				"requestStatusDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"requestStatusDateString": {
+					"type": "string"
+				},
+				"requestStatusName": {
+					"type": "string"
+				},
+				"requestType": {
+					"type": "string"
+				},
+				"requestTypeDisplayName": {
+					"type": "string"
+				},
+				"requestTypeName": {
+					"type": "string"
+				},
+				"requestorCayCode": {
+					"type": "string"
+				},
+				"requestorDoc": {
+					"type": "string"
+				},
+				"requestorLdapId": {
+					"type": "string"
+				},
+				"requestorNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestorNpnId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestorPdFullName": {
+					"type": "string"
+				},
+				"rfaPaNumber": {
+					"type": "string"
+				},
+				"roleUsageCode": {
+					"type": "string"
+				},
+				"selectedFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"serialNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"splApprovedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"splMeetingDate": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"suffixCode": {
+					"type": "string"
+				},
+				"supportYear": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"thtCode": {
+					"type": "string"
+				},
+				"type3SuppAwardFlag": {
+					"type": "string"
+				},
+				"typeIds": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"userLdapId": {
+					"type": "string"
+				},
+				"withinCurrentPaylineFlag": {
+					"type": "string"
+				}
+			},
+			"title": "FundingRequestDtoReq"
+		},
+		"FundingRequestDtoRes": {
+			"type": "object",
+			"properties": {
+				"actionType": {
+					"type": "string"
+				},
+				"activityCode": {
+					"type": "string"
+				},
+				"additionalApprovers": {
+					"type": "string"
+				},
+				"adminPhsOrgCode": {
+					"type": "string"
+				},
+				"applId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"applStatusCode": {
+					"type": "string"
+				},
+				"applStatusGroupCode": {
+					"type": "string"
+				},
+				"applStatusGroupDescrip": {
+					"type": "string"
+				},
+				"applTypeCode": {
+					"type": "string"
+				},
+				"approvalChain": {
+					"type": "string"
+				},
+				"arcFundsApprover": {
+					"type": "string"
+				},
+				"arraEcApprvrdYrs": {
+					"type": "boolean"
+				},
+				"arraEligibleFlag": {
+					"type": "string"
+				},
+				"awdNoticeIssuedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"bkupSpecNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bmmCode": {
+					"type": "string"
+				},
+				"bpelInstNumber": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bpelTaskId": {
+					"type": "string"
+				},
+				"bpelTaskNumber": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bpelVersion": {
+					"type": "string"
+				},
+				"bpelWfErrorFlag": {
+					"type": "string"
+				},
+				"budgetDocuments": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DocumentsT"
+					}
+				},
+				"budgetEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"budgetStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"cayCode": {
+					"type": "string"
+				},
+				"ccrCode": {
+					"type": "string"
+				},
+				"certCode": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"councilMeetingDate": {
+					"type": "string"
+				},
+				"defaultActionType": {
+					"type": "string"
+				},
+				"defaultOefiaCreateCode": {
+					"type": "string"
+				},
+				"divSuppAddYearFlag": {
+					"type": "string"
+				},
+				"divSuppNewFlag": {
+					"type": "string"
+				},
+				"doc": {
+					"type": "string"
+				},
+				"documents": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DocumentsT"
+					}
+				},
+				"errorMessage": {
+					"type": "string"
+				},
+				"esiApplEligFlag": {
+					"type": "string"
+				},
+				"financialInfoVO": {
+					"$ref": "#/definitions/FinancialInfoDtoRes"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"formattedCouncilMeetingDate": {
+					"type": "string"
+				},
+				"formerNum": {
+					"type": "string"
+				},
+				"fprId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frtId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fullGrantNum": {
+					"type": "string"
+				},
+				"fundedByFundingPlan": {
+					"type": "boolean"
+				},
+				"fundingRequestFundsSources": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestFundsSrcVw"
+					}
+				},
+				"fundingRequestSkipVw": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestSkipVw"
+					}
+				},
+				"fundsCertificationCode": {
+					"type": "string"
+				},
+				"fy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"gmsCode": {
+					"type": "string"
+				},
+				"gmsFirstName": {
+					"type": "string"
+				},
+				"gmsLastName": {
+					"type": "string"
+				},
+				"gmsMiName": {
+					"type": "string"
+				},
+				"gpmatsErrorFlag": {
+					"type": "string"
+				},
+				"gpmatsErrorMsg": {
+					"type": "string"
+				},
+				"grantAwarded": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/GrantAwardedDto"
+					}
+				},
+				"grantCans": {
+					"type": "array",
+					"uniqueItems": true,
+					"items": {
+						"$ref": "#/definitions/FundingRequestGrantCanVw"
+					}
+				},
+				"institutionCity": {
+					"type": "string"
+				},
+				"institutionState": {
+					"type": "string"
+				},
+				"ipf": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"irgPercentileNum": {
+					"type": "number"
+				},
+				"isJustificationUploaded": {
+					"type": "boolean"
+				},
+				"isSkip": {
+					"type": "boolean"
+				},
+				"justification": {
+					"type": "string"
+				},
+				"justificationUploaded": {
+					"type": "boolean"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"latestEncumbranceDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"line1Addr": {
+					"type": "string"
+				},
+				"line2Addr": {
+					"type": "string"
+				},
+				"line3Addr": {
+					"type": "string"
+				},
+				"line4Addr": {
+					"type": "string"
+				},
+				"line5Addr": {
+					"type": "string"
+				},
+				"loaCode": {
+					"type": "string"
+				},
+				"loaId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"loaName": {
+					"type": "string"
+				},
+				"miName": {
+					"type": "string"
+				},
+				"newInvestigatorCode": {
+					"type": "string"
+				},
+				"newInvestigatorFlag": {
+					"type": "string"
+				},
+				"nihGuideAddr": {
+					"type": "string"
+				},
+				"notSelectableReason": {
+					"type": "string"
+				},
+				"oefiaCreateCode": {
+					"type": "string"
+				},
+				"officialPayStatus": {
+					"type": "string"
+				},
+				"orgName": {
+					"type": "string"
+				},
+				"otherDocsFlag": {
+					"type": "string"
+				},
+				"otherDocsText": {
+					"type": "string"
+				},
+				"packageSubmissionVO": {
+					"$ref": "#/definitions/PackageSubmissionDto"
+				},
+				"parentFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pdEmailAddress": {
+					"type": "string"
+				},
+				"pdFirstName": {
+					"type": "string"
+				},
+				"pdFullName": {
+					"type": "string"
+				},
+				"pdLastName": {
+					"type": "string"
+				},
+				"pdMiName": {
+					"type": "string"
+				},
+				"pdName": {
+					"type": "string"
+				},
+				"pdNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pdNpnId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pfrBkupSpecFullName": {
+					"type": "string"
+				},
+				"pfrBkupSpecNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pfrSpecFullName": {
+					"type": "string"
+				},
+				"piEmail": {
+					"type": "string"
+				},
+				"piFullName": {
+					"type": "string"
+				},
+				"prevFprId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"prevFrqId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"priorityScoreNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"projectPeriodEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectPeriodStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectTitle": {
+					"type": "string"
+				},
+				"projectedCan": {
+					"$ref": "#/definitions/CanCcxVw"
+				},
+				"projectedCans": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/CanCcxVw"
+					}
+				},
+				"requestCount": {
+					"type": "number"
+				},
+				"requestCreateUserId": {
+					"type": "string"
+				},
+				"requestFy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestName": {
+					"type": "string"
+				},
+				"requestStatus": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestStatusCode": {
+					"type": "string"
+				},
+				"requestStatusDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"requestStatusDateString": {
+					"type": "string"
+				},
+				"requestStatusName": {
+					"type": "string"
+				},
+				"requestType": {
+					"type": "string"
+				},
+				"requestTypeDisplayName": {
+					"type": "string"
+				},
+				"requestTypeName": {
+					"type": "string"
+				},
+				"requestorCayCode": {
+					"type": "string"
+				},
+				"requestorDoc": {
+					"type": "string"
+				},
+				"requestorLdapId": {
+					"type": "string"
+				},
+				"requestorNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestorNpnId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestorPdFullName": {
+					"type": "string"
+				},
+				"rfaPaNumber": {
+					"type": "string"
+				},
+				"roleUsageCode": {
+					"type": "string"
+				},
+				"selectedFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"serialNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"splApprovedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"splMeetingDate": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"suffixCode": {
+					"type": "string"
+				},
+				"supportYear": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"thtCode": {
+					"type": "string"
+				},
+				"type3SuppAwardFlag": {
+					"type": "string"
+				},
+				"typeIds": {
+					"type": "array",
+					"items": {
+						"type": "integer",
+						"format": "int64"
+					}
+				},
+				"userLdapId": {
+					"type": "string"
+				},
+				"withinCurrentPaylineFlag": {
+					"type": "string"
+				}
+			},
+			"title": "FundingRequestDtoRes"
+		},
+		"FundingRequestFundsSrcVw": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"fundingSourceId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fundingSourceName": {
+					"type": "string"
+				},
+				"nciSourceFlag": {
+					"type": "string"
+				},
+				"octId": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "FundingRequestFundsSrcVw"
+		},
+		"FundingRequestGrantCanVw": {
+			"type": "object",
+			"properties": {
+				"applId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"canDescrip": {
+					"type": "string"
+				},
+				"canType": {
+					"type": "string"
+				},
+				"fullGrantNum": {
+					"type": "string"
+				},
+				"phsOrgCode": {
+					"type": "string"
+				},
+				"xCanCan": {
+					"type": "string"
+				}
+			},
+			"title": "FundingRequestGrantCanVw"
+		},
+		"FundingRequestQueryDatatableDto": {
+			"type": "object",
+			"properties": {
+				"criteria": {
+					"$ref": "#/definitions/FundSelectSearchCriteriaRes"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestQueryDto"
+					}
+				},
+				"draw": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"error": {
+					"type": "string"
+				},
+				"length": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"recordsFiltered": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"recordsTotal": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"start": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "FundingRequestQueryDatatableDto"
+		},
+		"FundingRequestQueryDto": {
+			"type": "object",
+			"properties": {
+				"actionType": {
+					"type": "string"
+				},
+				"activityCode": {
+					"type": "string"
+				},
+				"adminPhsOrgCode": {
+					"type": "string"
+				},
+				"applId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"applStatusCode": {
+					"type": "string"
+				},
+				"applStatusGroupCode": {
+					"type": "string"
+				},
+				"applStatusGroupDescrip": {
+					"type": "string"
+				},
+				"applTypeCode": {
+					"type": "string"
+				},
+				"arraEcApprvrdYrs": {
+					"type": "boolean"
+				},
+				"arraEligibleFlag": {
+					"type": "string"
+				},
+				"awdNoticeIssuedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"bkupSpecNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bmmCode": {
+					"type": "string"
+				},
+				"bpelInstNumber": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bpelTaskId": {
+					"type": "string"
+				},
+				"bpelTaskNumber": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"bpelVersion": {
+					"type": "string"
+				},
+				"bpelWfErrorFlag": {
+					"type": "string"
+				},
+				"budgetEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"budgetStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"cayCode": {
+					"type": "string"
+				},
+				"ccrCode": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"councilMeetingDate": {
+					"type": "string"
+				},
+				"defaultActionType": {
+					"type": "string"
+				},
+				"defaultOefiaCreateCode": {
+					"type": "string"
+				},
+				"divSuppAddYearFlag": {
+					"type": "string"
+				},
+				"divSuppNewFlag": {
+					"type": "string"
+				},
+				"doc": {
+					"type": "string"
+				},
+				"esiApplEligFlag": {
+					"type": "string"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"formattedCouncilMeetingDate": {
+					"type": "string"
+				},
+				"formerNum": {
+					"type": "string"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frtId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"fullGrantNum": {
+					"type": "string"
+				},
+				"fundsCertificationCode": {
+					"type": "string"
+				},
+				"fy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"gmsCode": {
+					"type": "string"
+				},
+				"gmsFirstName": {
+					"type": "string"
+				},
+				"gmsLastName": {
+					"type": "string"
+				},
+				"gmsMiName": {
+					"type": "string"
+				},
+				"gpmatsErrorFlag": {
+					"type": "string"
+				},
+				"gpmatsErrorMsg": {
+					"type": "string"
+				},
+				"institutionCity": {
+					"type": "string"
+				},
+				"institutionState": {
+					"type": "string"
+				},
+				"ipf": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"irgPercentileNum": {
+					"type": "number"
+				},
+				"justification": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"latestEncumbranceDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"line1Addr": {
+					"type": "string"
+				},
+				"line2Addr": {
+					"type": "string"
+				},
+				"line3Addr": {
+					"type": "string"
+				},
+				"line4Addr": {
+					"type": "string"
+				},
+				"line5Addr": {
+					"type": "string"
+				},
+				"loaCode": {
+					"type": "string"
+				},
+				"loaId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"loaName": {
+					"type": "string"
+				},
+				"miName": {
+					"type": "string"
+				},
+				"newInvestigatorCode": {
+					"type": "string"
+				},
+				"newInvestigatorFlag": {
+					"type": "string"
+				},
+				"nihGuideAddr": {
+					"type": "string"
+				},
+				"oefiaCreateCode": {
+					"type": "string"
+				},
+				"officialPayStatus": {
+					"type": "string"
+				},
+				"orgName": {
+					"type": "string"
+				},
+				"otherDocsFlag": {
+					"type": "string"
+				},
+				"otherDocsText": {
+					"type": "string"
+				},
+				"parentFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pdEmailAddress": {
+					"type": "string"
+				},
+				"pdFirstName": {
+					"type": "string"
+				},
+				"pdFullName": {
+					"type": "string"
+				},
+				"pdLastName": {
+					"type": "string"
+				},
+				"pdMiName": {
+					"type": "string"
+				},
+				"pdNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pdNpnId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pfrBkupSpecFullName": {
+					"type": "string"
+				},
+				"pfrBkupSpecNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"pfrSpecFullName": {
+					"type": "string"
+				},
+				"piEmail": {
+					"type": "string"
+				},
+				"piFullName": {
+					"type": "string"
+				},
+				"priorityScoreNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"projectPeriodEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectPeriodStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectTitle": {
+					"type": "string"
+				},
+				"requestCount": {
+					"type": "number"
+				},
+				"requestCreateUserId": {
+					"type": "string"
+				},
+				"requestFy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestName": {
+					"type": "string"
+				},
+				"requestStatus": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestStatusCode": {
+					"type": "string"
+				},
+				"requestStatusDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"requestStatusName": {
+					"type": "string"
+				},
+				"requestType": {
+					"type": "string"
+				},
+				"requestorCayCode": {
+					"type": "string"
+				},
+				"requestorDoc": {
+					"type": "string"
+				},
+				"requestorLdapId": {
+					"type": "string"
+				},
+				"requestorNpeId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestorNpnId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"requestorPdFullName": {
+					"type": "string"
+				},
+				"rfaPaNumber": {
+					"type": "string"
+				},
+				"roleUsageCode": {
+					"type": "string"
+				},
+				"selectedFrtId": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"serialNum": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"splApprovedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"splMeetingDate": {
+					"type": "string"
+				},
+				"suffixCode": {
+					"type": "string"
+				},
+				"supportYear": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"thtCode": {
+					"type": "string"
+				},
+				"type3SuppAwardFlag": {
+					"type": "string"
+				},
+				"withinCurrentPaylineFlag": {
+					"type": "string"
+				}
+			},
+			"title": "FundingRequestQueryDto"
+		},
+		"FundingRequestSkipVw": {
+			"type": "object",
+			"properties": {
+				"applId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"frtId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"skipAdminPhsOrgCode": {
+					"type": "string"
+				},
+				"skipApplId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"skipFrqId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"skipFullGrantNum": {
+					"type": "string"
+				},
+				"skipRequestCurrentStatus": {
+					"type": "string"
+				},
+				"skipSerialNum": {
+					"type": "integer",
+					"format": "int64"
+				}
+			},
+			"title": "FundingRequestSkipVw"
+		},
+		"FundingRequestTypeRulesDto": {
+			"type": "object",
+			"properties": {
+				"categoryName": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"parentCategoryFlag": {
+					"type": "string"
+				},
+				"parentFrtId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"requestDescription": {
+					"type": "string"
+				},
+				"requestName": {
+					"type": "string"
+				},
+				"requestNameLevel": {
+					"type": "string"
+				}
+			},
+			"title": "FundingRequestTypeRulesDto"
+		},
+		"FundingRequestTypeRulesWithFlagDto": {
+			"type": "object",
+			"properties": {
+				"flag": {
+					"type": "boolean"
+				},
+				"fundingRequestTypeRulesDtoList": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/FundingRequestTypeRulesDto"
+					}
+				}
+			},
+			"title": "FundingRequestTypeRulesWithFlagDto"
+		},
+		"GrantAwardedDto": {
+			"type": "object",
+			"properties": {
+				"directAmount": {
+					"type": "number",
+					"format": "float"
+				},
+				"requestAmount": {
+					"type": "number",
+					"format": "float"
+				},
+				"totalAwarded": {
+					"type": "number",
+					"format": "float"
+				},
+				"year": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "GrantAwardedDto"
 		},
 		"GrantedAuthority": {
 			"type": "object",
@@ -12408,6 +16708,68 @@
 				}
 			},
 			"title": "GrantedAuthority"
+		},
+		"GrantsSearchCriteriaDto": {
+			"type": "object",
+			"properties": {
+				"applStatusGroupCode": {
+					"type": "string"
+				},
+				"cayCodes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"doc": {
+					"type": "string"
+				},
+				"fromCouncilMeetingDate": {
+					"type": "string"
+				},
+				"fromFy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"grantIc": {
+					"type": "string"
+				},
+				"grantMech": {
+					"type": "string"
+				},
+				"grantSerial": {
+					"type": "string"
+				},
+				"grantSuffix": {
+					"type": "string"
+				},
+				"grantType": {
+					"type": "string"
+				},
+				"grantYear": {
+					"type": "string"
+				},
+				"instituteName": {
+					"type": "string"
+				},
+				"pdNpnId": {
+					"type": "string"
+				},
+				"piName": {
+					"type": "string"
+				},
+				"rfaPa": {
+					"type": "string"
+				},
+				"toCouncileMeetingDate": {
+					"type": "string"
+				},
+				"toFy": {
+					"type": "integer",
+					"format": "int32"
+				}
+			},
+			"title": "GrantsSearchCriteriaDto"
 		},
 		"GwbLinksT": {
 			"type": "object",
@@ -12722,6 +17084,224 @@
 				}
 			},
 			"title": "NciPerson"
+		},
+		"NciPfrGrantQueryDto": {
+			"type": "object",
+			"properties": {
+				"activityCode": {
+					"type": "string"
+				},
+				"adminPhsOrgCode": {
+					"type": "string"
+				},
+				"applId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"applStatusCode": {
+					"type": "string"
+				},
+				"applStatusGroupCode": {
+					"type": "string"
+				},
+				"applStatusGroupDescrip": {
+					"type": "string"
+				},
+				"applTypeCode": {
+					"type": "string"
+				},
+				"bmmCode": {
+					"type": "string"
+				},
+				"budgetEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"budgetStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"cayCode": {
+					"type": "string"
+				},
+				"ccrCode": {
+					"type": "string"
+				},
+				"councilMeetingDate": {
+					"type": "string"
+				},
+				"currentFy": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"doc": {
+					"type": "string"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"formattedCouncilMeetingDate": {
+					"type": "string"
+				},
+				"formerNum": {
+					"type": "string"
+				},
+				"fullGrantNum": {
+					"type": "string"
+				},
+				"fy": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"institutionCity": {
+					"type": "string"
+				},
+				"institutionState": {
+					"type": "string"
+				},
+				"ipf": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"irgPercentileNum": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"latestEncumbranceDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"line1Addr": {
+					"type": "string"
+				},
+				"line2Addr": {
+					"type": "string"
+				},
+				"line3Addr": {
+					"type": "string"
+				},
+				"line4Addr": {
+					"type": "string"
+				},
+				"line5Addr": {
+					"type": "string"
+				},
+				"miName": {
+					"type": "string"
+				},
+				"newInvestigatorCode": {
+					"type": "string"
+				},
+				"nihGuideAddr": {
+					"type": "string"
+				},
+				"notSelectableReason": {
+					"type": "string"
+				},
+				"officialPayStatus": {
+					"type": "string"
+				},
+				"orgName": {
+					"type": "string"
+				},
+				"pdEmailAddress": {
+					"type": "string"
+				},
+				"pdFirstName": {
+					"type": "string"
+				},
+				"pdFullName": {
+					"type": "string"
+				},
+				"pdLastName": {
+					"type": "string"
+				},
+				"pdMiName": {
+					"type": "string"
+				},
+				"pdNpeId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"pdNpnId": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"piEmail": {
+					"type": "string"
+				},
+				"piFullName": {
+					"type": "string"
+				},
+				"priorityScoreNum": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"projectPeriodEndDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectPeriodStartDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"projectTitle": {
+					"type": "string"
+				},
+				"requestCount": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"rfaPaNumber": {
+					"type": "string"
+				},
+				"roleUsageCode": {
+					"type": "string"
+				},
+				"serialNum": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"splApprovedDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"suffixCode": {
+					"type": "string"
+				},
+				"supportYear": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"thtCode": {
+					"type": "string"
+				},
+				"withinCurrentPaylineFlag": {
+					"type": "string"
+				}
+			},
+			"title": "NciPfrGrantQueryDto"
+		},
+		"PackageSubmissionDto": {
+			"type": "object",
+			"properties": {
+				"availableDocs": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"selectedDocs": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"title": "PackageSubmissionDto"
 		},
 		"Parameter": {
 			"type": "object",
@@ -13182,12 +17762,34 @@
 				"comment": {
 					"type": "string"
 				},
+				"createDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"createUserId": {
+					"type": "string"
+				},
+				"endDate": {
+					"type": "string",
+					"format": "date-time"
+				},
 				"id": {
 					"type": "integer",
 					"format": "int64"
 				},
+				"lastChangeDate": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"lastChangeUserId": {
+					"type": "string"
+				},
 				"locusOfReview": {
 					"type": "string"
+				},
+				"startDate": {
+					"type": "string",
+					"format": "date-time"
 				}
 			},
 			"title": "ReferralApplNotifyTDto"
