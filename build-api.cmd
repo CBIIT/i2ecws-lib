@@ -18,9 +18,9 @@ REM Specify the target language for the generated API
 set lang_opts=-l typescript-angular
 
 REM Set additional options here.  These are what would normally go in config.json above.
-set sys_opts=-DnpmVersion=2.1.4 -Dsnapshot=true
+set sys_opts=-DnpmVersion=1.0.0 -Dsnapshot=false
 
 REM Additional properties that can be read by the mustache templates
-set misc_opts=--additional-properties apiVersion=%1,author="Doug the Magnificent (kanozad@mail.nih.gov)"
+set misc_opts=--additional-properties apiVersion=1.0.0,author="Doug the Magnificent (kanozad@mail.nih.gov)"
  
 java -jar bin\swagger-codegen-cli-2.4.19.jar generate %sys_opts% %swagger_opts% %template_opts% %lang_opts% %config_opts% %output_opts% %misc_opts%
