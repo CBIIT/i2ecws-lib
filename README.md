@@ -1,5 +1,10 @@
 ## i2ecws-lib@2.1.0
 
+### To Do
+
+- [ ] Update to Swagger 3.0?
+- [ ] 
+
 ### Building
 
 Starting from the very beginning, the only dependencies here are: 
