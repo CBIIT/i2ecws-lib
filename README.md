@@ -54,7 +54,7 @@ I left it this way because that's how the maven plugin does it. Just remember th
 they will get overwritten the next time you build the API. If you want permanent changes, update the template.
 
 I should also note that in ```package.mustache```, you can see the directive ```#useNgPackagr``` this property is set
-automatically when ngVersion (in ```config.json``) is > 4.0.0.
+automatically when ngVersion (in ```config.json```) is > 4.0.0.
 
 **NOTE:** the generated versions of package.json and ng-package.json go in the output directory specified in the 
 build-api.cmd script above. There is no need for either file in the root of the project. 
