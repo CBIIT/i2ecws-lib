@@ -1,4 +1,5 @@
 {
     "ngVersion":"12.2.16",
-    "npmName": "@cbiit/i2ecws-lib"
+    "npmName": "@cbiit/i2ecws-lib",
+    "tsVersion": ">=4.2.3 and <4.4.0"
 }
