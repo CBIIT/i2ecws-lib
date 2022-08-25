@@ -21,9 +21,9 @@ REM set lang_opts=-l spring
 set lang_opts=-l nodejs-server
 
 REM Set additional options here.  These are what would normally go in config.json above.
-set sys_opts=-DnpmVersion=1.0.0 -Dsnapshot=false
+set sys_opts=-DnpmVersion=2.0.0 -Dsnapshot=false
 
 REM Additional properties that can be read by the mustache templates
-set misc_opts=--additional-properties apiVersion=1.0.0,author="Doug the Magnificent (kanozad@mail.nih.gov)"
+set misc_opts=--additional-properties apiVersion=2.0.0,author="Doug the Magnificent (kanozad@mail.nih.gov)"
  
 java -jar bin\swagger-codegen-cli-3.0.33.jar generate %sys_opts% %swagger_opts% %template_opts% %lang_opts% %config_opts% %output_opts% %misc_opts%
