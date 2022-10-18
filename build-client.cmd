@@ -22,5 +22,7 @@ set sys_opts=-DnpmVersion=2.0.0 -Dsnapshot=false
 
 REM Additional properties that can be read by the mustache templates
 set misc_opts=--additional-properties apiVersion=2.0.0,author="Doug the Magnificent (kanozad@mail.nih.gov)",skipHttpImport=true
+
+set version=3.0.35
  
-java -jar bin\swagger-codegen-cli-3.0.33.jar generate %sys_opts% %swagger_opts% %template_opts% %lang_opts% %config_opts% %output_opts% %misc_opts%
+java -jar bin\swagger-codegen-cli-%version%.jar generate %sys_opts% %swagger_opts% %template_opts% %lang_opts% %config_opts% %output_opts% %misc_opts%
