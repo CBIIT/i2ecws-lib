@@ -1,0 +1,834 @@
+{
+    "info": {
+        "license": {
+            "url": "http://springdoc.org",
+            "name": "Apache 2.0"
+        },
+        "title": "I2E Jasper Web Services API",
+        "description": "I2EJASPERWS Web Services",
+        "version": "v2.1.0"
+    },
+    "components": {
+        "schemas": {
+            "DatatablesSearchDto": {
+                "type": "object",
+                "properties": {
+                    "draw": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Column"
+                        }
+                    },
+                    "length": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "start": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "order": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    },
+                    "search": {
+                        "$ref": "#/components/schemas/Search"
+                    }
+                }
+            },
+            "Column": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string"
+                    },
+                    "orderable": {
+                        "type": "boolean"
+                    },
+                    "search": {
+                        "$ref": "#/components/schemas/Search"
+                    },
+                    "searchable": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "columnName": {
+                        "type": "string"
+                    },
+                    "dir": {
+                        "type": "string"
+                    },
+                    "column": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Search": {
+                "type": "object",
+                "properties": {
+                    "regex": {
+                        "type": "boolean"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Parameter": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FundSelectSearchCriteria": {
+                "type": "object",
+                "properties": {
+                    "accessionNum": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ncabTo": {
+                        "type": "string"
+                    },
+                    "roNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "requestingDoc": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "pdNpeIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "grantYear": {
+                        "type": "string"
+                    },
+                    "searchWithIn": {
+                        "type": "string"
+                    },
+                    "sraFlexCode": {
+                        "type": "string"
+                    },
+                    "applIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "applStatusGroupCode": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "institution": {
+                        "type": "string"
+                    },
+                    "notifyFlag": {
+                        "type": "string"
+                    },
+                    "requestingPdNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "irgCode": {
+                        "type": "string"
+                    },
+                    "pdNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "grantSuffix": {
+                        "type": "string"
+                    },
+                    "userNihNetworkId": {
+                        "type": "string"
+                    },
+                    "grantMech": {
+                        "type": "string"
+                    },
+                    "grantSerial": {
+                        "type": "string"
+                    },
+                    "planId": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "nosiNumber": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "activeSegments": {
+                        "type": "boolean"
+                    },
+                    "statusCodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "grantsWitCa": {
+                        "type": "boolean"
+                    },
+                    "includeDeleted": {
+                        "type": "boolean"
+                    },
+                    "includeInactive": {
+                        "type": "boolean"
+                    },
+                    "pdNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "institutionCity": {
+                        "type": "string"
+                    },
+                    "myCancerActivities": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "includeOrphans": {
+                        "type": "boolean"
+                    },
+                    "params": {
+                        "$ref": "#/components/schemas/DatatablesSearchDto"
+                    },
+                    "sraDesignatorCode": {
+                        "type": "string"
+                    },
+                    "pdAssignmentSearch": {
+                        "type": "boolean"
+                    },
+                    "referralStatus": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "irgFlexCode": {
+                        "type": "string"
+                    },
+                    "doc": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "rfaPaNumber": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "composedGrantNumber": {
+                        "type": "string"
+                    },
+                    "grantType": {
+                        "type": "string"
+                    },
+                    "fyFrom": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "cancerActivities": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "approverRoleCode": {
+                        "type": "string"
+                    },
+                    "requestId": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "grantIc": {
+                        "type": "string"
+                    },
+                    "fsStatus": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "dualCas": {
+                        "type": "boolean"
+                    },
+                    "budgetEndDateInFuture": {
+                        "type": "boolean"
+                    },
+                    "pendingApprovalStatusOnly": {
+                        "type": "boolean"
+                    },
+                    "referralOfficer": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "groupCode": {
+                        "type": "string"
+                    },
+                    "fyTo": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "wbsearch": {
+                        "type": "boolean"
+                    },
+                    "institutionState": {
+                        "type": "string"
+                    },
+                    "piName": {
+                        "type": "string"
+                    },
+                    "araMatchStatus": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "ncabFrom": {
+                        "type": "string"
+                    },
+                    "selectFrom": {
+                        "type": "string"
+                    },
+                    "i2status": {
+                        "type": "string"
+                    },
+                    "requestType": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "fundingSource": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "messageExist": {
+                        "type": "string"
+                    },
+                    "pdId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "formerGrantNumber": {
+                        "type": "string"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ro": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Report": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "param": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Parameter"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost",
+            "description": "Generated server url"
+        }
+    ],
+    "paths": {
+        "/api/v1/hss-check-report/": {
+            "get": {
+                "tags": [
+                    "hss-check-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/vnd.ms-excel": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        },
+                        "required": true,
+                        "name": "applIds",
+                        "in": "query"
+                    }
+                ],
+                "operationId": "hssCheckReport"
+            }
+        },
+        "/api/v1/documents/funding-plans-detail-report/{fprIds}/{isRequest}": {
+            "post": {
+                "tags": [
+                    "fs-jasper-reports-controller"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FundSelectSearchCriteria"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "name": "fprIds",
+                        "in": "path"
+                    },
+                    {
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "required": true,
+                        "name": "isRequest",
+                        "in": "path"
+                    }
+                ],
+                "operationId": "generateFpDetailReport"
+            }
+        },
+        "/api/v1/hss-check/": {
+            "get": {
+                "tags": [
+                    "hss-check-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        },
+                        "required": true,
+                        "name": "applIds",
+                        "in": "query"
+                    }
+                ],
+                "operationId": "hssCheckMulti"
+            }
+        },
+        "/api/v1/documents/funding-requests-cover-page/{frqId}": {
+            "get": {
+                "tags": [
+                    "fs-jasper-reports-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "name": "frqId",
+                        "in": "path"
+                    }
+                ],
+                "operationId": "generateFrqCoverPage"
+            }
+        },
+        "/api/v1/generate-jasper-report": {
+            "post": {
+                "tags": [
+                    "jasper-report-controller"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Report"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "operationId": "generateJasperReport"
+            },
+            "get": {
+                "tags": [
+                    "jasper-report-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/vnd.ms-excel": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "promptex-pSessionId",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "promptex-pReportId",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "EXPORT_FMT",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "operationId": "generateJasperReport_1"
+            }
+        },
+        "/api/v1/documents/funding-plans-cover-page/{fprId}": {
+            "get": {
+                "tags": [
+                    "fs-jasper-reports-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "name": "fprId",
+                        "in": "path"
+                    }
+                ],
+                "operationId": "generateFpCoverPage"
+            }
+        },
+        "/api/v1/documents/funding-plans-word-template/{fprId}/{type}": {
+            "get": {
+                "tags": [
+                    "fs-jasper-reports-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "name": "fprId",
+                        "in": "path"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "name": "type",
+                        "in": "path"
+                    }
+                ],
+                "operationId": "generateFpTemplate"
+            }
+        },
+        "/api/v1/hss-check/{applId}": {
+            "get": {
+                "tags": [
+                    "hss-check-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/vnd.ms-excel": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "name": "applId",
+                        "in": "path"
+                    }
+                ],
+                "operationId": "hssCheck"
+            }
+        },
+        "/api/v1/generate-paylist-report/{paylistId}/{reportName}/{type}": {
+            "get": {
+                "tags": [
+                    "jasper-report-controller"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/vnd.ms-excel": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "name": "paylistId",
+                        "in": "path"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "name": "reportName",
+                        "in": "path"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "name": "type",
+                        "in": "path"
+                    }
+                ],
+                "operationId": "generatePaylistReport"
+            }
+        }
+    },
+    "openapi": "3.0.1"
+}
