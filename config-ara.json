@@ -1,0 +1,14 @@
+{
+  "ngVersion":"17.2.4",
+  "npmName": "@cbiit/i2earaws-lib",
+  "groupId": "gov.nih.nci.cbiit.scimgmt",
+  "artifactId": "i2earaws-lib",
+  "apiPackage": "gov.nih.nci.cbiit.scimgmt.ara.api",
+  "modelPackage": "gov.nih.nci.cbiit.scimgmt.ara.dto",
+  "invokerPackage": "gov.nih.nci.cbiit.scimgmt.ara.invoker",
+  "java11": true,
+  "dateLibrary": "java11",
+  "artifactVersion": "1.0.0",
+  "tsVersion": ">=4.2.3 and <=5.4.2",
+  "hideGenerationTimestamp": true
+}

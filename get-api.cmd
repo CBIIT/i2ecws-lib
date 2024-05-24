@@ -1,1 +1,0 @@
-copy C:\Users\kanozad\dev\workspaces\i2e-common-ws-workspace\sm_i2e_common_ws\i2ecws-rest-common\target\swagger\swagger.json .

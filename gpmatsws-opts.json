@@ -1,0 +1,23 @@
+{
+  "swagger_opts": "-i api\\sm_i2e_gpmats_ws.json",
+  "template_opts": "-t templates\\typescript-angular",
+  "output_opts": "-o projects\\i2e-gpmats-lib\\ts-client",
+  "lang_opts": "-l typescript-angular",
+  "misc_opts": "--additional-properties apiVersion=2.0.0,author=\"I2E Grants Management\",skipHttpImport=true",
+  "config_opts": {
+    "ngVersion": "17.2.4",
+    "npmName": "@cbiit/i2egpmatsws-lib",
+    "groupId": "gov.nih.nci.cbiit.scimgmt",
+    "artifactId": "i2egpmatsws-lib",
+    "apiPackage": "gov.nih.nci.cbiit.scimgmt.gpmats.api",
+    "modelPackage": "gov.nih.nci.cbiit.scimgmt.gpmats.dto",
+    "invokerPackage": "gov.nih.nci.cbiit.scimgmt.gpmats.invoker",
+    "java11": true,
+    "dateLibrary": "java11",
+    "artifactVersion": "1.0.0",
+    "tsVersion": "\">=4.2.3 and <=5.4.2\"",
+    "hideGenerationTimestamp": true,
+    "npmVersion": "2.0.0",
+    "snapshot": false
+  }
+}
