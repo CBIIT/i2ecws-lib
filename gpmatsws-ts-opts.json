@@ -3,7 +3,7 @@
   "template_opts": "-t templates\\typescript-angular",
   "output_opts": "-o projects\\i2e-gpmats-lib\\ts-client",
   "lang_opts": "-l typescript-angular",
-  "misc_opts": "--additional-properties apiVersion=2.0.0,author=\"I2E Grants Management\",skipHttpImport=true",
+  "misc_opts": "--additional-properties apiVersion=2.0.0,skipHttpImport=true,author=\"I2E Grants Management\"",
   "config_opts": {
     "ngVersion": "17.2.4",
     "npmName": "@cbiit/i2egpmatsws-lib",
