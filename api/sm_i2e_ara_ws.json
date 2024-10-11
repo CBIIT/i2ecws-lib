@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost",
+            "url": "http://ncias-d3203-v:16080/i2earaws",
             "description": "Generated server url"
         }
     ],

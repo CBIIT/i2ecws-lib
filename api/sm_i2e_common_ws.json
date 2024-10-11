@@ -1,2087 +1,2087 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "I2E Common Web Services API",
-    "description": "I2ECOMMONWS Web Services",
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://springdoc.org"
-    },
-    "version": "v2.1.0"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:8080/i2ecommonws",
-      "description": "local"
-    },
-    {
-      "url": "http://ncias-d3203-v:38080/i2ecommonws",
-      "description": "dev"
-    },
-    {
-      "url": "http://ncias-q1990-v:38080/i2ecommonws",
-      "description": "test"
-    },
-    {
-      "url": "http://ncias-s2002-v:38080/i2ecommonws",
-      "description": "stage"
-    },
-    {
-      "url": "http://ncias-p1996-v:38080/i2ecommonws",
-      "description": "prod"
-    }
-  ],
-  "paths": {
-    "/api/v1/lookups/search-pi-institutes": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "searchOrganizations",
-        "parameters": [
-          {
-            "name": "term",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Select2ExtOrgDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "searchOrganizations_1",
-        "parameters": [
-          {
-            "name": "term",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Select2ExtOrgDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/user-preferences": {
-      "post": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "saveUserPreferences",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/I2eUserSettingsTDto"
-              }
-            }
-          },
-          "required": true
+    "openapi": "3.0.1",
+    "info": {
+        "title": "I2E Common Web Services API",
+        "description": "I2ECOMMONWS Web Services",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
         },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/I2eUserSettingsTDto"
-                }
-              }
-            }
-          }
-        }
-      }
+        "version": "v2.1.0"
     },
-    "/api/v1/logs": {
-      "post": {
-        "tags": [
-          "ngx-logger-controller"
-        ],
-        "operationId": "saveLog",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NgxPayload"
-              }
-            }
-          },
-          "required": true
+    "servers": [
+        {
+            "url": "http://localhost:8080/i2ecommonws",
+            "description": "local"
         },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/documents/delete/{docId}": {
-      "post": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "deleteDocument",
-        "parameters": [
-          {
-            "name": "docId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentsDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/add": {
-      "post": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "addDocument",
-        "parameters": [
-          {
-            "name": "dto",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/UploadDocumentsDto"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentsDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/user": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "user",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SecurityCredentials"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/user-preferences/{npnId}/{glkId}": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "getUserPreferences",
-        "parameters": [
-          {
-            "name": "npnId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "glkId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/I2eUserSettingsTDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "deleteUserPreferences",
-        "parameters": [
-          {
-            "name": "npnId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "glkId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/I2eUserSettingsTDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/referral-reasons/{domain}": {
-      "get": {
-        "tags": [
-          "cg-ref-cod-controller"
-        ],
-        "operationId": "getRemoveCaInterestReasons",
-        "parameters": [
-          {
-            "name": "orderBy",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "domain",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/KeyValueBean"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/KeyValueBean"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/properties/{app}": {
-      "get": {
-        "tags": [
-          "properties-controller"
-        ],
-        "operationId": "getProperties",
-        "parameters": [
-          {
-            "name": "app",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/properties/{app}/{propKey}": {
-      "get": {
-        "tags": [
-          "properties-controller"
-        ],
-        "operationId": "getProperty",
-        "parameters": [
-          {
-            "name": "app",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "propKey",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "defaultValue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/properties/": {
-      "get": {
-        "tags": [
-          "properties-controller"
-        ],
-        "operationId": "getProperties_1",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/nci-person-by-npn-id/{npnId}": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "findByNpnId",
-        "parameters": [
-          {
-            "name": "npnId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NciPerson"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/nci-people/ldap": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "getLdapUser",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LdapUser"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/nci-people/ldap/memberOf": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "isUserMemberOf",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "groupName",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/nci-people/": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "operationId": "getUsers",
-        "parameters": [
-          {
-            "name": "term",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "activeFlag",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NciPerson"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/nav-links/": {
-      "get": {
-        "tags": [
-          "app-navigation-t-controller"
-        ],
-        "operationId": "getNavLinks",
-        "parameters": [
-          {
-            "name": "roles",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AppNavigationTDto"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AppNavigationTDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lookups/review-locuses": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "getReviewLocuses",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lookups/pi-institutes": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "getPiInstitutes",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lookups/nci-doc": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "getNciDocs",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lookups/foa-url/{foa}": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "getNihGuideAddr",
-        "parameters": [
-          {
-            "name": "foa",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RfaPaNoticesDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lookups/cayCode-doc": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "getDocAndCayCodes",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lookups/app-properties/{appName}": {
-      "get": {
-        "tags": [
-          "lookups-controller"
-        ],
-        "operationId": "getAppPropertiesByAppName",
-        "parameters": [
-          {
-            "name": "appName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AppPropertiesTDto"
-                  }
-                }
-              }
-            }
-          }
+        {
+            "url": "http://ncias-d3203-v:38080/i2ecommonws",
+            "description": "dev"
         },
-        "deprecated": true
-      }
-    },
-    "/api/v1/heartbeat": {
-      "get": {
-        "tags": [
-          "heartbeat-controller"
-        ],
-        "operationId": "getHeartBeat",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HeartbeatPayload"
-                }
-              }
-            }
-          }
+        {
+            "url": "http://ncias-q1990-v:38080/i2ecommonws",
+            "description": "test"
+        },
+        {
+            "url": "http://ncias-s2002-v:38080/i2ecommonws",
+            "description": "stage"
+        },
+        {
+            "url": "http://ncias-p1996-v:38080/i2ecommonws",
+            "description": "prod"
         }
-      }
-    },
-    "/api/v1/gwb-links": {
-      "get": {
-        "tags": [
-          "gwb-links-controller"
-        ],
-        "operationId": "getLinks",
-        "parameters": [
-          {
-            "name": "names",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GwbLinksTDto"
-                  }
+    ],
+    "paths": {
+        "/api/v1/lookups/search-pi-institutes": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "searchOrganizations",
+                "parameters": [
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Select2ExtOrgDto"
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GwbLinksTDto"
-                  }
+            },
+            "post": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "searchOrganizations_1",
+                "parameters": [
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Select2ExtOrgDto"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
+        },
+        "/api/v1/user-preferences": {
+            "post": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "saveUserPreferences",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/I2eUserSettingsTDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/I2eUserSettingsTDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/logs": {
+            "post": {
+                "tags": [
+                    "ngx-logger-controller"
+                ],
+                "operationId": "saveLog",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NgxPayload"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/delete/{docId}": {
+            "post": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "deleteDocument",
+                "parameters": [
+                    {
+                        "name": "docId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentsDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/add": {
+            "post": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "addDocument",
+                "parameters": [
+                    {
+                        "name": "dto",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/UploadDocumentsDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentsDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user": {
+            "get": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecurityCredentials"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user-preferences/{npnId}/{glkId}": {
+            "get": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "getUserPreferences",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "glkId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/I2eUserSettingsTDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "deleteUserPreferences",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "glkId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/I2eUserSettingsTDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/referral-reasons/{domain}": {
+            "get": {
+                "tags": [
+                    "cg-ref-cod-controller"
+                ],
+                "operationId": "getRemoveCaInterestReasons",
+                "parameters": [
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "domain",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KeyValueBean"
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KeyValueBean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/properties/{app}": {
+            "get": {
+                "tags": [
+                    "properties-controller"
+                ],
+                "operationId": "getProperties",
+                "parameters": [
+                    {
+                        "name": "app",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/properties/{app}/{propKey}": {
+            "get": {
+                "tags": [
+                    "properties-controller"
+                ],
+                "operationId": "getProperty",
+                "parameters": [
+                    {
+                        "name": "app",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "propKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "defaultValue",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/properties/": {
+            "get": {
+                "tags": [
+                    "properties-controller"
+                ],
+                "operationId": "getProperties_1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/nci-person-by-npn-id/{npnId}": {
+            "get": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "findByNpnId",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciPerson"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/nci-people/ldap": {
+            "get": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "getLdapUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LdapUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/nci-people/ldap/memberOf": {
+            "get": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "isUserMemberOf",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "groupName",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/nci-people/": {
+            "get": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "getUsers",
+                "parameters": [
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "activeFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NciPerson"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/nav-links/": {
+            "get": {
+                "tags": [
+                    "app-navigation-t-controller"
+                ],
+                "operationId": "getNavLinks",
+                "parameters": [
+                    {
+                        "name": "roles",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AppNavigationTDto"
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AppNavigationTDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lookups/review-locuses": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "getReviewLocuses",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lookups/pi-institutes": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "getPiInstitutes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lookups/nci-doc": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "getNciDocs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lookups/foa-url/{foa}": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "getNihGuideAddr",
+                "parameters": [
+                    {
+                        "name": "foa",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RfaPaNoticesDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lookups/cayCode-doc": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "getDocAndCayCodes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lookups/app-properties/{appName}": {
+            "get": {
+                "tags": [
+                    "lookups-controller"
+                ],
+                "operationId": "getAppPropertiesByAppName",
+                "parameters": [
+                    {
+                        "name": "appName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AppPropertiesTDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/api/v1/heartbeat": {
+            "get": {
+                "tags": [
+                    "heartbeat-controller"
+                ],
+                "operationId": "getHeartBeat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HeartbeatPayload"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/gwb-links": {
+            "get": {
+                "tags": [
+                    "gwb-links-controller"
+                ],
+                "operationId": "getLinks",
+                "parameters": [
+                    {
+                        "name": "names",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GwbLinksTDto"
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GwbLinksTDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/fs-document-type": {
+            "get": {
+                "tags": [
+                    "cg-ref-cod-controller"
+                ],
+                "operationId": "getPfrDocType",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CgRefCodesDto"
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CgRefCodesDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/{keyId}/{keyType}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "loadDocuments",
+                "parameters": [
+                    {
+                        "name": "keyId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "keyType",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocumentsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/{docId}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "downloadDocument",
+                "parameters": [
+                    {
+                        "name": "docId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/load-excluded-documents/{frqId}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "loadExcludedDocuments",
+                "parameters": [
+                    {
+                        "name": "frqId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocumentsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/load-all-by-frqid/{frqId}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "loadDocumentsBySortOrder",
+                "parameters": [
+                    {
+                        "name": "frqId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocumentsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/funding-requests-view-package/{frqId}/{applId}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "viewPackage",
+                "parameters": [
+                    {
+                        "name": "frqId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "applId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/funding-requests-summary-statement/{applId}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "generateSummaryStatement",
+                "parameters": [
+                    {
+                        "name": "applId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/funding-requests-send-package/{frqId}/{applId}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "sendPackage",
+                "parameters": [
+                    {
+                        "name": "frqId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "applId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/funding-plan-view-package": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "viewFpPackage",
+                "parameters": [
+                    {
+                        "name": "fpId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "applIds",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/funding-plan-send-package": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "sendFpPackage",
+                "parameters": [
+                    {
+                        "name": "fpId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "applIds",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/fs-budget-docs/{keyId}/{keyType}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "loadFsFinanceDocuments",
+                "parameters": [
+                    {
+                        "name": "keyId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "keyType",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocumentsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/document/latest/{keyId}/{keyType}": {
+            "get": {
+                "tags": [
+                    "documents-controller"
+                ],
+                "operationId": "loadLatestDocument",
+                "parameters": [
+                    {
+                        "name": "keyId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "keyType",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentsDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/doc-viewer/supplement-app/{applId}": {
+            "get": {
+                "tags": [
+                    "doc-viewer-controller"
+                ],
+                "operationId": "getSupplementDocByApplId",
+                "parameters": [
+                    {
+                        "name": "applId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/doc-viewer/funding-plan-summary-statement": {
+            "get": {
+                "tags": [
+                    "doc-viewer-controller"
+                ],
+                "operationId": "generatePlanSummaryStatement",
+                "parameters": [
+                    {
+                        "name": "applIds",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "byte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/db-heartbeat": {
+            "get": {
+                "tags": [
+                    "heartbeat-controller"
+                ],
+                "operationId": "getDbHeartBeat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HeartbeatPayload"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     },
-    "/api/v1/fs-document-type": {
-      "get": {
-        "tags": [
-          "cg-ref-cod-controller"
-        ],
-        "operationId": "getPfrDocType",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CgRefCodesDto"
-                  }
+    "components": {
+        "schemas": {
+            "Select2ExtOrgDto": {
+                "type": "object",
+                "properties": {
+                    "term": {
+                        "type": "string"
+                    },
+                    "result": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
                 }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CgRefCodesDto"
-                  }
+            },
+            "I2eUserSettingsTDto": {
+                "required": [
+                    "createDate",
+                    "createUserId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "glkId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "configJson": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "maxLength": 30,
+                        "minLength": 0,
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "maxLength": 30,
+                        "minLength": 0,
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
                 }
-              }
+            },
+            "NgxPayload": {
+                "type": "object",
+                "properties": {
+                    "level": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "timestamp": {
+                        "type": "string"
+                    },
+                    "fileName": {
+                        "type": "string"
+                    },
+                    "lineNumber": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "additional": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "DocumentsDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "keyId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "keyType": {
+                        "type": "string"
+                    },
+                    "doc": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "byte"
+                        }
+                    },
+                    "docType": {
+                        "type": "string"
+                    },
+                    "docFilename": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "docDescription": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "deletedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "uploadedByNpnId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "uploadByName": {
+                        "type": "string"
+                    },
+                    "uploadByEmail": {
+                        "type": "string"
+                    },
+                    "included": {
+                        "type": "string"
+                    },
+                    "fsSSUploaded": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UploadDocumentsDto": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "keyId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "keyType": {
+                        "type": "string"
+                    },
+                    "docType": {
+                        "type": "string"
+                    },
+                    "docDescription": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GrantedAuthority": {
+                "type": "object",
+                "properties": {
+                    "authority": {
+                        "type": "string"
+                    }
+                }
+            },
+            "I2ERoles": {
+                "type": "object",
+                "properties": {
+                    "oracleId": {
+                        "type": "string"
+                    },
+                    "nciLdapCn": {
+                        "type": "string"
+                    },
+                    "emailAddress": {
+                        "type": "string"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "npeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "roleCode": {
+                        "type": "string"
+                    },
+                    "roleName": {
+                        "type": "string"
+                    },
+                    "roleCreatedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "roleCreatedByFullName": {
+                        "type": "string"
+                    },
+                    "orgId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgAbbrev": {
+                        "type": "string"
+                    },
+                    "docAbbrev": {
+                        "type": "string"
+                    },
+                    "fullOrgPathAbbrev": {
+                        "type": "string"
+                    },
+                    "fullOrgPathDescription": {
+                        "type": "string"
+                    },
+                    "ldapRoleName": {
+                        "type": "string"
+                    },
+                    "ogaBranchId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NciPerson": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "nihNetworkId": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/I2ERoles"
+                        }
+                    },
+                    "oracleId": {
+                        "type": "string"
+                    },
+                    "i2eFullNameLF": {
+                        "type": "string"
+                    },
+                    "i2eFullName": {
+                        "type": "string"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "emailAddress": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "i2eLastName": {
+                        "type": "string"
+                    },
+                    "i2eFirstName": {
+                        "type": "string"
+                    },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "activeFlag": {
+                        "type": "string"
+                    },
+                    "fullNameLF": {
+                        "type": "string"
+                    },
+                    "i2eMiddleName": {
+                        "type": "string"
+                    },
+                    "parentNedOrgPath": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SecurityCredentials": {
+                "type": "object",
+                "properties": {
+                    "environment": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "authorities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GrantedAuthority"
+                        }
+                    },
+                    "nciPerson": {
+                        "$ref": "#/components/schemas/NciPerson"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "accountNonExpired": {
+                        "type": "boolean"
+                    },
+                    "accountNonLocked": {
+                        "type": "boolean"
+                    },
+                    "credentialsNonExpired": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "KeyValueBean": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LdapUser": {
+                "type": "object",
+                "properties": {
+                    "cn": {
+                        "type": "string"
+                    },
+                    "memberOf": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "AppNavigationTDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "applicationName": {
+                        "type": "string"
+                    },
+                    "roleCode": {
+                        "type": "string"
+                    },
+                    "activeFlag": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "mainDisplayFlag": {
+                        "type": "string"
+                    },
+                    "gwbLinksTDto": {
+                        "$ref": "#/components/schemas/GwbLinksTDto"
+                    },
+                    "orderNum": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "GwbLinksTDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "linkType": {
+                        "type": "string"
+                    },
+                    "linkServer": {
+                        "type": "string"
+                    },
+                    "linkPath": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "activeFlag": {
+                        "type": "string"
+                    },
+                    "protocol": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "displayOrderNum": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "composedUrl": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RfaPaNoticesDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "noticeNumber": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "priorNoticeNumber": {
+                        "type": "string"
+                    },
+                    "activities": {
+                        "type": "string"
+                    },
+                    "rfaPaType": {
+                        "type": "string"
+                    },
+                    "ncabDates": {
+                        "type": "string"
+                    },
+                    "receiptDates": {
+                        "type": "string"
+                    },
+                    "grantsExistFlag": {
+                        "type": "string"
+                    },
+                    "dea1StYrSetAside": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "publishedSetAsideAmt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "unpublishedSetAsideAmt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "primaryDivision": {
+                        "type": "string"
+                    },
+                    "secondaryDivision": {
+                        "type": "string"
+                    },
+                    "pdName": {
+                        "type": "string"
+                    },
+                    "sraName": {
+                        "type": "string"
+                    },
+                    "gabName": {
+                        "type": "string"
+                    },
+                    "reviewLocus": {
+                        "type": "string"
+                    },
+                    "minYearsNum": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "maxYearsNum": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "minEstAwardsNum": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "maxEstAwardsNum": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ecApproval": {
+                        "type": "string"
+                    },
+                    "ecApprovalDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "comments": {
+                        "type": "string"
+                    },
+                    "paylistFlag": {
+                        "type": "string"
+                    },
+                    "nihGuideDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "nihGuideAddr": {
+                        "type": "string"
+                    },
+                    "caPrimaryFlag": {
+                        "type": "string"
+                    },
+                    "bscApproval": {
+                        "type": "string"
+                    },
+                    "bscApprovalDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "letterOfIntentDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "projectedStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "getxCanCan": {
+                        "type": "string"
+                    },
+                    "transIc": {
+                        "type": "string"
+                    },
+                    "efdbType": {
+                        "type": "string"
+                    },
+                    "intentToPublishFlag": {
+                        "type": "string"
+                    },
+                    "expirationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cptId": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "AppPropertiesTDto": {
+                "type": "object",
+                "properties": {
+                    "appName": {
+                        "type": "string"
+                    },
+                    "propKey": {
+                        "type": "string"
+                    },
+                    "propValue": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "HeartbeatPayload": {
+                "type": "object",
+                "properties": {
+                    "sessionId": {
+                        "type": "string"
+                    },
+                    "dbActive": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "CgRefCodesDto": {
+                "type": "object",
+                "properties": {
+                    "rvDomain": {
+                        "type": "string"
+                    },
+                    "rvLowValue": {
+                        "type": "string"
+                    },
+                    "rvHighValue": {
+                        "type": "string"
+                    },
+                    "rvAbbreviation": {
+                        "type": "string"
+                    },
+                    "rvMeaning": {
+                        "type": "string"
+                    }
+                }
             }
-          }
         }
-      }
-    },
-    "/api/v1/documents/{keyId}/{keyType}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "loadDocuments",
-        "parameters": [
-          {
-            "name": "keyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "keyType",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DocumentsDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/{docId}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "downloadDocument",
-        "parameters": [
-          {
-            "name": "docId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/load-excluded-documents/{frqId}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "loadExcludedDocuments",
-        "parameters": [
-          {
-            "name": "frqId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DocumentsDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/load-all-by-frqid/{frqId}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "loadDocumentsBySortOrder",
-        "parameters": [
-          {
-            "name": "frqId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DocumentsDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/funding-requests-view-package/{frqId}/{applId}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "viewPackage",
-        "parameters": [
-          {
-            "name": "frqId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "applId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/funding-requests-summary-statement/{applId}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "generateSummaryStatement",
-        "parameters": [
-          {
-            "name": "applId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/funding-requests-send-package/{frqId}/{applId}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "sendPackage",
-        "parameters": [
-          {
-            "name": "frqId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "applId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/funding-plan-view-package": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "viewFpPackage",
-        "parameters": [
-          {
-            "name": "fpId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "applIds",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/funding-plan-send-package": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "sendFpPackage",
-        "parameters": [
-          {
-            "name": "fpId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "applIds",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/documents/fs-budget-docs/{keyId}/{keyType}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "loadFsFinanceDocuments",
-        "parameters": [
-          {
-            "name": "keyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "keyType",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DocumentsDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/document/latest/{keyId}/{keyType}": {
-      "get": {
-        "tags": [
-          "documents-controller"
-        ],
-        "operationId": "loadLatestDocument",
-        "parameters": [
-          {
-            "name": "keyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "keyType",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentsDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/doc-viewer/supplement-app/{applId}": {
-      "get": {
-        "tags": [
-          "doc-viewer-controller"
-        ],
-        "operationId": "getSupplementDocByApplId",
-        "parameters": [
-          {
-            "name": "applId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/doc-viewer/funding-plan-summary-statement": {
-      "get": {
-        "tags": [
-          "doc-viewer-controller"
-        ],
-        "operationId": "generatePlanSummaryStatement",
-        "parameters": [
-          {
-            "name": "applIds",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/db-heartbeat": {
-      "get": {
-        "tags": [
-          "heartbeat-controller"
-        ],
-        "operationId": "getDbHeartBeat",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HeartbeatPayload"
-                }
-              }
-            }
-          }
-        }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "Select2ExtOrgDto": {
-        "type": "object",
-        "properties": {
-          "term": {
-            "type": "string"
-          },
-          "result": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "I2eUserSettingsTDto": {
-        "required": [
-          "createDate",
-          "createUserId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "npnId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "glkId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "configJson": {
-            "type": "string"
-          },
-          "createUserId": {
-            "maxLength": 30,
-            "minLength": 0,
-            "type": "string"
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastChangeUserId": {
-            "maxLength": 30,
-            "minLength": 0,
-            "type": "string"
-          },
-          "lastChangeDate": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "NgxPayload": {
-        "type": "object",
-        "properties": {
-          "level": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "timestamp": {
-            "type": "string"
-          },
-          "fileName": {
-            "type": "string"
-          },
-          "lineNumber": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "additional": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "DocumentsDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "keyId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "keyType": {
-            "type": "string"
-          },
-          "doc": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "byte"
-            }
-          },
-          "docType": {
-            "type": "string"
-          },
-          "docFilename": {
-            "type": "string"
-          },
-          "createUserId": {
-            "type": "string"
-          },
-          "docDescription": {
-            "type": "string"
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastChangeUserId": {
-            "type": "string"
-          },
-          "lastChangeDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updateStamp": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "uploadedByNpnId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "uploadByName": {
-            "type": "string"
-          },
-          "uploadByEmail": {
-            "type": "string"
-          },
-          "included": {
-            "type": "string"
-          },
-          "fsSSUploaded": {
-            "type": "string"
-          }
-        }
-      },
-      "UploadDocumentsDto": {
-        "type": "object",
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary"
-          },
-          "keyId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "keyType": {
-            "type": "string"
-          },
-          "docType": {
-            "type": "string"
-          },
-          "docDescription": {
-            "type": "string"
-          }
-        }
-      },
-      "GrantedAuthority": {
-        "type": "object",
-        "properties": {
-          "authority": {
-            "type": "string"
-          }
-        }
-      },
-      "I2ERoles": {
-        "type": "object",
-        "properties": {
-          "oracleId": {
-            "type": "string"
-          },
-          "nciLdapCn": {
-            "type": "string"
-          },
-          "emailAddress": {
-            "type": "string"
-          },
-          "npnId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "npeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "roleCode": {
-            "type": "string"
-          },
-          "roleName": {
-            "type": "string"
-          },
-          "roleCreatedDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "roleCreatedByFullName": {
-            "type": "string"
-          },
-          "orgId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orgAbbrev": {
-            "type": "string"
-          },
-          "docAbbrev": {
-            "type": "string"
-          },
-          "fullOrgPathAbbrev": {
-            "type": "string"
-          },
-          "fullOrgPathDescription": {
-            "type": "string"
-          },
-          "ldapRoleName": {
-            "type": "string"
-          },
-          "ogaBranchId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "fullName": {
-            "type": "string"
-          }
-        }
-      },
-      "NciPerson": {
-        "type": "object",
-        "properties": {
-          "fullName": {
-            "type": "string"
-          },
-          "nihNetworkId": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/I2ERoles"
-            }
-          },
-          "npnId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "i2eLastName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "emailAddress": {
-            "type": "string"
-          },
-          "i2eFirstName": {
-            "type": "string"
-          },
-          "inactiveDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "i2eFullNameLF": {
-            "type": "string"
-          },
-          "i2eFullName": {
-            "type": "string"
-          },
-          "oracleId": {
-            "type": "string"
-          },
-          "parentNedOrgPath": {
-            "type": "string"
-          },
-          "fullNameLF": {
-            "type": "string"
-          },
-          "i2eMiddleName": {
-            "type": "string"
-          },
-          "activeFlag": {
-            "type": "string"
-          }
-        }
-      },
-      "SecurityCredentials": {
-        "type": "object",
-        "properties": {
-          "environment": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "authorities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GrantedAuthority"
-            }
-          },
-          "nciPerson": {
-            "$ref": "#/components/schemas/NciPerson"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "accountNonLocked": {
-            "type": "boolean"
-          },
-          "password": {
-            "type": "string"
-          },
-          "accountNonExpired": {
-            "type": "boolean"
-          },
-          "credentialsNonExpired": {
-            "type": "boolean"
-          }
-        }
-      },
-      "KeyValueBean": {
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          }
-        }
-      },
-      "LdapUser": {
-        "type": "object",
-        "properties": {
-          "cn": {
-            "type": "string"
-          },
-          "memberOf": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "AppNavigationTDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "applicationName": {
-            "type": "string"
-          },
-          "roleCode": {
-            "type": "string"
-          },
-          "activeFlag": {
-            "type": "string"
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createUserId": {
-            "type": "string"
-          },
-          "lastChangeDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastChangeUserId": {
-            "type": "string"
-          },
-          "mainDisplayFlag": {
-            "type": "string"
-          },
-          "gwbLinksTDto": {
-            "$ref": "#/components/schemas/GwbLinksTDto"
-          },
-          "orderNum": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "GwbLinksTDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "linkType": {
-            "type": "string"
-          },
-          "linkServer": {
-            "type": "string"
-          },
-          "linkPath": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "displayName": {
-            "type": "string"
-          },
-          "activeFlag": {
-            "type": "string"
-          },
-          "protocol": {
-            "type": "string"
-          },
-          "createUserId": {
-            "type": "string"
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastChangeUserId": {
-            "type": "string"
-          },
-          "lastChangeDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updateStamp": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "displayOrderNum": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "composedUrl": {
-            "type": "string"
-          }
-        }
-      },
-      "RfaPaNoticesDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "noticeNumber": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "priorNoticeNumber": {
-            "type": "string"
-          },
-          "activities": {
-            "type": "string"
-          },
-          "rfaPaType": {
-            "type": "string"
-          },
-          "ncabDates": {
-            "type": "string"
-          },
-          "receiptDates": {
-            "type": "string"
-          },
-          "grantsExistFlag": {
-            "type": "string"
-          },
-          "dea1StYrSetAside": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "publishedSetAsideAmt": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "unpublishedSetAsideAmt": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "primaryDivision": {
-            "type": "string"
-          },
-          "secondaryDivision": {
-            "type": "string"
-          },
-          "pdName": {
-            "type": "string"
-          },
-          "sraName": {
-            "type": "string"
-          },
-          "gabName": {
-            "type": "string"
-          },
-          "reviewLocus": {
-            "type": "string"
-          },
-          "minYearsNum": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "maxYearsNum": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "minEstAwardsNum": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "maxEstAwardsNum": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "ecApproval": {
-            "type": "string"
-          },
-          "ecApprovalDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "comments": {
-            "type": "string"
-          },
-          "paylistFlag": {
-            "type": "string"
-          },
-          "nihGuideDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "nihGuideAddr": {
-            "type": "string"
-          },
-          "caPrimaryFlag": {
-            "type": "string"
-          },
-          "bscApproval": {
-            "type": "string"
-          },
-          "bscApprovalDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "letterOfIntentDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "projectedStartDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "getxCanCan": {
-            "type": "string"
-          },
-          "transIc": {
-            "type": "string"
-          },
-          "efdbType": {
-            "type": "string"
-          },
-          "intentToPublishFlag": {
-            "type": "string"
-          },
-          "expirationDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "cptId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "AppPropertiesTDto": {
-        "type": "object",
-        "properties": {
-          "appName": {
-            "type": "string"
-          },
-          "propKey": {
-            "type": "string"
-          },
-          "propValue": {
-            "type": "string"
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastChangeDate": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "HeartbeatPayload": {
-        "type": "object",
-        "properties": {
-          "sessionId": {
-            "type": "string"
-          },
-          "dbActive": {
-            "type": "boolean"
-          }
-        }
-      },
-      "CgRefCodesDto": {
-        "type": "object",
-        "properties": {
-          "rvDomain": {
-            "type": "string"
-          },
-          "rvLowValue": {
-            "type": "string"
-          },
-          "rvHighValue": {
-            "type": "string"
-          },
-          "rvAbbreviation": {
-            "type": "string"
-          },
-          "rvMeaning": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  }
 }
