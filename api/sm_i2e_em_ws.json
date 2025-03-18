@@ -1,1 +1,3102 @@
-{"openapi":"3.0.1","info":{"title":"I2E Enterprise Maintenance Web Services API","description":"I2EEMWS Web Services","license":{"name":"Apache 2.0","url":"http://springdoc.org"},"version":"v2.1.0"},"servers":[{"url":"https://i2e-dev.nci.nih.gov/i2eemws","description":"dev"},{"url":"https://i2e-test.nci.nih.gov/i2eemws","description":"test"},{"url":"https://i2e-stage.nci.nih.gov/i2eemws","description":"stage"},{"url":"https://i2e.nci.nih.gov/i2eemws","description":"prod"}],"paths":{"/api/v1/em/user/unlock/{npnId}":{"post":{"tags":["em-manage-user-controller"],"operationId":"unlockUser","parameters":[{"name":"npnId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciPersonDto"}}}}}}},"/api/v1/em/user/search":{"post":{"tags":["em-manage-user-controller"],"operationId":"searchUsers","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmSearchParamsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GenericDataTablesDtoEmSearchParamsDtoListEmUserPayloadDto"}}}}}}},"/api/v1/em/user/save":{"post":{"tags":["em-manage-user-controller"],"operationId":"saveUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciPersonDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciPersonDto"}}}}}}},"/api/v1/em/user/reactivate/{npnId}":{"post":{"tags":["em-manage-user-controller"],"operationId":"reactivateUser","parameters":[{"name":"npnId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciPersonDto"}}}}}}},"/api/v1/em/user/modify":{"post":{"tags":["em-manage-user-controller"],"operationId":"modifyUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmModifyUserDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciPersonDto"}}}}}}},"/api/v1/em/user/export-search":{"post":{"tags":["em-manage-user-controller"],"operationId":"exportUserSearchResults","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmSearchParamsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"text/plain":{"schema":{"type":"object"}}}}}}},"/api/v1/em/user/export-search2":{"post":{"tags":["em-manage-user-controller"],"operationId":"exportUserSearchResults2","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmSearchParamsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"text/plain":{"schema":{"type":"object"}}}}}}},"/api/v1/em/user/deactivate/{npnId}":{"post":{"tags":["em-manage-user-controller"],"operationId":"deactivateUser","parameters":[{"name":"npnId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciPersonDto"}}}}}}},"/api/v1/em/usag-code/reserve":{"post":{"tags":["em-manage-user-controller"],"operationId":"reserveCode","parameters":[{"name":"role","in":"query","required":true,"schema":{"type":"string"}},{"name":"code","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"integer","format":"int32"}}}}}}},"/api/v1/em/orphans":{"post":{"tags":["em-manage-user-controller"],"operationId":"searchOrphanUsers","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmSearchParamsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GenericDataTablesDtoEmSearchParamsDtoListEmUserPayloadDto"}}}}}}},"/api/v1/em/filter-orgs":{"post":{"tags":["em-lookup-controller"],"operationId":"filterOrgs","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmOrgFilterDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NciOrganizationsDto"}}}}}}}},"/api/v1/em/user/{nihNetworkId}":{"get":{"tags":["em-manage-user-controller"],"operationId":"retrieveUser","parameters":[{"name":"nihNetworkId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}}}}}}},"/api/v1/em/user/primary-role/{role}":{"get":{"tags":["em-manage-user-controller"],"operationId":"searchUsersByRole","parameters":[{"name":"role","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmUserPayloadDto"}}}}}}}},"/api/v1/em/user/deactivated-by-system/{npnId}":{"get":{"tags":["em-manage-user-controller"],"operationId":"deactivatedBySystem","parameters":[{"name":"npnId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"boolean"}}}}}}},"/api/v1/em/user-role-histories/{userId}":{"get":{"tags":["em-lookup-controller"],"operationId":"getRoleHistoriesForUser","parameters":[{"name":"userId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmUserRoleInfoVwDto"}}}}}}}},"/api/v1/em/user-impacii-roles/{userId}":{"get":{"tags":["em-manage-user-controller"],"operationId":"getUseImpaciiRoles","parameters":[{"name":"userId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmPortfolioRolesDto"}}}}}}}},"/api/v1/em/user-change-histories/{userId}":{"get":{"tags":["em-lookup-controller"],"operationId":"getChangeHistoriesForUser","parameters":[{"name":"userId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmI2eUserChangeHistoryVwDto"}}}}}}}},"/api/v1/em/user-cancer-activities/{userId}":{"get":{"tags":["em-lookup-controller"],"operationId":"getCancerActivityHistories","parameters":[{"name":"userId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmCaUserVwDto"}}}}}}}},"/api/v1/em/test-lock":{"get":{"tags":["em-manage-user-controller"],"operationId":"testLock","responses":{"200":{"description":"OK","content":{"text/plain":{"schema":{"type":"string"}}}}}}},"/api/v1/em/test-deactivate":{"get":{"tags":["em-manage-user-controller"],"operationId":"testDeactivate","responses":{"200":{"description":"OK","content":{"text/plain":{"schema":{"type":"string"}}}}}}},"/api/v1/em/role-usage-code-check/{roleCode}/{usageCode}/{npnId}":{"get":{"tags":["em-lookup-controller"],"operationId":"isCodeUsedByRole","parameters":[{"name":"roleCode","in":"path","required":true,"schema":{"type":"string"}},{"name":"usageCode","in":"path","required":true,"schema":{"type":"string"}},{"name":"npnId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"boolean"}}}}}}},"/api/v1/em/role-assigned/{roleCode}":{"get":{"tags":["em-lookup-controller"],"operationId":"isRoleAssignedActively","parameters":[{"name":"roleCode","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"boolean"}}}}}}},"/api/v1/em/role-assigned-doc/{roleCode}/{docOrgId}":{"get":{"tags":["em-lookup-controller"],"operationId":"isRoleAssignedForDoc","parameters":[{"name":"roleCode","in":"path","required":true,"schema":{"type":"string"}},{"name":"docOrgId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"boolean"}}}}}}},"/api/v1/em/next-role-usage-code/{roleCode}":{"get":{"tags":["em-lookup-controller"],"operationId":"getNextUsageCodeByRole","parameters":[{"name":"roleCode","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/KeyValueBean"}}}}}}},"/api/v1/em/ned-organizations":{"get":{"tags":["em-lookup-controller"],"operationId":"getEmNedOrganizations","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NedOrgunitVwDto"}}}}}}}},"/api/v1/em/nci-organizations":{"get":{"tags":["em-lookup-controller"],"operationId":"getNciOrganizationList","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NciOrganizationsDto"}}}}}}}},"/api/v1/em/nci-org-docs":{"get":{"tags":["em-lookup-controller"],"operationId":"getNciOrgDocs","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmOrgDocDto"}}}}}}}},"/api/v1/em/nci-doc-id/{orgId}":{"get":{"tags":["em-lookup-controller"],"operationId":"getDocId","parameters":[{"name":"orgId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"integer","format":"int32"}}}}}}},"/api/v1/em/i2e-roles":{"get":{"tags":["em-lookup-controller"],"operationId":"getI2eRoles","parameters":[{"name":"assignableOnly","in":"query","required":false,"schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NciRolesTDto"}}}}}}}},"/api/v1/em/i2e-ned-account/{nihNetworkId}":{"get":{"tags":["em-manage-user-controller"],"operationId":"getI2eNedAccount","parameters":[{"name":"nihNetworkId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/I2ENedAccountsVwDto"}}}}}}},"/api/v1/em/em-people/":{"get":{"tags":["em-lookup-controller"],"operationId":"getEmPeople","parameters":[{"name":"term","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/I2ENedAccountsVwDto"}}}}}}}},"/api/v1/em/discrepancy/{nihNetworkId}":{"get":{"tags":["em-manage-user-controller"],"operationId":"getDiscrepancies","parameters":[{"name":"nihNetworkId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EmDiscrepancyPayloadDto"}}}}}}},"/api/v1/em/cancer-activity-docs":{"get":{"tags":["em-lookup-controller"],"operationId":"getCancerActvityDocs","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CancerActivityDocsVwDto"}}}}}}}},"/api/v1/em/business-areas":{"get":{"tags":["em-lookup-controller"],"operationId":"getBusinessAreas","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BusinessAreasDto"}}}}}}}},"/api/v1/em/audit-active":{"get":{"tags":["em-lookup-controller"],"operationId":"isAuditActive","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}}}}}}},"/api/v1/em/all-nci-organizations":{"get":{"tags":["em-lookup-controller"],"operationId":"getAllNciOrganizations","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NciOrganizationsDto"}}}}}}}}},"components":{"schemas":{"CancerActivityPeopleTDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"npnId":{"type":"integer","format":"int32"},"cayCode":{"type":"string"},"description":{"type":"string"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"updateStamp":{"type":"integer","format":"int32"}}},"NciOrganizationsDto":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"abbreviation":{"type":"string"},"description":{"type":"string"},"nihAdminCode":{"type":"string"},"noeOrgType":{"type":"string"},"parentOrgId":{"type":"integer","format":"int64"},"commonEmailAddr":{"type":"string"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"updateStamp":{"type":"integer","format":"int32"},"verifiedFlag":{"type":"string"},"verifiedDate":{"type":"string","format":"date-time"},"ardEntry":{"type":"string"},"inactiveDate":{"type":"string","format":"date-time"},"orgIdentifierNum":{"type":"string"},"docFlag":{"type":"string"},"orgFullPath":{"type":"string"},"accountEligibleFlag":{"type":"string"}}},"NciPersonDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"lastName":{"type":"string"},"firstName":{"type":"string"},"genderCode":{"type":"string"},"miName":{"type":"string"},"namePrefix":{"type":"string"},"nameSuffix":{"type":"string"},"personTypeCode":{"type":"string"},"title":{"type":"string"},"emailAddress":{"type":"string"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"updateStamp":{"type":"integer","format":"int32"},"userId":{"type":"string"},"specialty":{"type":"string"},"rrlId":{"type":"integer","format":"int32"},"nipId":{"type":"integer","format":"int32"},"ardPubVerifiedFlag":{"type":"string"},"ardNotes":{"type":"string"},"ardVerifiedFlag":{"type":"string"},"biography":{"type":"string"},"publicationNotes":{"type":"string"},"researchTitle":{"type":"string"},"tfsId":{"type":"integer","format":"int32"},"researchDescription":{"type":"string"},"inactiveDate":{"type":"string","format":"date-time"},"nciLdapCn":{"type":"string"},"personProfileId":{"type":"integer","format":"int32"},"lastLoginDate":{"type":"string","format":"date-time"},"resourceAccountFlag":{"type":"string"},"fullName":{"type":"string"},"uniqueIdentifier":{"type":"string"},"orgRoles":{"type":"array","items":{"$ref":"#/components/schemas/NciPersonOrgRolesDto"}},"monitoredCancerActivities":{"type":"array","items":{"$ref":"#/components/schemas/CancerActivityPeopleTDto"}},"userLockDate":{"type":"string","format":"date-time"},"deactivatedBySystem":{"type":"boolean"}}},"NciPersonOrgRolesDto":{"type":"object","properties":{"npeId":{"type":"integer","format":"int32"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"},"assignType":{"type":"string"},"npnId":{"type":"integer","format":"int32"},"roleUsageCode":{"type":"string"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"updateStamp":{"type":"integer","format":"int32"},"orgId":{"type":"integer","format":"int32"},"orgAbbreviation":{"type":"string"},"orgDescription":{"type":"string"},"noeOrgType":{"type":"string"},"roleCode":{"type":"string"},"roleDescription":{"type":"string"},"parentOrg":{"$ref":"#/components/schemas/NciOrganizationsDto"},"pdCancerActivities":{"type":"array","items":{"$ref":"#/components/schemas/PdCancerActivityDto"}}}},"PdCancerActivityDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"npeId":{"type":"integer","format":"int32"},"cayCode":{"type":"string"},"description":{"type":"string"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"updateStamp":{"type":"integer","format":"int32"}}},"Column":{"type":"object","properties":{"data":{"type":"string"},"name":{"type":"string"},"searchable":{"type":"boolean"},"orderable":{"type":"boolean"},"search":{"$ref":"#/components/schemas/Search"}}},"EmSearchParamsDto":{"type":"object","properties":{"draw":{"type":"integer","format":"int32"},"columns":{"type":"array","items":{"$ref":"#/components/schemas/Column"}},"order":{"type":"array","items":{"$ref":"#/components/schemas/Order"}},"start":{"type":"integer","format":"int32"},"length":{"type":"integer","format":"int32"},"search":{"$ref":"#/components/schemas/Search"},"name":{"type":"string"},"nihNetworkId":{"type":"string"},"nciOrganizations":{"type":"array","items":{"type":"string"}},"nciOrganizationIds":{"type":"array","items":{"type":"string"}},"i2eRoles":{"type":"array","items":{"type":"string"}},"i2eAccountStatuses":{"type":"array","items":{"type":"string"}},"assignedCas":{"type":"array","items":{"type":"string"}},"monitoredCas":{"type":"array","items":{"type":"string"}},"roleOrganizations":{"type":"array","items":{"type":"string"}},"roleOrganizationIds":{"type":"array","items":{"type":"integer","format":"int32"}},"impaciiUser":{"type":"boolean"},"inactiveNedI2e":{"type":"boolean"}}},"Order":{"type":"object","properties":{"column":{"type":"integer","format":"int32"},"columnName":{"type":"string"},"dir":{"type":"string"}}},"Search":{"type":"object","properties":{"value":{"type":"string"},"regex":{"type":"boolean"}}},"EmUserPayloadDto":{"type":"object","properties":{"nciPersonDto":{"$ref":"#/components/schemas/NciPersonDto"},"i2ENedAccountsVwDto":{"$ref":"#/components/schemas/I2ENedAccountsVwDto"},"nedPreferredFullName":{"type":"string"},"nedPreferredFullNameLF":{"type":"string"},"nedLegalFullNameLF":{"type":"string"},"nedAgencyId":{"type":"string"},"nedParentOrgPath":{"type":"string"},"discrepancyExists":{"type":"boolean"},"nedOrgPath":{"type":"string"}}},"GenericDataTablesDtoEmSearchParamsDtoListEmUserPayloadDto":{"type":"object","properties":{"criteria":{"$ref":"#/components/schemas/EmSearchParamsDto"},"data":{"type":"array","items":{"$ref":"#/components/schemas/EmUserPayloadDto"}},"draw":{"type":"integer","format":"int32"},"start":{"type":"integer","format":"int32"},"length":{"type":"integer","format":"int32"},"recordsTotal":{"type":"integer","format":"int64"},"recordsFiltered":{"type":"integer","format":"int64"},"error":{"type":"string"}}},"I2ENedAccountsVwDto":{"type":"object","properties":{"nedAgencyId":{"type":"string"},"nedNihId":{"type":"string"},"nedOrgName":{"type":"string"},"nedNihSac":{"type":"string"},"nedOrgPath":{"type":"string"},"nedEmailAddr":{"type":"string"},"nedPrefix":{"type":"string"},"nedFullName":{"type":"string"},"nedLegalFullName":{"type":"string"},"nedPreferredFullName":{"type":"string"},"nedFirstName":{"type":"string"},"nedMidName":{"type":"string"},"nedLastName":{"type":"string"},"nedPreferredFirstName":{"type":"string"},"nedPreferredLastName":{"type":"string"},"nedTitle":{"type":"string"},"nedActiveFlag":{"type":"string"},"nedStreet":{"type":"string"},"nedCity":{"type":"string"},"nedState":{"type":"string"},"nedPostalcode":{"type":"string"},"nedFax":{"type":"string"},"nedClassification":{"type":"string"},"nedTelephonenumber":{"type":"string"},"nedParentOrgPath":{"type":"string"},"nedParentNihsac":{"type":"string"},"nedParentOrgName":{"type":"string"},"nedSupervisorPreferredFirstName":{"type":"string"},"nedSupervisorPreferredLastName":{"type":"string"},"nedSupervisorOrgPath":{"type":"string"},"nedSupervisorTelephoneNumber":{"type":"string"},"nedSupervisorEmailAddr":{"type":"string"},"nedSupervisorAgencyId":{"type":"string"},"nedSupervisorNihId":{"type":"string"},"accountCreated":{"type":"boolean"},"nedPreferredFullNameLF":{"type":"string"},"nedLegalFullNameLF":{"type":"string"},"status":{"type":"string"},"i2eFullName":{"type":"string"},"i2eFirstName":{"type":"string"},"i2eLastName":{"type":"string"},"i2eMiName":{"type":"string"},"typeAheadDisplayName":{"type":"string"},"nedLegalFullNameLFM":{"type":"string"}}},"EmModifyUserDto":{"type":"object","properties":{"npnId":{"type":"integer","format":"int32"},"actionUserId":{"type":"string"},"deactivatedRoles":{"type":"array","items":{"type":"integer","format":"int32"}},"addedRoles":{"type":"array","items":{"$ref":"#/components/schemas/NciPersonOrgRolesDto"}},"deactivatedCas":{"type":"array","items":{"type":"integer","format":"int32"}},"addedCas":{"type":"array","items":{"$ref":"#/components/schemas/PdCancerActivityDto"}},"addedMonitoredCas":{"type":"array","items":{"$ref":"#/components/schemas/CancerActivityPeopleTDto"}},"deactivatedMonitoredCas":{"type":"array","items":{"type":"integer","format":"int32"}},"addedGtaCas":{"type":"array","items":{"$ref":"#/components/schemas/PdCancerActivityDto"}},"deactivatedGtaCas":{"type":"array","items":{"type":"integer","format":"int32"}},"lastName":{"type":"string"},"firstName":{"type":"string"},"miName":{"type":"string"},"userNameUpdated":{"type":"boolean"},"previousFullName":{"type":"string"},"newFullName":{"type":"string"}}},"EmOrgFilterDto":{"type":"object","properties":{"includeParentIds":{"type":"array","items":{"type":"integer","format":"int64"}},"excludeParentIds":{"type":"array","items":{"type":"integer","format":"int64"}},"ogaBranchesOnly":{"type":"boolean"}}},"EmUserRoleInfoVwDto":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"fullName":{"type":"string"},"nciUserId":{"type":"string"},"roleName":{"type":"string"},"roleCode":{"type":"string"},"orgId":{"type":"integer","format":"int32"},"orgName":{"type":"string"},"roleUsageCode":{"type":"string"},"updatedByUserId":{"type":"string"},"updatedBy":{"type":"string"},"updatedByEmailId":{"type":"string"},"roleStartDate":{"type":"string","format":"date-time"},"roleEndDate":{"type":"string","format":"date-time"},"lastChangeDate":{"type":"string","format":"date-time"}}},"EmPortfolioRolesDto":{"type":"object","properties":{"impaciiUserId":{"type":"string"},"roleName":{"type":"string"},"orgId":{"type":"string"},"createdByUserId":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"createdByFullName":{"type":"string"}}},"EmI2eUserChangeHistoryVwDto":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"npnId":{"type":"integer","format":"int64"},"updateActionId":{"type":"integer","format":"int64"},"fullName":{"type":"string"},"nciUserId":{"type":"string"},"actionName":{"type":"string"},"actionText":{"type":"string"},"actionDescription":{"type":"string"},"actionDate":{"type":"string","format":"date-time"},"updatedByUserId":{"type":"string"},"updatedBy":{"type":"string"},"updatedByEmailId":{"type":"string"},"assignedCaId":{"type":"integer","format":"int32"},"assignedCaCode":{"type":"string"},"assignedCaDesc":{"type":"string"},"assignedCaStartDate":{"type":"string","format":"date-time"},"assignedEndDate":{"type":"string","format":"date-time"},"monitoredCaId":{"type":"integer","format":"int32"},"monitoredCaCode":{"type":"string"},"monitoredCaDesc":{"type":"string"},"monitoredCaStartDate":{"type":"string","format":"date-time"},"monitoredCaEndDate":{"type":"string","format":"date-time"},"roleStartDate":{"type":"string","format":"date-time"},"roleEndDate":{"type":"string","format":"date-time"},"roleCode":{"type":"string"},"roleName":{"type":"string"},"orgId":{"type":"integer","format":"int32"},"orgName":{"type":"string"},"orgAbbreviation":{"type":"string"},"pdOrSpecCode":{"type":"string"},"gtaCaId":{"type":"integer","format":"int32"},"gtaCaCode":{"type":"string"},"gtaCaDesc":{"type":"string"},"gtaCaStartDate":{"type":"string","format":"date-time"},"gtaCaEndDate":{"type":"string","format":"date-time"},"previousValue":{"type":"string"},"newValue":{"type":"string"},"changeObjectType":{"type":"string"},"changesMadeDescription":{"type":"string"}}},"EmCaUserVwDto":{"type":"object","properties":{"fullName":{"type":"string"},"nciUserId":{"type":"string"},"cancerActivity":{"type":"string"},"caCode":{"type":"string"},"type":{"type":"string"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"},"updatedByUserId":{"type":"string"},"updatedBy":{"type":"string"},"updatedByEmailId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"}}},"KeyValueBean":{"type":"object","properties":{"key":{"type":"string"},"value":{"type":"string"}}},"NedOrgunitVwDto":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"nihSac":{"type":"string"},"nihOrgAcronym":{"type":"string"},"nihOrgName":{"type":"string"},"nihOrgPath":{"type":"string"},"nihOuAcronym":{"type":"string"},"nihOuName":{"type":"string"},"nihParentSac":{"type":"string"},"inactiveDate":{"type":"string","format":"date-time"},"createdDate":{"type":"string","format":"date-time"},"lastChangeDate":{"type":"string","format":"date-time"}}},"EmOrgDocDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"orgPath":{"type":"string"},"noeOrgType":{"type":"string"},"inactiveDate":{"type":"string","format":"date-time"},"abbreviation":{"type":"string"},"docAbbreviation":{"type":"string"},"docOrgId":{"type":"integer","format":"int32"},"description":{"type":"string"}}},"NciRolesTDto":{"type":"object","properties":{"code":{"type":"string"},"description":{"type":"string"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"updateStamp":{"type":"integer","format":"int32"},"roleDescription":{"type":"string"},"nbaId":{"type":"integer","format":"int32"},"nbaName":{"type":"string"},"ldapCode":{"type":"string"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"},"assignableFlag":{"type":"string"}}},"EmAuditAccountsVwDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"auditId":{"type":"integer","format":"int32"},"impaciiUserId":{"type":"string"},"nihNetworkId":{"type":"string"},"lastName":{"type":"string"},"firstName":{"type":"string"},"nedLastName":{"type":"string"},"nedFirstName":{"type":"string"},"nedPreferredLastName":{"type":"string"},"nedPreferredFirstName":{"type":"string"},"impaciiLastName":{"type":"string"},"impaciiFirstName":{"type":"string"},"nedEmailAddress":{"type":"string"},"parentNedOrgPath":{"type":"string"},"nedOrgPath":{"type":"string"},"nedIc":{"type":"string"},"nciDoc":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"createdByUserId":{"type":"string"},"createdByFullName":{"type":"string"},"deletedDate":{"type":"string","format":"date-time"},"deletedByUserId":{"type":"string"},"deletedByFullName":{"type":"string"},"deactivationComments":{"type":"string"},"secondaryOrgText":{"type":"string"},"amsFedSupervisor":{"type":"string"},"amsFedEmail":{"type":"string"},"amsOrgDept":{"type":"string"},"lastLoginDate":{"type":"string","format":"date-time"},"inactiveUserFlag":{"type":"string"},"activeActionId":{"type":"integer","format":"int32"},"activeSubActionId":{"type":"integer","format":"int32"},"activeNotes":{"type":"string"},"activeUnsubmittedFlag":{"type":"string"},"activeSubmittedBy":{"type":"string"},"activeSubmittedDate":{"type":"string","format":"date-time"},"newActionId":{"type":"integer","format":"int32"},"newNotes":{"type":"string"},"newUnsubmittedFlag":{"type":"string"},"newSubmittedBy":{"type":"string"},"newSubmittedDate":{"type":"string","format":"date-time"},"deletedActionId":{"type":"integer","format":"int32"},"deletedNotes":{"type":"string"},"deletedUnsubmittedFlag":{"type":"string"},"deletedSubmittedBy":{"type":"string"},"deletedSubmittedDate":{"type":"string","format":"date-time"},"inactiveActionId":{"type":"integer","format":"int32"},"inactiveNotes":{"type":"string"},"inactiveUnsubmittedFlag":{"type":"string"},"inactiveSubmittedBy":{"type":"string"},"inactiveSubmittedDate":{"type":"string","format":"date-time"},"deletedByParentOrgPath":{"type":"string"},"deletedByNciDoc":{"type":"string"},"sodFlag":{"type":"string"},"icDiffFlag":{"type":"string"},"nedInactiveFlag":{"type":"string"},"lastNameDiffFlag":{"type":"string"},"transferToOrgPath":{"type":"string"},"transferFromOrgPath":{"type":"string"},"impaciiActiveStatusFlag":{"type":"string"},"transferredDate":{"type":"string","format":"date-time"},"deletedTransferToOrgPath":{"type":"string"},"deletedTransferFromOrgPath":{"type":"string"},"statusCode":{"type":"boolean"},"statusDescription":{"type":"string"},"activeCategoryFlag":{"type":"string"},"newCategoryFlag":{"type":"string"},"deletedCategoryFlag":{"type":"string"},"inactiveCategoryFlag":{"type":"string"},"gmSodFlag":{"type":"string"},"deactivationReqId":{"type":"integer","format":"int32"},"deactivationReqFullName":{"type":"string"},"deactivationReqEmailAddr":{"type":"string"},"deactivationReqCreateDate":{"type":"string","format":"date-time"},"discrepancies":{"type":"array","items":{"type":"string"}}}},"EmDiscrepancyPayloadDto":{"type":"object","properties":{"nciPersonDto":{"$ref":"#/components/schemas/NciPersonDto"},"emPortfolioVwDto":{"$ref":"#/components/schemas/EmPortfolioVwDto"},"emI2ePortfolioVwDto":{"$ref":"#/components/schemas/EmI2ePortfolioVwDto"},"emI2eAuditAccountsVwDtos":{"type":"array","items":{"$ref":"#/components/schemas/EmI2eAuditAccountsVwDto"}},"emAuditAccountsVwDtos":{"type":"array","items":{"$ref":"#/components/schemas/EmAuditAccountsVwDto"}},"discrepancies":{"type":"array","items":{"type":"string"}},"discrepancyTypes":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/EmDiscrepancyTypesTDto"}}}},"EmDiscrepancyTypesTDto":{"type":"object","properties":{"code":{"type":"string"},"shortDescrip":{"type":"string"},"longDescrip":{"type":"string"},"resolutionText":{"type":"string"},"createDate":{"type":"string"},"createUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"severityLevel":{"type":"string"}}},"EmI2eAuditAccountsVwDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"auditId":{"type":"integer","format":"int32"},"npnId":{"type":"integer","format":"int32"},"nihNetworkId":{"type":"string"},"lastName":{"type":"string"},"firstName":{"type":"string"},"nedLastName":{"type":"string"},"nedFirstName":{"type":"string"},"nedPreferredLastName":{"type":"string"},"nedPreferredFirstName":{"type":"string"},"i2ELastName":{"type":"string"},"i2EFirstName":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"nedEmailAddress":{"type":"string"},"parentNedOrgPath":{"type":"string"},"nedOrgPath":{"type":"string"},"nedIc":{"type":"string"},"nciDoc":{"type":"string"},"lastUpdByFullName":{"type":"string"},"actionId":{"type":"integer","format":"int32"},"subActionId":{"type":"integer","format":"int32"},"notes":{"type":"string"},"unsubmittedFlag":{"type":"string"},"submittedBy":{"type":"string"},"submittedDate":{"type":"string","format":"date-time"},"i2EOnlyFlag":{"type":"string"},"sodFlag":{"type":"string"},"nedInactiveFlag":{"type":"string"},"noActiveRoleFlag":{"type":"string"},"activeRoleRemainderFlag":{"type":"string"},"transferToOrgPath":{"type":"string"},"transferFromOrgPath":{"type":"string"},"i2EActiveStatusFlag":{"type":"string"},"transferredDate":{"type":"string","format":"date-time"},"icDiffFlag":{"type":"string"},"pdMissingI2Flag":{"type":"string"},"gsMissingI2Flag":{"type":"string"},"deactivationReqId":{"type":"integer","format":"int32"},"deactivationReqFullName":{"type":"string"},"deactivationReqEmailAddr":{"type":"string"},"deactivationReqCreateDate":{"type":"string","format":"date-time"},"discrepancies":{"type":"array","items":{"type":"string"}}}},"EmI2ePortfolioVwDto":{"type":"object","properties":{"npnId":{"type":"integer","format":"int32"},"oracleId":{"type":"string"},"nihNetworkId":{"type":"string"},"lastName":{"type":"string"},"firstName":{"type":"string"},"i2ELastName":{"type":"string"},"i2EFirstName":{"type":"string"},"nedLastName":{"type":"string"},"nedFirstName":{"type":"string"},"nedPreferredLastName":{"type":"string"},"nedPreferredFirstName":{"type":"string"},"nedEmailAddress":{"type":"string"},"parentNedOrgPath":{"type":"string"},"nedOrgPath":{"type":"string"},"nedIc":{"type":"string"},"nedActiveFlag":{"type":"string"},"nciDoc":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"lastUpdByFullName":{"type":"string"},"i2EOnlyFlag":{"type":"string"},"pdMissingI2Flag":{"type":"string"},"gsMissingI2Flag":{"type":"string"},"notes":{"type":"string"},"notesSubmittedByFullName":{"type":"string"},"notesSubmittedDate":{"type":"string","format":"date-time"},"inactiveDate":{"type":"string","format":"date-time"},"sodFlag":{"type":"string"},"nedInactiveFlag":{"type":"string"},"noActiveRoleFlag":{"type":"string"},"icDiffFlag":{"type":"string"},"nciExceptionFlag":{"type":"string"},"actionGrantMgrFlag":{"type":"string"}}},"EmPortfolioVwDto":{"type":"object","properties":{"impaciiUserId":{"type":"string"},"nihNetworkId":{"type":"string"},"lastName":{"type":"string"},"firstName":{"type":"string"},"impaciiLastName":{"type":"string"},"impaciiFirstName":{"type":"string"},"nedLastName":{"type":"string"},"nedFirstName":{"type":"string"},"nedPreferredLastName":{"type":"string"},"nedPreferredFirstName":{"type":"string"},"nedEmailAddress":{"type":"string"},"parentNedOrgPath":{"type":"string"},"nedOrgPath":{"type":"string"},"nedIc":{"type":"string"},"nedActiveFlag":{"type":"string"},"nciDoc":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"createdByUserId":{"type":"string"},"createdByFullName":{"type":"string"},"deletedDate":{"type":"string","format":"date-time"},"deletedByUserId":{"type":"string"},"deletedByFullName":{"type":"string"},"deactivationComments":{"type":"string"},"deletedByParentOrgPath":{"type":"string"},"deletedByNciDoc":{"type":"string"},"secondaryOrgText":{"type":"string"},"amsOrgDept":{"type":"string"},"amsFedSupervisor":{"type":"string"},"amsFedEmail":{"type":"string"},"lastLoginDate":{"type":"string"},"impaciiOnlyFlag":{"type":"string"},"notes":{"type":"string"},"notesSubmittedByFullName":{"type":"string"},"notesSubmittedDate":{"type":"string","format":"date-time"},"sodFlag":{"type":"string"},"icDiffFlag":{"type":"string"},"nedInactiveFlag":{"type":"string"},"lastNameDiffFlag":{"type":"string"},"activeStatusFlag":{"type":"string"},"statusCode":{"type":"boolean"},"statusDescription":{"type":"string"},"gmSodFlag":{"type":"string"},"nciExceptionFlag":{"type":"string"},"actionGrantMgrFlag":{"type":"string"},"roles":{"type":"array","items":{"$ref":"#/components/schemas/EmPortfolioRolesDto"}},"programOfficial":{"type":"boolean"}}},"CancerActivityDocsVwDto":{"type":"object","properties":{"code":{"type":"string"},"cayDescription":{"type":"string"},"nonId":{"type":"integer","format":"int32"},"nonAbbreviation":{"type":"string"},"nonDescription":{"type":"string"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"}}},"BusinessAreasDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"name":{"type":"string"},"description":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"createUserId":{"type":"string"},"lastChangeDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"activeFlag":{"type":"boolean"}}}}}}
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "I2E Enterprise Maintenance Web Services API",
+        "description": "I2EEMWS Web Services",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
+        },
+        "version": "v2.1.0"
+    },
+    "servers": [
+        {
+            "url": "https://i2e-dev.nci.nih.gov/i2eemws",
+            "description": "dev"
+        },
+        {
+            "url": "https://i2e-test.nci.nih.gov/i2eemws",
+            "description": "test"
+        },
+        {
+            "url": "https://i2e-stage.nci.nih.gov/i2eemws",
+            "description": "stage"
+        },
+        {
+            "url": "https://i2e.nci.nih.gov/i2eemws",
+            "description": "prod"
+        }
+    ],
+    "paths": {
+        "/api/v1/em/user/unlock/{npnId}": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "unlockUser",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciPersonDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/search": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "searchUsers",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmSearchParamsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenericDataTablesDtoEmSearchParamsDtoListEmUserPayloadDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/save": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "saveUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NciPersonDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciPersonDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/reactivate/{npnId}": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "reactivateUser",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciPersonDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/modify": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "modifyUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmModifyUserDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciPersonDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/export-search": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "exportUserSearchResults",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmSearchParamsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/export-search2": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "exportUserSearchResults2",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmSearchParamsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/deactivate/{npnId}": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "deactivateUser",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciPersonDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/usag-code/reserve": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "reserveCode",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/orphans": {
+            "post": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "searchOrphanUsers",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmSearchParamsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenericDataTablesDtoEmSearchParamsDtoListEmUserPayloadDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/filter-orgs": {
+            "post": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "filterOrgs",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmOrgFilterDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NciOrganizationsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/{nihNetworkId}": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "retrieveUser",
+                "parameters": [
+                    {
+                        "name": "nihNetworkId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/primary-role/{role}": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "searchUsersByRole",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmUserPayloadDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user/deactivated-by-system/{npnId}": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "deactivatedBySystem",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user-role-histories/{userId}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getRoleHistoriesForUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmUserRoleInfoVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user-impacii-roles/{userId}": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "getUseImpaciiRoles",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmPortfolioRolesDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user-change-histories/{userId}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getChangeHistoriesForUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmI2eUserChangeHistoryVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/user-cancer-activities/{userId}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getCancerActivityHistories",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmCaUserVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/test-lock": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "testLock",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/test-deactivate": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "testDeactivate",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/role-usage-code-check/{roleCode}/{usageCode}/{npnId}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "isCodeUsedByRole",
+                "parameters": [
+                    {
+                        "name": "roleCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "usageCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/role-assigned/{roleCode}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "isRoleAssignedActively",
+                "parameters": [
+                    {
+                        "name": "roleCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/role-assigned-doc/{roleCode}/{docOrgId}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "isRoleAssignedForDoc",
+                "parameters": [
+                    {
+                        "name": "roleCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "docOrgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/next-role-usage-code/{roleCode}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getNextUsageCodeByRole",
+                "parameters": [
+                    {
+                        "name": "roleCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KeyValueBean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/ned-organizations": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getEmNedOrganizations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NedOrgunitVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/nci-organizations": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getNciOrganizationList",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NciOrganizationsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/nci-org-docs": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getNciOrgDocs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EmOrgDocDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/nci-doc-id/{orgId}": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getDocId",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/i2e-roles": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getI2eRoles",
+                "parameters": [
+                    {
+                        "name": "assignableOnly",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NciRolesTDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/i2e-ned-account/{nihNetworkId}": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "getI2eNedAccount",
+                "parameters": [
+                    {
+                        "name": "nihNetworkId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/I2ENedAccountsVwDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/em-people/": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getEmPeople",
+                "parameters": [
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/I2ENedAccountsVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/discrepancy/{nihNetworkId}": {
+            "get": {
+                "tags": [
+                    "em-manage-user-controller"
+                ],
+                "operationId": "getDiscrepancies",
+                "parameters": [
+                    {
+                        "name": "nihNetworkId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmDiscrepancyPayloadDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/cancer-activity-docs": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getCancerActvityDocs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CancerActivityDocsVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/business-areas": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getBusinessAreas",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BusinessAreasDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/audit-active": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "isAuditActive",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/em/all-nci-organizations": {
+            "get": {
+                "tags": [
+                    "em-lookup-controller"
+                ],
+                "operationId": "getAllNciOrganizations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NciOrganizationsDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CancerActivityPeopleTDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "cayCode": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "NciOrganizationsDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "abbreviation": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "nihAdminCode": {
+                        "type": "string"
+                    },
+                    "noeOrgType": {
+                        "type": "string"
+                    },
+                    "parentOrgId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "commonEmailAddr": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "verifiedFlag": {
+                        "type": "string"
+                    },
+                    "verifiedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "ardEntry": {
+                        "type": "string"
+                    },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "orgIdentifierNum": {
+                        "type": "string"
+                    },
+                    "docFlag": {
+                        "type": "string"
+                    },
+                    "orgFullPath": {
+                        "type": "string"
+                    },
+                    "accountEligibleFlag": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NciPersonDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "genderCode": {
+                        "type": "string"
+                    },
+                    "miName": {
+                        "type": "string"
+                    },
+                    "namePrefix": {
+                        "type": "string"
+                    },
+                    "nameSuffix": {
+                        "type": "string"
+                    },
+                    "personTypeCode": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "emailAddress": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "specialty": {
+                        "type": "string"
+                    },
+                    "rrlId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nipId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ardPubVerifiedFlag": {
+                        "type": "string"
+                    },
+                    "ardNotes": {
+                        "type": "string"
+                    },
+                    "ardVerifiedFlag": {
+                        "type": "string"
+                    },
+                    "biography": {
+                        "type": "string"
+                    },
+                    "publicationNotes": {
+                        "type": "string"
+                    },
+                    "researchTitle": {
+                        "type": "string"
+                    },
+                    "tfsId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "researchDescription": {
+                        "type": "string"
+                    },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "nciLdapCn": {
+                        "type": "string"
+                    },
+                    "personProfileId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "lastLoginDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "resourceAccountFlag": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "uniqueIdentifier": {
+                        "type": "string"
+                    },
+                    "orgRoles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NciPersonOrgRolesDto"
+                        }
+                    },
+                    "monitoredCancerActivities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CancerActivityPeopleTDto"
+                        }
+                    },
+                    "userLockDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deactivatedBySystem": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "NciPersonOrgRolesDto": {
+                "type": "object",
+                "properties": {
+                    "npeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "assignType": {
+                        "type": "string"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "roleUsageCode": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgAbbreviation": {
+                        "type": "string"
+                    },
+                    "orgDescription": {
+                        "type": "string"
+                    },
+                    "noeOrgType": {
+                        "type": "string"
+                    },
+                    "roleCode": {
+                        "type": "string"
+                    },
+                    "roleDescription": {
+                        "type": "string"
+                    },
+                    "parentOrg": {
+                        "$ref": "#/components/schemas/NciOrganizationsDto"
+                    },
+                    "pdCancerActivities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PdCancerActivityDto"
+                        }
+                    }
+                }
+            },
+            "PdCancerActivityDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "npeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "cayCode": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Column": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "searchable": {
+                        "type": "boolean"
+                    },
+                    "orderable": {
+                        "type": "boolean"
+                    },
+                    "search": {
+                        "$ref": "#/components/schemas/Search"
+                    }
+                }
+            },
+            "EmSearchParamsDto": {
+                "type": "object",
+                "properties": {
+                    "draw": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Column"
+                        }
+                    },
+                    "order": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    },
+                    "start": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "length": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "search": {
+                        "$ref": "#/components/schemas/Search"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "nihNetworkId": {
+                        "type": "string"
+                    },
+                    "nciOrganizations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "nciOrganizationIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "i2eRoles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "i2eAccountStatuses": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "assignedCas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "monitoredCas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "roleOrganizations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "roleOrganizationIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "impaciiUser": {
+                        "type": "boolean"
+                    },
+                    "inactiveNedI2e": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "column": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "columnName": {
+                        "type": "string"
+                    },
+                    "dir": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Search": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    },
+                    "regex": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "EmUserPayloadDto": {
+                "type": "object",
+                "properties": {
+                    "nciPersonDto": {
+                        "$ref": "#/components/schemas/NciPersonDto"
+                    },
+                    "i2ENedAccountsVwDto": {
+                        "$ref": "#/components/schemas/I2ENedAccountsVwDto"
+                    },
+                    "nedPreferredFullName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFullNameLF": {
+                        "type": "string"
+                    },
+                    "nedLegalFullNameLF": {
+                        "type": "string"
+                    },
+                    "nedAgencyId": {
+                        "type": "string"
+                    },
+                    "nedParentOrgPath": {
+                        "type": "string"
+                    },
+                    "discrepancyExists": {
+                        "type": "boolean"
+                    },
+                    "nedOrgPath": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GenericDataTablesDtoEmSearchParamsDtoListEmUserPayloadDto": {
+                "type": "object",
+                "properties": {
+                    "criteria": {
+                        "$ref": "#/components/schemas/EmSearchParamsDto"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmUserPayloadDto"
+                        }
+                    },
+                    "draw": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "start": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "length": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "recordsTotal": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "recordsFiltered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "error": {
+                        "type": "string"
+                    }
+                }
+            },
+            "I2ENedAccountsVwDto": {
+                "type": "object",
+                "properties": {
+                    "nedAgencyId": {
+                        "type": "string"
+                    },
+                    "nedNihId": {
+                        "type": "string"
+                    },
+                    "nedOrgName": {
+                        "type": "string"
+                    },
+                    "nedNihSac": {
+                        "type": "string"
+                    },
+                    "nedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedEmailAddr": {
+                        "type": "string"
+                    },
+                    "nedPrefix": {
+                        "type": "string"
+                    },
+                    "nedFullName": {
+                        "type": "string"
+                    },
+                    "nedLegalFullName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFullName": {
+                        "type": "string"
+                    },
+                    "nedFirstName": {
+                        "type": "string"
+                    },
+                    "nedMidName": {
+                        "type": "string"
+                    },
+                    "nedLastName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFirstName": {
+                        "type": "string"
+                    },
+                    "nedPreferredLastName": {
+                        "type": "string"
+                    },
+                    "nedTitle": {
+                        "type": "string"
+                    },
+                    "nedActiveFlag": {
+                        "type": "string"
+                    },
+                    "nedStreet": {
+                        "type": "string"
+                    },
+                    "nedCity": {
+                        "type": "string"
+                    },
+                    "nedState": {
+                        "type": "string"
+                    },
+                    "nedPostalcode": {
+                        "type": "string"
+                    },
+                    "nedFax": {
+                        "type": "string"
+                    },
+                    "nedClassification": {
+                        "type": "string"
+                    },
+                    "nedTelephonenumber": {
+                        "type": "string"
+                    },
+                    "nedParentOrgPath": {
+                        "type": "string"
+                    },
+                    "nedParentNihsac": {
+                        "type": "string"
+                    },
+                    "nedParentOrgName": {
+                        "type": "string"
+                    },
+                    "nedSupervisorPreferredFirstName": {
+                        "type": "string"
+                    },
+                    "nedSupervisorPreferredLastName": {
+                        "type": "string"
+                    },
+                    "nedSupervisorOrgPath": {
+                        "type": "string"
+                    },
+                    "nedSupervisorTelephoneNumber": {
+                        "type": "string"
+                    },
+                    "nedSupervisorEmailAddr": {
+                        "type": "string"
+                    },
+                    "nedSupervisorAgencyId": {
+                        "type": "string"
+                    },
+                    "nedSupervisorNihId": {
+                        "type": "string"
+                    },
+                    "accountCreated": {
+                        "type": "boolean"
+                    },
+                    "nedPreferredFullNameLF": {
+                        "type": "string"
+                    },
+                    "nedLegalFullNameLF": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "i2eFullName": {
+                        "type": "string"
+                    },
+                    "i2eFirstName": {
+                        "type": "string"
+                    },
+                    "i2eLastName": {
+                        "type": "string"
+                    },
+                    "i2eMiName": {
+                        "type": "string"
+                    },
+                    "typeAheadDisplayName": {
+                        "type": "string"
+                    },
+                    "nedLegalFullNameLFM": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmModifyUserDto": {
+                "type": "object",
+                "properties": {
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "actionUserId": {
+                        "type": "string"
+                    },
+                    "deactivatedRoles": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "addedRoles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NciPersonOrgRolesDto"
+                        }
+                    },
+                    "deactivatedCas": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "addedCas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PdCancerActivityDto"
+                        }
+                    },
+                    "addedMonitoredCas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CancerActivityPeopleTDto"
+                        }
+                    },
+                    "deactivatedMonitoredCas": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "addedGtaCas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PdCancerActivityDto"
+                        }
+                    },
+                    "deactivatedGtaCas": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "miName": {
+                        "type": "string"
+                    },
+                    "userNameUpdated": {
+                        "type": "boolean"
+                    },
+                    "previousFullName": {
+                        "type": "string"
+                    },
+                    "newFullName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmOrgFilterDto": {
+                "type": "object",
+                "properties": {
+                    "includeParentIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "excludeParentIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "ogaBranchesOnly": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "EmUserRoleInfoVwDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "nciUserId": {
+                        "type": "string"
+                    },
+                    "roleName": {
+                        "type": "string"
+                    },
+                    "roleCode": {
+                        "type": "string"
+                    },
+                    "orgId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgName": {
+                        "type": "string"
+                    },
+                    "roleUsageCode": {
+                        "type": "string"
+                    },
+                    "updatedByUserId": {
+                        "type": "string"
+                    },
+                    "updatedBy": {
+                        "type": "string"
+                    },
+                    "updatedByEmailId": {
+                        "type": "string"
+                    },
+                    "roleStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "roleEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "EmPortfolioRolesDto": {
+                "type": "object",
+                "properties": {
+                    "impaciiUserId": {
+                        "type": "string"
+                    },
+                    "roleName": {
+                        "type": "string"
+                    },
+                    "orgId": {
+                        "type": "string"
+                    },
+                    "createdByUserId": {
+                        "type": "string"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdByFullName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmI2eUserChangeHistoryVwDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "updateActionId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "nciUserId": {
+                        "type": "string"
+                    },
+                    "actionName": {
+                        "type": "string"
+                    },
+                    "actionText": {
+                        "type": "string"
+                    },
+                    "actionDescription": {
+                        "type": "string"
+                    },
+                    "actionDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedByUserId": {
+                        "type": "string"
+                    },
+                    "updatedBy": {
+                        "type": "string"
+                    },
+                    "updatedByEmailId": {
+                        "type": "string"
+                    },
+                    "assignedCaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "assignedCaCode": {
+                        "type": "string"
+                    },
+                    "assignedCaDesc": {
+                        "type": "string"
+                    },
+                    "assignedCaStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "assignedEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "monitoredCaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "monitoredCaCode": {
+                        "type": "string"
+                    },
+                    "monitoredCaDesc": {
+                        "type": "string"
+                    },
+                    "monitoredCaStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "monitoredCaEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "roleStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "roleEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "roleCode": {
+                        "type": "string"
+                    },
+                    "roleName": {
+                        "type": "string"
+                    },
+                    "orgId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgName": {
+                        "type": "string"
+                    },
+                    "orgAbbreviation": {
+                        "type": "string"
+                    },
+                    "pdOrSpecCode": {
+                        "type": "string"
+                    },
+                    "gtaCaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gtaCaCode": {
+                        "type": "string"
+                    },
+                    "gtaCaDesc": {
+                        "type": "string"
+                    },
+                    "gtaCaStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "gtaCaEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "previousValue": {
+                        "type": "string"
+                    },
+                    "newValue": {
+                        "type": "string"
+                    },
+                    "changeObjectType": {
+                        "type": "string"
+                    },
+                    "changesMadeDescription": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmCaUserVwDto": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "nciUserId": {
+                        "type": "string"
+                    },
+                    "cancerActivity": {
+                        "type": "string"
+                    },
+                    "caCode": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedByUserId": {
+                        "type": "string"
+                    },
+                    "updatedBy": {
+                        "type": "string"
+                    },
+                    "updatedByEmailId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "KeyValueBean": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NedOrgunitVwDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nihSac": {
+                        "type": "string"
+                    },
+                    "nihOrgAcronym": {
+                        "type": "string"
+                    },
+                    "nihOrgName": {
+                        "type": "string"
+                    },
+                    "nihOrgPath": {
+                        "type": "string"
+                    },
+                    "nihOuAcronym": {
+                        "type": "string"
+                    },
+                    "nihOuName": {
+                        "type": "string"
+                    },
+                    "nihParentSac": {
+                        "type": "string"
+                    },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "EmOrgDocDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgPath": {
+                        "type": "string"
+                    },
+                    "noeOrgType": {
+                        "type": "string"
+                    },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "abbreviation": {
+                        "type": "string"
+                    },
+                    "docAbbreviation": {
+                        "type": "string"
+                    },
+                    "docOrgId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NciRolesTDto": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "roleDescription": {
+                        "type": "string"
+                    },
+                    "nbaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nbaName": {
+                        "type": "string"
+                    },
+                    "ldapCode": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "assignableFlag": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmAuditAccountsVwDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "auditId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "impaciiUserId": {
+                        "type": "string"
+                    },
+                    "nihNetworkId": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "nedLastName": {
+                        "type": "string"
+                    },
+                    "nedFirstName": {
+                        "type": "string"
+                    },
+                    "nedPreferredLastName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFirstName": {
+                        "type": "string"
+                    },
+                    "impaciiLastName": {
+                        "type": "string"
+                    },
+                    "impaciiFirstName": {
+                        "type": "string"
+                    },
+                    "nedEmailAddress": {
+                        "type": "string"
+                    },
+                    "parentNedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedIc": {
+                        "type": "string"
+                    },
+                    "nciDoc": {
+                        "type": "string"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdByUserId": {
+                        "type": "string"
+                    },
+                    "createdByFullName": {
+                        "type": "string"
+                    },
+                    "deletedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deletedByUserId": {
+                        "type": "string"
+                    },
+                    "deletedByFullName": {
+                        "type": "string"
+                    },
+                    "deactivationComments": {
+                        "type": "string"
+                    },
+                    "secondaryOrgText": {
+                        "type": "string"
+                    },
+                    "amsFedSupervisor": {
+                        "type": "string"
+                    },
+                    "amsFedEmail": {
+                        "type": "string"
+                    },
+                    "amsOrgDept": {
+                        "type": "string"
+                    },
+                    "lastLoginDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "inactiveUserFlag": {
+                        "type": "string"
+                    },
+                    "activeActionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "activeSubActionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "activeNotes": {
+                        "type": "string"
+                    },
+                    "activeUnsubmittedFlag": {
+                        "type": "string"
+                    },
+                    "activeSubmittedBy": {
+                        "type": "string"
+                    },
+                    "activeSubmittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "newActionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "newNotes": {
+                        "type": "string"
+                    },
+                    "newUnsubmittedFlag": {
+                        "type": "string"
+                    },
+                    "newSubmittedBy": {
+                        "type": "string"
+                    },
+                    "newSubmittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deletedActionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "deletedNotes": {
+                        "type": "string"
+                    },
+                    "deletedUnsubmittedFlag": {
+                        "type": "string"
+                    },
+                    "deletedSubmittedBy": {
+                        "type": "string"
+                    },
+                    "deletedSubmittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "inactiveActionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "inactiveNotes": {
+                        "type": "string"
+                    },
+                    "inactiveUnsubmittedFlag": {
+                        "type": "string"
+                    },
+                    "inactiveSubmittedBy": {
+                        "type": "string"
+                    },
+                    "inactiveSubmittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deletedByParentOrgPath": {
+                        "type": "string"
+                    },
+                    "deletedByNciDoc": {
+                        "type": "string"
+                    },
+                    "sodFlag": {
+                        "type": "string"
+                    },
+                    "icDiffFlag": {
+                        "type": "string"
+                    },
+                    "nedInactiveFlag": {
+                        "type": "string"
+                    },
+                    "lastNameDiffFlag": {
+                        "type": "string"
+                    },
+                    "transferToOrgPath": {
+                        "type": "string"
+                    },
+                    "transferFromOrgPath": {
+                        "type": "string"
+                    },
+                    "impaciiActiveStatusFlag": {
+                        "type": "string"
+                    },
+                    "transferredDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deletedTransferToOrgPath": {
+                        "type": "string"
+                    },
+                    "deletedTransferFromOrgPath": {
+                        "type": "string"
+                    },
+                    "statusCode": {
+                        "type": "boolean"
+                    },
+                    "statusDescription": {
+                        "type": "string"
+                    },
+                    "activeCategoryFlag": {
+                        "type": "string"
+                    },
+                    "newCategoryFlag": {
+                        "type": "string"
+                    },
+                    "deletedCategoryFlag": {
+                        "type": "string"
+                    },
+                    "inactiveCategoryFlag": {
+                        "type": "string"
+                    },
+                    "gmSodFlag": {
+                        "type": "string"
+                    },
+                    "deactivationReqId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "deactivationReqFullName": {
+                        "type": "string"
+                    },
+                    "deactivationReqEmailAddr": {
+                        "type": "string"
+                    },
+                    "deactivationReqCreateDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "discrepancies": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "EmDiscrepancyPayloadDto": {
+                "type": "object",
+                "properties": {
+                    "nciPersonDto": {
+                        "$ref": "#/components/schemas/NciPersonDto"
+                    },
+                    "emPortfolioVwDto": {
+                        "$ref": "#/components/schemas/EmPortfolioVwDto"
+                    },
+                    "emI2ePortfolioVwDto": {
+                        "$ref": "#/components/schemas/EmI2ePortfolioVwDto"
+                    },
+                    "emI2eAuditAccountsVwDtos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmI2eAuditAccountsVwDto"
+                        }
+                    },
+                    "emAuditAccountsVwDtos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmAuditAccountsVwDto"
+                        }
+                    },
+                    "discrepancies": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "discrepancyTypes": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/EmDiscrepancyTypesTDto"
+                        }
+                    }
+                }
+            },
+            "EmDiscrepancyTypesTDto": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "shortDescrip": {
+                        "type": "string"
+                    },
+                    "longDescrip": {
+                        "type": "string"
+                    },
+                    "resolutionText": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "severityLevel": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmI2eAuditAccountsVwDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "auditId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nihNetworkId": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "nedLastName": {
+                        "type": "string"
+                    },
+                    "nedFirstName": {
+                        "type": "string"
+                    },
+                    "nedPreferredLastName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFirstName": {
+                        "type": "string"
+                    },
+                    "i2ELastName": {
+                        "type": "string"
+                    },
+                    "i2EFirstName": {
+                        "type": "string"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "nedEmailAddress": {
+                        "type": "string"
+                    },
+                    "parentNedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedIc": {
+                        "type": "string"
+                    },
+                    "nciDoc": {
+                        "type": "string"
+                    },
+                    "lastUpdByFullName": {
+                        "type": "string"
+                    },
+                    "actionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "subActionId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "unsubmittedFlag": {
+                        "type": "string"
+                    },
+                    "submittedBy": {
+                        "type": "string"
+                    },
+                    "submittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "i2EOnlyFlag": {
+                        "type": "string"
+                    },
+                    "sodFlag": {
+                        "type": "string"
+                    },
+                    "nedInactiveFlag": {
+                        "type": "string"
+                    },
+                    "noActiveRoleFlag": {
+                        "type": "string"
+                    },
+                    "activeRoleRemainderFlag": {
+                        "type": "string"
+                    },
+                    "transferToOrgPath": {
+                        "type": "string"
+                    },
+                    "transferFromOrgPath": {
+                        "type": "string"
+                    },
+                    "i2EActiveStatusFlag": {
+                        "type": "string"
+                    },
+                    "transferredDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "icDiffFlag": {
+                        "type": "string"
+                    },
+                    "pdMissingI2Flag": {
+                        "type": "string"
+                    },
+                    "gsMissingI2Flag": {
+                        "type": "string"
+                    },
+                    "deactivationReqId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "deactivationReqFullName": {
+                        "type": "string"
+                    },
+                    "deactivationReqEmailAddr": {
+                        "type": "string"
+                    },
+                    "deactivationReqCreateDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "discrepancies": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "EmI2ePortfolioVwDto": {
+                "type": "object",
+                "properties": {
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "oracleId": {
+                        "type": "string"
+                    },
+                    "nihNetworkId": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "i2ELastName": {
+                        "type": "string"
+                    },
+                    "i2EFirstName": {
+                        "type": "string"
+                    },
+                    "nedLastName": {
+                        "type": "string"
+                    },
+                    "nedFirstName": {
+                        "type": "string"
+                    },
+                    "nedPreferredLastName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFirstName": {
+                        "type": "string"
+                    },
+                    "nedEmailAddress": {
+                        "type": "string"
+                    },
+                    "parentNedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedIc": {
+                        "type": "string"
+                    },
+                    "nedActiveFlag": {
+                        "type": "string"
+                    },
+                    "nciDoc": {
+                        "type": "string"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastUpdByFullName": {
+                        "type": "string"
+                    },
+                    "i2EOnlyFlag": {
+                        "type": "string"
+                    },
+                    "pdMissingI2Flag": {
+                        "type": "string"
+                    },
+                    "gsMissingI2Flag": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "notesSubmittedByFullName": {
+                        "type": "string"
+                    },
+                    "notesSubmittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "sodFlag": {
+                        "type": "string"
+                    },
+                    "nedInactiveFlag": {
+                        "type": "string"
+                    },
+                    "noActiveRoleFlag": {
+                        "type": "string"
+                    },
+                    "icDiffFlag": {
+                        "type": "string"
+                    },
+                    "nciExceptionFlag": {
+                        "type": "string"
+                    },
+                    "actionGrantMgrFlag": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EmPortfolioVwDto": {
+                "type": "object",
+                "properties": {
+                    "impaciiUserId": {
+                        "type": "string"
+                    },
+                    "nihNetworkId": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "impaciiLastName": {
+                        "type": "string"
+                    },
+                    "impaciiFirstName": {
+                        "type": "string"
+                    },
+                    "nedLastName": {
+                        "type": "string"
+                    },
+                    "nedFirstName": {
+                        "type": "string"
+                    },
+                    "nedPreferredLastName": {
+                        "type": "string"
+                    },
+                    "nedPreferredFirstName": {
+                        "type": "string"
+                    },
+                    "nedEmailAddress": {
+                        "type": "string"
+                    },
+                    "parentNedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedOrgPath": {
+                        "type": "string"
+                    },
+                    "nedIc": {
+                        "type": "string"
+                    },
+                    "nedActiveFlag": {
+                        "type": "string"
+                    },
+                    "nciDoc": {
+                        "type": "string"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdByUserId": {
+                        "type": "string"
+                    },
+                    "createdByFullName": {
+                        "type": "string"
+                    },
+                    "deletedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deletedByUserId": {
+                        "type": "string"
+                    },
+                    "deletedByFullName": {
+                        "type": "string"
+                    },
+                    "deactivationComments": {
+                        "type": "string"
+                    },
+                    "deletedByParentOrgPath": {
+                        "type": "string"
+                    },
+                    "deletedByNciDoc": {
+                        "type": "string"
+                    },
+                    "secondaryOrgText": {
+                        "type": "string"
+                    },
+                    "amsOrgDept": {
+                        "type": "string"
+                    },
+                    "amsFedSupervisor": {
+                        "type": "string"
+                    },
+                    "amsFedEmail": {
+                        "type": "string"
+                    },
+                    "lastLoginDate": {
+                        "type": "string"
+                    },
+                    "impaciiOnlyFlag": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "notesSubmittedByFullName": {
+                        "type": "string"
+                    },
+                    "notesSubmittedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "sodFlag": {
+                        "type": "string"
+                    },
+                    "icDiffFlag": {
+                        "type": "string"
+                    },
+                    "nedInactiveFlag": {
+                        "type": "string"
+                    },
+                    "lastNameDiffFlag": {
+                        "type": "string"
+                    },
+                    "activeStatusFlag": {
+                        "type": "string"
+                    },
+                    "statusCode": {
+                        "type": "boolean"
+                    },
+                    "statusDescription": {
+                        "type": "string"
+                    },
+                    "gmSodFlag": {
+                        "type": "string"
+                    },
+                    "nciExceptionFlag": {
+                        "type": "string"
+                    },
+                    "actionGrantMgrFlag": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmPortfolioRolesDto"
+                        }
+                    },
+                    "programOfficial": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "CancerActivityDocsVwDto": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "cayDescription": {
+                        "type": "string"
+                    },
+                    "nonId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nonAbbreviation": {
+                        "type": "string"
+                    },
+                    "nonDescription": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "BusinessAreasDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "activeFlag": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

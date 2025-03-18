@@ -1,1 +1,1191 @@
-{"openapi":"3.0.1","info":{"title":"I2E YourGrants Web Services API","description":"I2EYGWS Web Services","license":{"name":"Apache 2.0","url":"http://springdoc.org"},"version":"v2.1.0"},"servers":[{"url":"https://i2e-dev.nci.nih.gov/i2eygws","description":"dev"},{"url":"https://i2e-test.nci.nih.gov/i2eygws","description":"test"},{"url":"https://i2e-stage.nci.nih.gov/i2eygws","description":"stage"},{"url":"https://i2e.nci.nih.gov/i2eygws","description":"prod"}],"paths":{"/api/v1/yourgrants/set-system-default-query":{"put":{"tags":["yourgrants-controller"],"operationId":"setSystemDefaultQuery","parameters":[{"name":"queryName","in":"query","required":true,"schema":{"type":"string"}},{"name":"userId","in":"query","required":true,"schema":{"type":"string"}},{"name":"defaultFlag","in":"query","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}}}}}}},"/api/v1/yourgrants/search":{"post":{"tags":["yourgrants-controller"],"operationId":"searchYourGrants","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/YourGrantsSearchParamsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GenericDataTablesDtoYourGrantsSearchParamsDtoListNciGrantQueryVwDto"}}}}}}},"/api/v1/yourgrants/save-query":{"post":{"tags":["yourgrants-controller"],"operationId":"saveYGQuery","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/GrantQueriesTDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GrantQueriesTDto"}}}}}}},"/api/v1/yourgrants/export/your-grants":{"post":{"tags":["yourgrants-controller"],"operationId":"exportGrantSearchResults","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/YourGrantsSearchParamsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"text/plain":{"schema":{"type":"object"}}}}}}},"/api/v1/yourgrants/user-ca-docs/{npnId}":{"get":{"tags":["yourgrants-controller"],"operationId":"getUserCaDocs","parameters":[{"name":"npnId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"programRolesOnly","in":"query","required":false,"schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CancerActivityDocsVwDto"}}}}}}}},"/api/v1/yourgrants/set-default-query":{"get":{"tags":["yourgrants-controller"],"operationId":"setDefaultQuery","parameters":[{"name":"queryId","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}}}}}}},"/api/v1/yourgrants/get-user-query-details/{queryId}":{"get":{"tags":["yourgrants-controller"],"operationId":"getUserQueryDetails","parameters":[{"name":"queryId","in":"path","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GrantQueriesTDto"}}}}}}},"/api/v1/yourgrants/get-user-queries":{"get":{"tags":["yourgrants-controller"],"operationId":"getUserQueries","parameters":[{"name":"userId","in":"query","required":true,"schema":{"type":"string"}},{"name":"queryType","in":"query","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/GrantQueriesTDto"}}}}}}}},"/api/v1/yourgrants/get-grant/{grantNumber}":{"get":{"tags":["yourgrants-controller"],"operationId":"getGrant","parameters":[{"name":"grantNumber","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NciGrantQueryVwDto"}}}}}}},"/api/v1/yourgrants/docs/ca/":{"get":{"tags":["yourgrants-controller"],"operationId":"getDocsForCas","parameters":[{"name":"cas","in":"query","required":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CancerActivityDocsVwDto"}}}}}}}},"/api/v1/yourgrants/delete-query":{"get":{"tags":["yourgrants-controller"],"operationId":"deleteGrantQuery","parameters":[{"name":"queryId","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}}}}}}}},"components":{"schemas":{"Column":{"type":"object","properties":{"data":{"type":"string"},"name":{"type":"string"},"searchable":{"type":"boolean"},"orderable":{"type":"boolean"},"search":{"$ref":"#/components/schemas/Search"}}},"Order":{"type":"object","properties":{"column":{"type":"integer","format":"int32"},"columnName":{"type":"string"},"dir":{"type":"string"}}},"Search":{"type":"object","properties":{"value":{"type":"string"},"regex":{"type":"boolean"}}},"YourGrantsSearchParamsDto":{"type":"object","properties":{"draw":{"type":"integer","format":"int32"},"columns":{"type":"array","items":{"$ref":"#/components/schemas/Column"}},"order":{"type":"array","items":{"$ref":"#/components/schemas/Order"}},"start":{"type":"integer","format":"int32"},"length":{"type":"integer","format":"int32"},"search":{"$ref":"#/components/schemas/Search"},"searchCategory":{"type":"string"},"grantType":{"type":"string"},"grantMech":{"type":"string"},"grantIc":{"type":"string"},"grantSerial":{"type":"string"},"grantYear":{"type":"string"},"grantSuffix":{"type":"string"},"withinPayline":{"type":"boolean"},"officiallySelectedToBePaid":{"type":"boolean"},"fyFrom":{"type":"integer","format":"int32"},"fyTo":{"type":"integer","format":"int32"},"projectTitle":{"type":"string"},"applId":{"type":"string"},"i2Status":{"type":"string"},"foa":{"type":"string"},"ncabFrom":{"type":"string"},"ncabTo":{"type":"string"},"budgetStartDate":{"type":"string","format":"date-time"},"budgetEndDate":{"type":"string","format":"date-time"},"budgetEndDateInFuture":{"type":"boolean"},"irgPercentileFrom":{"type":"number","format":"double"},"irgPercentileTo":{"type":"number","format":"double"},"priorityScoreFrom":{"type":"integer","format":"int32"},"priorityScoreTo":{"type":"integer","format":"int32"},"notDiscussed":{"type":"boolean"},"activeGrants":{"type":"boolean"},"inactiveGrants":{"type":"boolean"},"multiYearFunded":{"type":"boolean"},"grantsWithBars":{"type":"boolean"},"hasAttentionFlags":{"type":"boolean"},"gdsFlag":{"type":"boolean"},"hssError":{"type":"boolean"},"hasFprOrFrpprDocument":{"type":"boolean"},"irgCode":{"type":"string"},"irgFlexCode":{"type":"string"},"groupCode":{"type":"string"},"sraDesignatorCode":{"type":"string"},"sraFlexCode":{"type":"string"},"groupExtension":{"type":"string"},"intentToPay":{"type":"boolean"},"administrativeSupplements":{"type":"boolean"},"piName":{"type":"string"},"institutionName":{"type":"string"},"earlyStageInvestigator":{"type":"string"},"newInvestigator":{"type":"string"},"pdNpnId":{"type":"integer","format":"int32"},"pdNpeId":{"type":"integer","format":"int32"},"pdNpeIds":{"type":"array","items":{"type":"integer","format":"int32"}},"cayCodes":{"type":"array","items":{"type":"string"}},"doc":{"type":"array","items":{"type":"string"}},"greensheetStatus":{"type":"string"},"greensheetEligibleForSubmission":{"type":"boolean"},"greensheetAwaitingSubmission":{"type":"boolean"},"gmsNpnId":{"type":"integer","format":"int32"},"gmsNpeId":{"type":"integer","format":"int32"},"roleOrgs":{"type":"array","items":{"type":"string"}},"applIds":{"type":"array","items":{"type":"integer","format":"int32"}},"clinicalTrials":{"type":"string"},"clinicalTrialsId":{"type":"string"},"nosi":{"type":"string"}}},"GenericDataTablesDtoYourGrantsSearchParamsDtoListNciGrantQueryVwDto":{"type":"object","properties":{"criteria":{"$ref":"#/components/schemas/YourGrantsSearchParamsDto"},"data":{"type":"array","items":{"$ref":"#/components/schemas/NciGrantQueryVwDto"}},"draw":{"type":"integer","format":"int32"},"start":{"type":"integer","format":"int32"},"length":{"type":"integer","format":"int32"},"recordsTotal":{"type":"integer","format":"int64"},"recordsFiltered":{"type":"integer","format":"int64"},"error":{"type":"string"}}},"NciGrantQueryVwDto":{"type":"object","properties":{"line1Addr":{"type":"string"},"line2Addr":{"type":"string"},"line3Addr":{"type":"string"},"line4Addr":{"type":"string"},"line5Addr":{"type":"string"},"barFlag":{"type":"string"},"cayCode":{"type":"string"},"roleUsageCode":{"type":"string"},"pdNpeId":{"type":"integer","format":"int32"},"pdNpnId":{"type":"integer","format":"int32"},"pdLastName":{"type":"string"},"pdFirstName":{"type":"string"},"pdMiName":{"type":"string"},"pdEmailAddress":{"type":"string"},"hncCode":{"type":"string"},"doc":{"type":"string"},"gmsCode":{"type":"string"},"gmsNpeId":{"type":"integer","format":"int32"},"gmsNpnId":{"type":"integer","format":"int32"},"gmsLastName":{"type":"string"},"gmsFirstName":{"type":"string"},"gmsMiName":{"type":"string"},"gmsUserId":{"type":"string"},"gmsEmailAddr":{"type":"string"},"bkupGmsCode":{"type":"string"},"bkupGmsNpeId":{"type":"integer","format":"int32"},"bkupGmsNpnId":{"type":"integer","format":"int32"},"bkupGmsLastName":{"type":"string"},"bkupGmsFirstName":{"type":"string"},"bkupGmsMiName":{"type":"string"},"bkupGmsUserId":{"type":"string"},"bkupGmsEmailAddr":{"type":"string"},"bkupSpecNpeId":{"type":"integer","format":"int32"},"onControlFlag":{"type":"string"},"pgmFormStatus":{"type":"string"},"withinCurrentPaylineFlag":{"type":"string"},"officialPayStatus":{"type":"string"},"arraEligibleFlag":{"type":"string"},"arraEcApprvdYrs":{"type":"integer","format":"int32"},"pgmGsReadyFlag":{"type":"string"},"gpmatsDayCountNum":{"type":"integer","format":"int32"},"gdsFlag":{"type":"string"},"type6PriorAwardFlag":{"type":"string"},"gpmatsClosedFlag":{"type":"string"},"gpmatsCancelledFlag":{"type":"string"},"pgmFormExistsFlag":{"type":"string"},"applId":{"type":"integer","format":"int32"},"fullGrantNum":{"type":"string"},"projectTitle":{"type":"string"},"rfaPaNumber":{"type":"string"},"nihGuideAddr":{"type":"string"},"councilMeetingDate":{"type":"string"},"firstName":{"type":"string"},"miName":{"type":"string"},"lastName":{"type":"string"},"esiApplEligFlag":{"type":"string"},"newInvestigatorCode":{"type":"string"},"irgPercentileNum":{"type":"number","format":"double"},"priorityScoreNum":{"type":"integer","format":"int32"},"irgCode":{"type":"string"},"irgFlexCode":{"type":"string"},"groupCode":{"type":"string"},"groupExtCode":{"type":"string"},"sraDesignatorCode":{"type":"string"},"sraFlexCode":{"type":"string"},"specialConsiderCode":{"type":"string"},"applTypeCode":{"type":"string"},"adminPhsOrgCode":{"type":"string"},"activityCode":{"type":"string"},"serialNum":{"type":"integer","format":"int32"},"supportYear":{"type":"integer","format":"int32"},"suffixCode":{"type":"string"},"applStatusCode":{"type":"string"},"applStatusGroupCode":{"type":"string"},"formerNum":{"type":"string"},"projectPeriodStartDate":{"type":"string","format":"date-time"},"projectPeriodEndDate":{"type":"string","format":"date-time"},"budgetStartDate":{"type":"string","format":"date-time"},"budgetEndDate":{"type":"string","format":"date-time"},"awdNoticeIssuedDate":{"type":"string","format":"date-time"},"latestEncumbranceDate":{"type":"string","format":"date-time"},"fy":{"type":"integer","format":"int32"},"ipf":{"type":"integer","format":"int32"},"orgName":{"type":"string"},"institutionCity":{"type":"string"},"institutionState":{"type":"string"},"attentionFlag":{"type":"boolean"},"intentToPayCode":{"type":"string"},"multiYearAwardFlag":{"type":"string"},"fprSubmittedFlag":{"type":"string"},"frpprSubmittedFlag":{"type":"string"},"rpprSubmittedFlag":{"type":"string"},"irgRecommendationCode":{"type":"string"},"piEmailAddr":{"type":"string"},"jitSubmittedFlag":{"type":"string"},"jitSubmittedFileDate":{"type":"string","format":"date-time"},"gsNotAvailableFlag":{"type":"boolean"},"gsNotAvailableReason":{"type":"string"},"clinicalTrials":{"type":"string"},"clinicalTrialsId":{"type":"string"},"nctInfo":{"type":"string"},"nciLinkExist":{"type":"boolean"},"iconSortOrder":{"type":"integer","format":"int32"},"nociNum":{"type":"string"},"nociNihAddress":{"type":"string"},"fundingDocumentExist":{"type":"string"}}},"GrantQueriesTDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"queryName":{"type":"string"},"queryDesc":{"type":"string"},"queryType":{"type":"string"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"queryJson":{"type":"string"},"defaultFlag":{"type":"string"},"params":{"type":"array","items":{"$ref":"#/components/schemas/QueryParametersTDto"}}}},"QueryParametersTDto":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"parameterName":{"type":"string"},"parameterValue":{"type":"string"},"createUserId":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"lastChangeDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"queryId":{"type":"integer","format":"int32"}}},"CancerActivityDocsVwDto":{"type":"object","properties":{"code":{"type":"string"},"cayDescription":{"type":"string"},"nonId":{"type":"integer","format":"int32"},"nonAbbreviation":{"type":"string"},"nonDescription":{"type":"string"},"startDate":{"type":"string","format":"date-time"},"endDate":{"type":"string","format":"date-time"}}}}}}
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "I2E YourGrants Web Services API",
+        "description": "I2EYGWS Web Services",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
+        },
+        "version": "v2.1.0"
+    },
+    "servers": [
+        {
+            "url": "https://i2e-dev.nci.nih.gov/i2eygws",
+            "description": "dev"
+        },
+        {
+            "url": "https://i2e-test.nci.nih.gov/i2eygws",
+            "description": "test"
+        },
+        {
+            "url": "https://i2e-stage.nci.nih.gov/i2eygws",
+            "description": "stage"
+        },
+        {
+            "url": "https://i2e.nci.nih.gov/i2eygws",
+            "description": "prod"
+        }
+    ],
+    "paths": {
+        "/api/v1/yourgrants/set-system-default-query": {
+            "put": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "setSystemDefaultQuery",
+                "parameters": [
+                    {
+                        "name": "queryName",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "defaultFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/search": {
+            "post": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "searchYourGrants",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/YourGrantsSearchParamsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenericDataTablesDtoYourGrantsSearchParamsDtoListNciGrantQueryVwDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/save-query": {
+            "post": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "saveYGQuery",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GrantQueriesTDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrantQueriesTDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/export/your-grants": {
+            "post": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "exportGrantSearchResults",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/YourGrantsSearchParamsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/user-ca-docs/{npnId}": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "getUserCaDocs",
+                "parameters": [
+                    {
+                        "name": "npnId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "programRolesOnly",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CancerActivityDocsVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/set-default-query": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "setDefaultQuery",
+                "parameters": [
+                    {
+                        "name": "queryId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/get-user-query-details/{queryId}": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "getUserQueryDetails",
+                "parameters": [
+                    {
+                        "name": "queryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrantQueriesTDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/get-user-queries": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "getUserQueries",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "queryType",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrantQueriesTDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/get-grant/{grantNumber}": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "getGrant",
+                "parameters": [
+                    {
+                        "name": "grantNumber",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NciGrantQueryVwDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/docs/ca/": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "getDocsForCas",
+                "parameters": [
+                    {
+                        "name": "cas",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CancerActivityDocsVwDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/yourgrants/delete-query": {
+            "get": {
+                "tags": [
+                    "yourgrants-controller"
+                ],
+                "operationId": "deleteGrantQuery",
+                "parameters": [
+                    {
+                        "name": "queryId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Column": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "searchable": {
+                        "type": "boolean"
+                    },
+                    "orderable": {
+                        "type": "boolean"
+                    },
+                    "search": {
+                        "$ref": "#/components/schemas/Search"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "column": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "columnName": {
+                        "type": "string"
+                    },
+                    "dir": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Search": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    },
+                    "regex": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "YourGrantsSearchParamsDto": {
+                "type": "object",
+                "properties": {
+                    "draw": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Column"
+                        }
+                    },
+                    "order": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    },
+                    "start": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "length": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "search": {
+                        "$ref": "#/components/schemas/Search"
+                    },
+                    "searchCategory": {
+                        "type": "string"
+                    },
+                    "grantType": {
+                        "type": "string"
+                    },
+                    "grantMech": {
+                        "type": "string"
+                    },
+                    "grantIc": {
+                        "type": "string"
+                    },
+                    "grantSerial": {
+                        "type": "string"
+                    },
+                    "grantYear": {
+                        "type": "string"
+                    },
+                    "grantSuffix": {
+                        "type": "string"
+                    },
+                    "withinPayline": {
+                        "type": "boolean"
+                    },
+                    "officiallySelectedToBePaid": {
+                        "type": "boolean"
+                    },
+                    "fyFrom": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "fyTo": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "projectTitle": {
+                        "type": "string"
+                    },
+                    "applId": {
+                        "type": "string"
+                    },
+                    "i2Status": {
+                        "type": "string"
+                    },
+                    "foa": {
+                        "type": "string"
+                    },
+                    "ncabFrom": {
+                        "type": "string"
+                    },
+                    "ncabTo": {
+                        "type": "string"
+                    },
+                    "budgetStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "budgetEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "budgetEndDateInFuture": {
+                        "type": "boolean"
+                    },
+                    "irgPercentileFrom": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "irgPercentileTo": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "priorityScoreFrom": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "priorityScoreTo": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "notDiscussed": {
+                        "type": "boolean"
+                    },
+                    "activeGrants": {
+                        "type": "boolean"
+                    },
+                    "inactiveGrants": {
+                        "type": "boolean"
+                    },
+                    "multiYearFunded": {
+                        "type": "boolean"
+                    },
+                    "grantsWithBars": {
+                        "type": "boolean"
+                    },
+                    "hasAttentionFlags": {
+                        "type": "boolean"
+                    },
+                    "gdsFlag": {
+                        "type": "boolean"
+                    },
+                    "hssError": {
+                        "type": "boolean"
+                    },
+                    "hasFprOrFrpprDocument": {
+                        "type": "boolean"
+                    },
+                    "irgCode": {
+                        "type": "string"
+                    },
+                    "irgFlexCode": {
+                        "type": "string"
+                    },
+                    "groupCode": {
+                        "type": "string"
+                    },
+                    "sraDesignatorCode": {
+                        "type": "string"
+                    },
+                    "sraFlexCode": {
+                        "type": "string"
+                    },
+                    "groupExtension": {
+                        "type": "string"
+                    },
+                    "intentToPay": {
+                        "type": "boolean"
+                    },
+                    "administrativeSupplements": {
+                        "type": "boolean"
+                    },
+                    "piName": {
+                        "type": "string"
+                    },
+                    "institutionName": {
+                        "type": "string"
+                    },
+                    "earlyStageInvestigator": {
+                        "type": "string"
+                    },
+                    "newInvestigator": {
+                        "type": "string"
+                    },
+                    "pdNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pdNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pdNpeIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "cayCodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "doc": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "greensheetStatus": {
+                        "type": "string"
+                    },
+                    "greensheetEligibleForSubmission": {
+                        "type": "boolean"
+                    },
+                    "greensheetAwaitingSubmission": {
+                        "type": "boolean"
+                    },
+                    "gmsNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gmsNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "roleOrgs": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "applIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "clinicalTrials": {
+                        "type": "string"
+                    },
+                    "clinicalTrialsId": {
+                        "type": "string"
+                    },
+                    "nosi": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GenericDataTablesDtoYourGrantsSearchParamsDtoListNciGrantQueryVwDto": {
+                "type": "object",
+                "properties": {
+                    "criteria": {
+                        "$ref": "#/components/schemas/YourGrantsSearchParamsDto"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NciGrantQueryVwDto"
+                        }
+                    },
+                    "draw": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "start": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "length": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "recordsTotal": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "recordsFiltered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "error": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NciGrantQueryVwDto": {
+                "type": "object",
+                "properties": {
+                    "line1Addr": {
+                        "type": "string"
+                    },
+                    "line2Addr": {
+                        "type": "string"
+                    },
+                    "line3Addr": {
+                        "type": "string"
+                    },
+                    "line4Addr": {
+                        "type": "string"
+                    },
+                    "line5Addr": {
+                        "type": "string"
+                    },
+                    "barFlag": {
+                        "type": "string"
+                    },
+                    "cayCode": {
+                        "type": "string"
+                    },
+                    "roleUsageCode": {
+                        "type": "string"
+                    },
+                    "pdNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pdNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pdLastName": {
+                        "type": "string"
+                    },
+                    "pdFirstName": {
+                        "type": "string"
+                    },
+                    "pdMiName": {
+                        "type": "string"
+                    },
+                    "pdEmailAddress": {
+                        "type": "string"
+                    },
+                    "hncCode": {
+                        "type": "string"
+                    },
+                    "doc": {
+                        "type": "string"
+                    },
+                    "gmsCode": {
+                        "type": "string"
+                    },
+                    "gmsNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gmsNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gmsLastName": {
+                        "type": "string"
+                    },
+                    "gmsFirstName": {
+                        "type": "string"
+                    },
+                    "gmsMiName": {
+                        "type": "string"
+                    },
+                    "gmsUserId": {
+                        "type": "string"
+                    },
+                    "gmsEmailAddr": {
+                        "type": "string"
+                    },
+                    "bkupGmsCode": {
+                        "type": "string"
+                    },
+                    "bkupGmsNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "bkupGmsNpnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "bkupGmsLastName": {
+                        "type": "string"
+                    },
+                    "bkupGmsFirstName": {
+                        "type": "string"
+                    },
+                    "bkupGmsMiName": {
+                        "type": "string"
+                    },
+                    "bkupGmsUserId": {
+                        "type": "string"
+                    },
+                    "bkupGmsEmailAddr": {
+                        "type": "string"
+                    },
+                    "bkupSpecNpeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "onControlFlag": {
+                        "type": "string"
+                    },
+                    "pgmFormStatus": {
+                        "type": "string"
+                    },
+                    "withinCurrentPaylineFlag": {
+                        "type": "string"
+                    },
+                    "officialPayStatus": {
+                        "type": "string"
+                    },
+                    "arraEligibleFlag": {
+                        "type": "string"
+                    },
+                    "arraEcApprvdYrs": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pgmGsReadyFlag": {
+                        "type": "string"
+                    },
+                    "gpmatsDayCountNum": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gdsFlag": {
+                        "type": "string"
+                    },
+                    "type6PriorAwardFlag": {
+                        "type": "string"
+                    },
+                    "gpmatsClosedFlag": {
+                        "type": "string"
+                    },
+                    "gpmatsCancelledFlag": {
+                        "type": "string"
+                    },
+                    "pgmFormExistsFlag": {
+                        "type": "string"
+                    },
+                    "applId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "fullGrantNum": {
+                        "type": "string"
+                    },
+                    "projectTitle": {
+                        "type": "string"
+                    },
+                    "rfaPaNumber": {
+                        "type": "string"
+                    },
+                    "nihGuideAddr": {
+                        "type": "string"
+                    },
+                    "councilMeetingDate": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "miName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "esiApplEligFlag": {
+                        "type": "string"
+                    },
+                    "newInvestigatorCode": {
+                        "type": "string"
+                    },
+                    "irgPercentileNum": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "priorityScoreNum": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "irgCode": {
+                        "type": "string"
+                    },
+                    "irgFlexCode": {
+                        "type": "string"
+                    },
+                    "groupCode": {
+                        "type": "string"
+                    },
+                    "groupExtCode": {
+                        "type": "string"
+                    },
+                    "sraDesignatorCode": {
+                        "type": "string"
+                    },
+                    "sraFlexCode": {
+                        "type": "string"
+                    },
+                    "specialConsiderCode": {
+                        "type": "string"
+                    },
+                    "applTypeCode": {
+                        "type": "string"
+                    },
+                    "adminPhsOrgCode": {
+                        "type": "string"
+                    },
+                    "activityCode": {
+                        "type": "string"
+                    },
+                    "serialNum": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "supportYear": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "suffixCode": {
+                        "type": "string"
+                    },
+                    "applStatusCode": {
+                        "type": "string"
+                    },
+                    "applStatusGroupCode": {
+                        "type": "string"
+                    },
+                    "formerNum": {
+                        "type": "string"
+                    },
+                    "projectPeriodStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "projectPeriodEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "budgetStartDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "budgetEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "awdNoticeIssuedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "latestEncumbranceDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fy": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ipf": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "orgName": {
+                        "type": "string"
+                    },
+                    "institutionCity": {
+                        "type": "string"
+                    },
+                    "institutionState": {
+                        "type": "string"
+                    },
+                    "attentionFlag": {
+                        "type": "boolean"
+                    },
+                    "intentToPayCode": {
+                        "type": "string"
+                    },
+                    "multiYearAwardFlag": {
+                        "type": "string"
+                    },
+                    "fprSubmittedFlag": {
+                        "type": "string"
+                    },
+                    "frpprSubmittedFlag": {
+                        "type": "string"
+                    },
+                    "rpprSubmittedFlag": {
+                        "type": "string"
+                    },
+                    "irgRecommendationCode": {
+                        "type": "string"
+                    },
+                    "piEmailAddr": {
+                        "type": "string"
+                    },
+                    "jitSubmittedFlag": {
+                        "type": "string"
+                    },
+                    "jitSubmittedFileDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "gsNotAvailableFlag": {
+                        "type": "boolean"
+                    },
+                    "gsNotAvailableReason": {
+                        "type": "string"
+                    },
+                    "clinicalTrials": {
+                        "type": "string"
+                    },
+                    "clinicalTrialsId": {
+                        "type": "string"
+                    },
+                    "nctInfo": {
+                        "type": "string"
+                    },
+                    "nciLinkExist": {
+                        "type": "boolean"
+                    },
+                    "iconSortOrder": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nociNum": {
+                        "type": "string"
+                    },
+                    "nociNihAddress": {
+                        "type": "string"
+                    },
+                    "fundingDocumentExist": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GrantQueriesTDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "queryName": {
+                        "type": "string"
+                    },
+                    "queryDesc": {
+                        "type": "string"
+                    },
+                    "queryType": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "queryJson": {
+                        "type": "string"
+                    },
+                    "defaultFlag": {
+                        "type": "string"
+                    },
+                    "params": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/QueryParametersTDto"
+                        }
+                    }
+                }
+            },
+            "QueryParametersTDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "parameterName": {
+                        "type": "string"
+                    },
+                    "parameterValue": {
+                        "type": "string"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "queryId": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "CancerActivityDocsVwDto": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "cayDescription": {
+                        "type": "string"
+                    },
+                    "nonId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nonAbbreviation": {
+                        "type": "string"
+                    },
+                    "nonDescription": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    }
+}

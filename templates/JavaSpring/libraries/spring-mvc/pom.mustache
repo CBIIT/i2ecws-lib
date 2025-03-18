@@ -15,7 +15,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.6</version>
+                <version>2.18.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -108,6 +108,7 @@
         </dependency>
 
         <!--SpringFox dependencies-->
+        {{#useOas2}}
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -119,6 +120,15 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        {{/useOas2}}
+        {{^useOas2}}
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-oas</artifactId>
+            <version>${springfox-version}</version>
+        </dependency>
+        {{/useOas2}}
+        
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -158,15 +168,6 @@
             <version>${jackson-threetenbp-version}</version>
         </dependency>
         {{/threetenbp}}
-        {{^threetenbp}}
-        {{^isJava8or11}}
-        <dependency>
-            <groupId>com.github.joschi.jackson</groupId>
-            <artifactId>jackson-datatype-threetenbp</artifactId>
-            <version>${jackson-threetenbp-version}</version>
-        </dependency>
-        {{/isJava8or11}}
-        {{/threetenbp}}
 
         <dependency>
             <groupId>junit</groupId>
@@ -174,36 +175,51 @@
             <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
+{{#jakarta}}
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta-api</artifactId>
+            <version>${servlet-api-version}</version>
+        </dependency>
+{{/jakarta}}
+{{^jakarta}}
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api-version}</version>
         </dependency>
-{{#useBeanValidation}}
-    <!-- Bean Validation API support -->
+{{/jakarta}}
+{{#useBeanValidation}}{{#isStrictValidation}}
+        <!-- Bean Validation API support -->
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+{{/isStrictValidation}}{{#isLooseValidation}}
+        <!-- Bean Validation API support -->
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+{{/isLooseValidation}}{{#jakarta}}
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.0.2</version>
+        <scope>provided</scope>
+    </dependency>
+    {{/jakarta}}
+    {{^jakarta}}
     <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>1.1.0.Final</version>
         <scope>provided</scope>
     </dependency>
+    {{/jakarta}}
 {{/useBeanValidation}}
-        {{#notNullJacksonAnnotation}}
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-        {{/notNullJacksonAnnotation}}
-        {{^notNullJacksonAnnotation}}
-        {{#ignoreUnknownJacksonAnnotation}}
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>2.11.4</version>
-            </dependency>
-        {{/ignoreUnknownJacksonAnnotation}}
-        {{/notNullJacksonAnnotation}}
     <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
@@ -224,6 +240,13 @@
             </exclusion>
         </exclusions>
     </dependency>
+        {{#notNullJacksonAnnotation}}
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+        {{/notNullJacksonAnnotation}}
     <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
@@ -235,13 +258,18 @@
         <java.version>{{#java11}}11{{/java11}}{{^java11}}{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}{{/java11}}</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <jetty-version>9.3.27.v20190418</jetty-version>
+        <jetty-version>9.3.28.v20191105</jetty-version>
         <slf4j-version>1.7.21</slf4j-version>
         <junit-version>4.13.1</junit-version>
-        <servlet-api-version>2.5</servlet-api-version>
-        <springfox-version>2.7.0</springfox-version>
-        <jackson-version>2.11.4</jackson-version>
-        <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
-        <spring-version>4.3.9.RELEASE</spring-version>
+        <servlet-api-version>{{#jakarta}}6.0.0{{/jakarta}}{{^jakarta}}2.5{{/jakarta}}</servlet-api-version>
+        {{#useOas2}}
+        <springfox-version>2.9.2</springfox-version>
+        {{/useOas2}}
+        {{^useOas2}}
+        <springfox-version>3.0.0</springfox-version>
+        {{/useOas2}}
+        <jackson-version>2.9.10</jackson-version>
+        <jackson-threetenbp-version>2.9.10</jackson-threetenbp-version>
+        <spring-version>5.3.27</spring-version>
     </properties>
 </project>

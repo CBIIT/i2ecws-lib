@@ -1,0 +1,123 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "eRA PAS Web Service API",
+        "description": "eRA PAS Web Service",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://services.internal.stage.era.nih.gov",
+            "description": "staging"
+        },
+        {
+            "url": "https://services.internal.era.nih.gov",
+            "description": "production"
+        }
+    ],
+    "paths": {
+        "/aasws/api/pas/getRoles": {
+            "post": {
+                "tags": [
+                    "era-pas-controller"
+                ],
+                "operationId": "getUserProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserIdentityIn"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserIdentityIn": {
+                "type": "object",
+                "properties": {
+                    "callerId": {
+                        "type": "string"
+                    },
+                    "userName": {
+                        "$ref": "#/components/schemas/UserName"
+                    }
+                }
+            },
+            "UserProfile": {
+                "type": "object",
+                "properties": {
+                    "responseTime": {
+                        "type": "number"
+                    },
+                    "userName": {
+                        "type": "string"
+                    },
+                    "primaryOrgId": {
+                        "type": "string"
+                    },
+                    "profileId": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "role": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
+                    }
+                }
+            },
+            "Role": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "context": {
+                        "type": "string"
+                    },
+                    "organization": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "UserName": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "orgId": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

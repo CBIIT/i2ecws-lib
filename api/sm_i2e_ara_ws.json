@@ -1,1 +1,680 @@
-{"openapi":"3.0.1","info":{"title":"I2E ARA Web Services API","description":"I2E ARA Web Services","license":{"name":"Apache 2.0","url":"http://springdoc.org"},"version":"v2.1.0"},"servers":[{"url":"https://i2e-dev.nci.nih.gov/i2earaws","description":"dev"},{"url":"https://i2e-test.nci.nih.gov/i2earaws","description":"test"},{"url":"https://i2e-stage.nci.nih.gov/i2earaws","description":"stage"},{"url":"https://i2e.nci.nih.gov/i2earaws","description":"prod"}],"paths":{"/api/v1/ara-reasons":{"get":{"tags":["ara-reasons-controller"],"operationId":"getAraReasons","parameters":[{"name":"activeFlag","in":"query","required":false,"schema":{"type":"boolean"}},{"name":"orderBy","in":"query","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}},"put":{"tags":["ara-reasons-controller"],"operationId":"updateAraReason","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/AraReasonsDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}},"post":{"tags":["ara-reasons-controller"],"operationId":"saveAraReason","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/AraReasonsDto"}}},"required":true},"responses":{"201":{"description":"Created","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-reasons/id/{id}":{"patch":{"tags":["ara-reasons-controller"],"operationId":"activateOrDeactivateAraReason","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"string"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActivationParamsHolder"}}},"required":true},"responses":{"204":{"description":"No Content","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-reasons/{id}":{"patch":{"tags":["ara-reasons-controller"],"operationId":"activateOrDeactivateAraReason_1","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"string"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActivationParamsHolder"}}},"required":true},"responses":{"204":{"description":"No Content","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/export/ara-match/{ncab}":{"get":{"tags":["ara-export-controller"],"operationId":"exportAraMatchReport","parameters":[{"name":"requestParams","in":"query","required":true,"schema":{"type":"object","additionalProperties":{"type":"string"}}},{"name":"ncab","in":"path","required":true,"schema":{"type":"string"}},{"name":"orderBy","in":"query","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/era-ara-reasons":{"get":{"tags":["ara-reasons-controller"],"operationId":"getEraAraReasons","parameters":[{"name":"activeFlag","in":"query","required":false,"schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/era-ara-reasons/{code}":{"get":{"tags":["ara-reasons-controller"],"operationId":"getEraAraReasons_1","parameters":[{"name":"code","in":"path","required":true,"schema":{"type":"string"}},{"name":"activeFlag","in":"query","required":false,"schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-statuses/":{"get":{"tags":["ara-controller"],"operationId":"getAraMatchStatuses","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/KeyValueBean"}}},"application/xml":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/KeyValueBean"}}}}}}}},"/api/v1/ara-reasons/{code}":{"get":{"tags":["ara-reasons-controller"],"operationId":"getAraReasons_1","parameters":[{"name":"code","in":"path","required":true,"schema":{"type":"string"}},{"name":"activeFlag","in":"query","required":false,"schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-reasons/code/{code}":{"get":{"tags":["ara-reasons-controller"],"operationId":"getAraReasons_2","parameters":[{"name":"code","in":"path","required":true,"schema":{"type":"string"}},{"name":"activeFlag","in":"query","required":false,"schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-reasons-precedences":{"get":{"tags":["ara-reasons-controller"],"operationId":"getAraReasonsPrecedences","parameters":[{"name":"available","in":"query","required":false,"schema":{"type":"boolean"}},{"name":"include","in":"query","required":false,"schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-reasons-history/{code}":{"get":{"tags":["ara-reasons-controller"],"operationId":"getAraReasonsHistory","parameters":[{"name":"code","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}},"/api/v1/ara-match/{ncab}":{"get":{"tags":["ara-controller"],"operationId":"getUnmatchedAras","parameters":[{"name":"ncab","in":"path","required":true,"schema":{"type":"string"}},{"name":"orderBy","in":"query","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}}}}}},"components":{"schemas":{"AraReasonsDto":{"type":"object","properties":{"code":{"type":"string"},"description":{"type":"string"},"handlingFlag":{"type":"string"},"createDate":{"type":"string","format":"date-time"},"createUserId":{"type":"string"},"updateStamp":{"type":"integer","format":"int32"},"lastChangeDate":{"type":"string","format":"date-time"},"lastChangeUserId":{"type":"string"},"inactiveFlag":{"type":"string"},"inactiveOnDate":{"type":"string","format":"date-time"},"precedenceOrder":{"type":"integer","format":"int32"},"araTypeMappingName":{"type":"string"},"codeDisplayname":{"type":"string"},"araTypeCode":{"type":"string"}}},"ActivationParamsHolder":{"type":"object","properties":{"activate":{"type":"boolean"},"actor":{"type":"string"}}},"KeyValueBean":{"type":"object","properties":{"key":{"type":"string"},"value":{"type":"string"}}}}}}
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "I2E ARA Web Services API",
+        "description": "I2E ARA Web Services",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
+        },
+        "version": "v2.1.0"
+    },
+    "servers": [
+        {
+            "url": "https://i2e-dev.nci.nih.gov/i2earaws",
+            "description": "dev"
+        },
+        {
+            "url": "https://i2e-test.nci.nih.gov/i2earaws",
+            "description": "test"
+        },
+        {
+            "url": "https://i2e-stage.nci.nih.gov/i2earaws",
+            "description": "stage"
+        },
+        {
+            "url": "https://i2e.nci.nih.gov/i2earaws",
+            "description": "prod"
+        }
+    ],
+    "paths": {
+        "/api/v1/ara-reasons": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getAraReasons",
+                "parameters": [
+                    {
+                        "name": "activeFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "updateAraReason",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AraReasonsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "saveAraReason",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AraReasonsDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-reasons/id/{id}": {
+            "patch": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "activateOrDeactivateAraReason",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivationParamsHolder"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-reasons/{id}": {
+            "patch": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "activateOrDeactivateAraReason_1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivationParamsHolder"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/export/ara-match/{ncab}": {
+            "get": {
+                "tags": [
+                    "ara-export-controller"
+                ],
+                "operationId": "exportAraMatchReport",
+                "parameters": [
+                    {
+                        "name": "requestParams",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "ncab",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/era-ara-reasons": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getEraAraReasons",
+                "parameters": [
+                    {
+                        "name": "activeFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/era-ara-reasons/{code}": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getEraAraReasons_1",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "activeFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-statuses/": {
+            "get": {
+                "tags": [
+                    "ara-controller"
+                ],
+                "operationId": "getAraMatchStatuses",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KeyValueBean"
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KeyValueBean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-reasons/{code}": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getAraReasons_1",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "activeFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-reasons/code/{code}": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getAraReasons_2",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "activeFlag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-reasons-precedences": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getAraReasonsPrecedences",
+                "parameters": [
+                    {
+                        "name": "available",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-reasons-history/{code}": {
+            "get": {
+                "tags": [
+                    "ara-reasons-controller"
+                ],
+                "operationId": "getAraReasonsHistory",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ara-match/{ncab}": {
+            "get": {
+                "tags": [
+                    "ara-controller"
+                ],
+                "operationId": "getUnmatchedAras",
+                "parameters": [
+                    {
+                        "name": "ncab",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AraReasonsDto": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "handlingFlag": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "updateStamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "inactiveFlag": {
+                        "type": "string"
+                    },
+                    "inactiveOnDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "precedenceOrder": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "araTypeMappingName": {
+                        "type": "string"
+                    },
+                    "codeDisplayname": {
+                        "type": "string"
+                    },
+                    "araTypeCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ActivationParamsHolder": {
+                "type": "object",
+                "properties": {
+                    "activate": {
+                        "type": "boolean"
+                    },
+                    "actor": {
+                        "type": "string"
+                    }
+                }
+            },
+            "KeyValueBean": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

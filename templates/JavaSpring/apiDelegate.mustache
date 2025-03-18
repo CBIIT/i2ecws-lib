@@ -5,7 +5,19 @@ package {{package}};
 {{#isJava8or11}}
 import com.fasterxml.jackson.databind.ObjectMapper;
 {{/isJava8or11}}
+{{#useOas2}}
 import io.swagger.annotations.*;
+{{/useOas2}}
+{{^useOas2}}
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+{{/useOas2}}
 {{#isJava8or11}}
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +30,15 @@ import java.io.IOException;
 {{/isJava8or11}}
 
 {{#isJava8or11}}
+{{#jakarta}}
+import jakarta.servlet.http.HttpServletRequest;
+{{/jakarta}}
+{{^jakarta}}
 import javax.servlet.http.HttpServletRequest;
+{{/jakarta}}
 {{/isJava8or11}}
 import java.util.List;
+import java.util.Map;
 {{#isJava8or11}}
 import java.util.Optional;
 {{/isJava8or11}}
@@ -30,7 +48,7 @@ import java.util.Optional;
     {{/useOptional}}
 {{/isJava8or11}}
 {{#async}}
-import java.util.concurrent.{{^jdk8}}Callable{{/jdk8}}{{#isJava8or11}}CompletableFuture{{/isJava8or11}};
+import java.util.concurrent.{{^isJava8or11}}Callable{{/isJava8or11}}{{#isJava8or11}}CompletableFuture{{/isJava8or11}};
 {{/async}}
 
 {{#operations}}
@@ -44,25 +62,27 @@ public interface {{classname}}Delegate {
 
     Logger log = LoggerFactory.getLogger({{classname}}.class);
 
-    default Optional<ObjectMapper> getObjectMapper() {
+    {{#defaultInterfaces}}default {{/defaultInterfaces}}Optional<ObjectMapper> getObjectMapper(){{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}}{
         return Optional.empty();
-    }
+    }{{/defaultInterfaces}}
 
-    default Optional<HttpServletRequest> getRequest() {
+    {{#defaultInterfaces}}default {{/defaultInterfaces}}Optional<HttpServletRequest> getRequest(){{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}}{
         return Optional.empty();
-    }
+    }{{/defaultInterfaces}}
 
-    default Optional<String> getAcceptHeader() {
+    {{#defaultInterfaces}}default Optional<String> getAcceptHeader() {
         return getRequest().map(r -> r.getHeader("Accept"));
-    }
+    }{{/defaultInterfaces}}
 {{/isJava8or11}}
 
 {{#operation}}
+{{#contents}}
+{{#@first}}
     /**
      * @see {{classname}}#{{operationId}}
      */
-    {{#isJava8or11}}{{#defaultInterfaces}}default {{/defaultInterfaces}}{{/isJava8or11}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}({{#allParams}}{{^isFile}} {{>optionalDataType}} {{/isFile}}{{#isFile}}MultipartFile{{/isFile}} {{paramName}}{{#hasMore}},
-        {{/hasMore}}{{/allParams}}){{^isJava8or11}};{{/isJava8or11}}{{#isJava8or11}}{{#defaultInterfaces}} {
+    {{#defaultInterfaces}}default {{/defaultInterfaces}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}({{#parameters}}{{^isBinary}} {{>optionalDataType}} {{/isBinary}}{{#isBinary}}MultipartFile{{/isBinary}} {{paramName}}{{#hasMore}},
+        {{/hasMore}}{{/parameters}}){{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}} {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         {{#examples}}
             if (getAcceptHeader().get().contains("{{{contentType}}}")) {
@@ -78,8 +98,10 @@ public interface {{classname}}Delegate {
             log.warn("ObjectMapper or HttpServletRequest not configured in default {{classname}} interface so no example is generated");
         }
         return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED){{#async}}){{/async}};
-    }{{/defaultInterfaces}}{{/isJava8or11}}
+    }{{/defaultInterfaces}}
 
+{{/@first}}
+{{/contents}}
 {{/operation}}
 }
 {{/operations}}

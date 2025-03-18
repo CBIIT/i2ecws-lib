@@ -1,35 +1,63 @@
 package {{package}};
 
-{{^isJava8or11}}
+{{#fullController}}
 {{#imports}}import {{import}};
 {{/imports}}
-{{/isJava8or11}}
+{{/fullController}}
 {{^isDelegate}}
 import com.fasterxml.jackson.databind.ObjectMapper;
 {{/isDelegate}}
-{{^isJava8or11}}
+{{#fullController}}
+{{#useOas2}}
 import io.swagger.annotations.*;
+{{/useOas2}}
+{{^useOas2}}
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+{{/useOas2}}
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-{{/isJava8or11}}
-import org.springframework.stereotype.Controller;
-{{^isJava8or11}}
+{{/fullController}}
+import org.springframework.web.bind.annotation.RestController;
+{{#fullController}}
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+{{^useOas2}}
+import org.springframework.web.bind.annotation.RestController;
+{{/useOas2}}
 import org.springframework.web.multipart.MultipartFile;
 
     {{#useBeanValidation}}
-import javax.validation.constraints.*;
+{{#jakarta}}
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.Valid;
+import javax.validation.constraints.*;
+{{/jakarta}}
     {{/useBeanValidation}}
-{{/isJava8or11}}
+{{/fullController}}
 {{^isDelegate}}
+  {{#jakarta}}
+import jakarta.servlet.http.HttpServletRequest;
+  {{/jakarta}}
+  {{^jakarta}}
 import javax.servlet.http.HttpServletRequest;
+  {{/jakarta}}
     {{#isJava8or11}}
 import java.util.Optional;
     {{/isJava8or11}}
@@ -39,17 +67,24 @@ import java.util.Optional;
 import java.util.Optional;
     {{/useOptional}}
 {{/jdk8-no-delegate}}
-{{^isJava8or11}}
+{{#fullController}}
     {{^isDelegate}}
 import java.io.IOException;
     {{/isDelegate}}
 import java.util.List;
+import java.util.Map;
     {{#async}}
 import java.util.concurrent.Callable;
     {{/async}}
-{{/isJava8or11}}
+{{/fullController}}
+
 {{>generatedAnnotation}}
-@Controller
+{{#useOas2}}
+@RestController
+{{/useOas2}}
+{{^useOas2}}
+@RestController
+{{/useOas2}}
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
 
@@ -69,10 +104,10 @@ public class {{classname}}Controller implements {{classname}} {
     {{/isJava8or11}}
 {{/isDelegate}}
 {{^isDelegate}}
-    {{^isJava8or11}}
+    {{#fullController}}
     private static final Logger log = LoggerFactory.getLogger({{classname}}Controller.class);
 
-    {{/isJava8or11}}
+    {{/fullController}}
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
@@ -96,9 +131,11 @@ public class {{classname}}Controller implements {{classname}} {
     {{/isJava8or11}}
 
 {{/isDelegate}}
-{{^isJava8or11}}
+{{#fullController}}
 {{#operation}}
-    public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}) {
+{{#contents}}
+{{#@first}}
+    public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#parameters}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{>cookieParams}}{{#hasMore}},{{/hasMore}}{{/parameters}}) {
         {{^isDelegate}}
         {{^async}}
         String accept = request.getHeader("Accept");
@@ -137,11 +174,13 @@ public class {{classname}}Controller implements {{classname}} {
         {{/async}}
         {{/isDelegate}}
         {{#isDelegate}}
-        return delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        return delegate.{{operationId}}({{#parameters}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/parameters}});
         {{/isDelegate}}
     }
 
+{{/@first}}
+{{/contents}}
 {{/operation}}
-{{/isJava8or11}}
+{{/fullController}}
 }
 {{/operations}}
