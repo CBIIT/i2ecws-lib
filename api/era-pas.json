@@ -54,6 +54,26 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema":{
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -64,15 +84,31 @@
             "UserIdentityIn": {
                 "type": "object",
                 "properties": {
+                    "userIdentityIn": {
+                        "$ref": "#/components/schemas/UserIdentity"        
+                    }
+                }
+            },
+            "UserIdentity": {
+                "type": "object",
+                "properties": {
                     "callerId": {
                         "type": "string"
                     },
                     "userName": {
                         "$ref": "#/components/schemas/UserName"
                     }
-                }
+                } 
             },
             "UserProfile": {
+                "type": "object",
+                "properties": {
+                    "UserProfile": {
+                        "$ref": "#/components/schemas/UserProfileEmbedded"
+                    }
+                }
+            },
+            "UserProfileEmbedded": {
                 "type": "object",
                 "properties": {
                     "responseTime": {

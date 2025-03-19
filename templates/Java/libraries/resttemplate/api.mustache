@@ -38,8 +38,8 @@ public class {{classname}} {
     
     private ApiClient {{localVariablePrefix}}apiClient;
 
-    @Value("${debug.api:false}")
-    private boolean debugApi;
+    @Value("${debug.api:true}")
+    private Boolean debugApi = true;
 
     public {{classname}}() {
         this(new ApiClient());

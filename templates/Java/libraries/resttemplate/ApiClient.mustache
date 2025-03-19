@@ -4,8 +4,8 @@ package {{invokerPackage}};
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 {{/withXml}}
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -71,7 +71,7 @@ import {{invokerPackage}}.auth.OAuth;
 @Component("{{invokerPackage}}.ApiClient")
 public class ApiClient {
 
-    private static final Log log = LogFactory.getLog(ApiClient.class);
+    private static final Logger log = LoggerFactory.getLog(ApiClient.class);
 
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
@@ -106,7 +106,7 @@ public class ApiClient {
     
     @Autowired
     public ApiClient(RestTemplate restTemplate) {
-        log.debug("Using custom RestTemplate");
+        log.debug("Using provided RestTemplate");
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         this.restTemplate = restTemplate;
         init();
@@ -131,6 +131,18 @@ public class ApiClient {
     authentications.put("{{name}}", new OAuth());{{/is}}{{/authMethods}}
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
+
+        this.restTemplate.setErrorHandler(new ResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse response) throws IOException {
+                return false;
+            }
+
+            @Override
+            public void handleError(ClientHttpResponse response) throws IOException {
+
+            }
+        });
     }
     
     /**
@@ -604,7 +616,7 @@ public class ApiClient {
     }
     
     private class ApiClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
-        private final Log log = LogFactory.getLog(ApiClientHttpRequestInterceptor.class);
+        private final Logger log = LoggerFactory.getLog(ApiClientHttpRequestInterceptor.class);
 
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
