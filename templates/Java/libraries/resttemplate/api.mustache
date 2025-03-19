@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;{{/fullJavaUtil}}
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -29,7 +32,13 @@ import org.springframework.http.ResponseEntity;
 @Component("{{package}}.{{classname}}")
 {{#operations}}
 public class {{classname}} {
+    
+    private static final Logger log = LoggerFactory.getLogger({{classname}}.class);
+    
     private ApiClient {{localVariablePrefix}}apiClient;
+
+    @Value("${debug.api:false}")
+    private boolean debugApi;
 
     public {{classname}}() {
         this(new ApiClient());
@@ -37,6 +46,7 @@ public class {{classname}} {
 
     @Autowired
     public {{classname}}(ApiClient apiClient) {
+        apiClient.setDebugging(debugApi);
         this.{{localVariablePrefix}}apiClient = apiClient;
     }
 
@@ -45,6 +55,7 @@ public class {{classname}} {
     }
 
     public void setApiClient(ApiClient apiClient) {
+        apiClient.setDebugging(debugApi);
         this.{{localVariablePrefix}}apiClient = apiClient;
     }
 

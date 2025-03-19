@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -69,6 +70,9 @@ import {{invokerPackage}}.auth.OAuth;
 {{>generatedAnnotation}}
 @Component("{{invokerPackage}}.ApiClient")
 public class ApiClient {
+
+    private static final Log log = LogFactory.getLog(ApiClient.class);
+
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
 
@@ -86,6 +90,7 @@ public class ApiClient {
     
     private HttpHeaders defaultHeaders = new HttpHeaders();
     
+    @Value("${api.client.base-path:'https://services.internal.stage.era.nih.gov'}")
     private String basePath = "{{basePath}}";
 
     private RestTemplate restTemplate;
@@ -101,6 +106,8 @@ public class ApiClient {
     
     @Autowired
     public ApiClient(RestTemplate restTemplate) {
+        log.debug("Using custom RestTemplate");
+        restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         this.restTemplate = restTemplate;
         init();
     }
@@ -553,6 +560,7 @@ public class ApiClient {
      * @return RestTemplate
      */
     protected RestTemplate buildRestTemplate() {
+        log.debug("building REST template");
         {{#withXml}}List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
         messageConverters.add(new MappingJackson2HttpMessageConverter());
         XmlMapper xmlMapper = new XmlMapper();

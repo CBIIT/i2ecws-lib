@@ -11,6 +11,14 @@
     },
     "servers": [
         {
+            "url": "https://services.internal.dev.era.nih.gov",
+            "description": "development"
+        },
+        {
+            "url": "https://services.internal.test.era.nih.gov",
+            "description": "test"
+        },
+        {
             "url": "https://services.internal.stage.era.nih.gov",
             "description": "staging"
         },
@@ -68,7 +76,8 @@
                 "type": "object",
                 "properties": {
                     "responseTime": {
-                        "type": "number"
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "userName": {
                         "type": "string"
@@ -79,18 +88,19 @@
                     "profileId": {
                         "type": "array",
                         "items": {
-                            "type": "number"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     },
-                    "role": {
+                    "userRole": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Role"
+                            "$ref": "#/components/schemas/UserRole"
                         }
                     }
                 }
             },
-            "Role": {
+            "UserRole": {
                 "type": "object",
                 "properties": {
                     "name": {
