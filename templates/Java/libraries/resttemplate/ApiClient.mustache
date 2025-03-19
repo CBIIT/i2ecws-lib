@@ -71,7 +71,7 @@ import {{invokerPackage}}.auth.OAuth;
 @Component("{{invokerPackage}}.ApiClient")
 public class ApiClient {
 
-    private static final Logger log = LoggerFactory.getLog(ApiClient.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiClient.class);
 
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
@@ -616,7 +616,7 @@ public class ApiClient {
     }
     
     private class ApiClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
-        private final Logger log = LoggerFactory.getLog(ApiClientHttpRequestInterceptor.class);
+        private final Logger log = LoggerFactory.getLogger(ApiClientHttpRequestInterceptor.class);
 
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
