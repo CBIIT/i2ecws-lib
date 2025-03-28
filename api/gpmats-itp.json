@@ -95,7 +95,8 @@
                 "type": "object",
                 "properties": {
                     "applId": {
-                        "type": "string"
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "phsOrgCode": {
                         "type": "string"
