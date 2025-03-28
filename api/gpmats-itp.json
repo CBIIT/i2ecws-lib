@@ -38,7 +38,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Input"
+                                "$ref": "#/components/schemas/ItpInformation"
                             }
                         }
                     },
@@ -50,7 +50,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Output"
+                                    "$ref": "#/components/schemas/ItpUpdateResponse"
                                 }
                             }
                         }
@@ -91,7 +91,7 @@
     },
     "components": {
         "schemas": {
-            "Input": {
+            "ItpInformation": {
                 "type": "object",
                 "properties": {
                     "applId": {
@@ -140,7 +140,7 @@
                     }
                 }
             },
-            "Output": {
+            "ItpUpdateResponse": {
                 "type": "object",
                 "properties": {
                     "responseCode": {
@@ -149,12 +149,12 @@
                     "errorMessages": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/MessagePayload"
+                            "$ref": "#/components/schemas/ItpMessage"
                         }
                     }
                 }
             },
-            "MessagePayload": {
+            "ItpMessage": {
                 "type": "object",
                 "properties": {
                     "code": {
