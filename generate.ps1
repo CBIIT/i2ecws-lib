@@ -1,8 +1,8 @@
 $Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.14_7";
 
-$output_path="projects\era-pas\java-client" 
+$output_path="projects\gpmats-itp\java-client" 
 
-$swagger_opts="-i api\era-pas.json"
+$swagger_opts="-i api\gpmats-itp.json"
 
 $template_opts="-t templates\Java"
 

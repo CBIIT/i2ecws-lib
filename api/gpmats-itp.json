@@ -11,34 +11,34 @@
     },
     "servers": [
         {
-            "url": "https://services.internal.dev.era.nih.gov",
+            "url": "https://web-dev.aic.era.nih.gov",
             "description": "development"
         },
         {
-            "url": "https://services.internal.test.era.nih.gov",
+            "url": "https://web-test.aic.era.nih.gov",
             "description": "test"
         },
         {
-            "url": "https://services.internal.stage.era.nih.gov",
+            "url": "https://web-stage.aic.era.nih.gov",
             "description": "staging"
         },
         {
-            "url": "https://services.internal.era.nih.gov",
+            "url": "https://web.aic.era.nih.gov",
             "description": "production"
         }
     ],
     "paths": {
-        "/aasws/api/pas/getRoles": {
+        "/payplan/dataservices/itp-external/itp-update": {
             "post": {
                 "tags": [
-                    "era-pas-controller"
+                    "gpmats-itp-controller"
                 ],
-                "operationId": "getUserProfile",
+                "operationId": "itpUpdate",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserIdentityIn"
+                                "$ref": "#/components/schemas/Input"
                             }
                         }
                     },
@@ -50,13 +50,23 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserProfile"
+                                    "$ref": "#/components/schemas/Output"
                                 }
                             }
                         }
                     },
                     "400": {
                         "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized",
                         "content": {
                             "text/plain": {
                                 "schema": {
@@ -81,85 +91,76 @@
     },
     "components": {
         "schemas": {
-            "UserIdentityIn": {
+            "Input": {
                 "type": "object",
                 "properties": {
-                    "userIdentityIn": {
-                        "$ref": "#/components/schemas/UserIdentity"
+                    "applId": {
+                        "type": "string"
+                    },
+                    "phsOrgCode": {
+                        "type": "string"
+                    },
+                    "itpFlag": {
+                        "type": "string",
+                        "enum": [
+                            "Y",
+                            "N",
+                            "D",
+                            "NULL"
+                        ]
+                    },
+                    "councilRecomCode": {
+                        "type": "string",
+                        "enum": [
+                            "1",
+                            "2",
+                            "3",
+                            "4",
+                            "5",
+                            "6",
+                            "7",
+                            "8",
+                            "9",
+                            "NULL"
+                        ]
+                    },
+                    "fiscalYear": {
+                        "type": "string"
+                    },
+                    "councilPriority": {
+                        "type": "string",
+                        "enum": [
+                            "CON",
+                            "HPP",
+                            "LPP",
+                            "NRC",
+                            "OTH",
+                            "NULL"
+                        ]
                     }
                 }
             },
-            "UserIdentity": {
+            "Output": {
                 "type": "object",
                 "properties": {
-                    "callerId": {
-                        "type": "string"
+                    "responseCode": {
+                        "type": "boolean"
                     },
-                    "userName": {
-                        "$ref": "#/components/schemas/UserName"
-                    }
-                }
-            },
-            "UserProfile": {
-                "type": "object",
-                "properties": {
-                    "UserProfile": {
-                        "$ref": "#/components/schemas/UserProfileEmbedded"
-                    }
-                }
-            },
-            "UserProfileEmbedded": {
-                "type": "object",
-                "properties": {
-                    "responseTime": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "userName": {
-                        "type": "string"
-                    },
-                    "primaryOrgId": {
-                        "type": "string"
-                    },
-                    "profileId": {
+                    "errorMessages": {
                         "type": "array",
                         "items": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    },
-                    "userRole": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRole"
-                        }
-                    }
-                }
-            },
-            "UserRole": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "context": {
-                        "type": "string"
-                    },
-                    "organization": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
+                            "$ref": "#/components/schemas/MessagePayload"
                         }
                     }
                 }
             },
-            "UserName": {
+            "MessagePayload": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "code": {
                         "type": "string"
                     },
-                    "orgId": {
+                    "message": {
                         "type": "string"
                     }
                 }
