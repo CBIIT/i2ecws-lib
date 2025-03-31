@@ -8,6 +8,7 @@
   "invokerPackage": "gov.nih.nci.cbiit.scimgmt.araeraclient.invoker",
   "java11": true,
   "dateLibrary": "java11",
+  "library": "resttemplate",
   "artifactVersion": "1.0.0",
   "tsVersion": ">=4.2.3 and <=5.4.2",
   "hideGenerationTimestamp": true
