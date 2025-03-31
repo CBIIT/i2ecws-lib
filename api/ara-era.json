@@ -7,20 +7,20 @@
   },
   "servers": [
     {
-      "url": "https://web.aic.era.nih.gov/ara/api",
-      "description": "Production URL"
-    },
-    {
-      "url": "https://web.stage.era.nih.gov/ara/api",
-      "description": "Stage URL"
+      "url": "https://web.dev.era.nih.gov/ara/api",
+      "description": "Dev URL"
     },
     {
       "url": "https://web.test.era.nih.gov/ara/api",
       "description": "Test URL"
     },
     {
-      "url": "https://web.dev.era.nih.gov/ara/api",
-      "description": "Dev URL"
+      "url": "https://web.stage.era.nih.gov/ara/api",
+      "description": "Stage URL"
+    },
+    {
+      "url": "https://web.aic.era.nih.gov/ara/api",
+      "description": "Production URL"
     }
   ],
   "tags": [
