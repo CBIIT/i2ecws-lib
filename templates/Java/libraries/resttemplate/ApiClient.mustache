@@ -91,7 +91,7 @@ public class ApiClient {
     
     private HttpHeaders defaultHeaders = new HttpHeaders();
     
-    @Value("${api.client.base-path:'https://services.internal.stage.era.nih.gov'}")
+    @Value("${api.client.base-path:'{{basePath}}'}")
     private String basePath = "{{basePath}}";
 
     private RestTemplate restTemplate;
