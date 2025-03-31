@@ -360,4 +360,16 @@
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.13.1</junit-version>
   </properties>
+
+      <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+    
 </project>
