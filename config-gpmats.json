@@ -1,0 +1,16 @@
+{
+  "ngVersion":"17.2.4",
+  "npmName": "@cbiit/itp-lib",
+  "groupId": "gov.nih.nci.cbiit.scimgmt",
+  "artifactId": "itp-lib",
+  "apiPackage": "gov.nih.nci.cbiit.scimgmt.itpclient.api",
+  "modelPackage": "gov.nih.nci.cbiit.scimgmt.itpclient.dto",
+  "invokerPackage": "gov.nih.nci.cbiit.scimgmt.itpclient.invoker",
+  "java11": true,
+  "dateLibrary": "java11",
+  "library": "resttemplate",
+  "artifactVersion": "1.0.0",
+  "tsVersion": ">=4.2.3 and <=5.4.2",
+  "hideGenerationTimestamp": true,
+  "jakarta": true
+}
