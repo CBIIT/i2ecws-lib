@@ -1,0 +1,302 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ARA Internal Org Rest Services",
+    "description": "ARA API to Initiate Internal Org ARA Request and Approve Internal Org ARA Request.",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://web.aic.era.nih.gov/ara/api",
+      "description": "Production URL"
+    },
+    {
+      "url": "https://web.stage.era.nih.gov/ara/api",
+      "description": "Stage URL"
+    },
+    {
+      "url": "https://web.test.era.nih.gov/ara/api",
+      "description": "Test URL"
+    },
+    {
+      "url": "https://web.dev.era.nih.gov/ara/api",
+      "description": "Dev URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "ara-internal-org-services-controller",
+      "description": "ARA Internal Org Services Rest Controller"
+    }
+  ],
+  "paths": {
+    "/araservice/initiateAraRequest": {
+      "post": {
+        "summary": "Initiates Internal Org ARA request",
+        "operationId": "initiateAraRequest",
+        "tags": [
+          "ARA Internal Org Service"
+        ],
+        "requestBody": {
+          "description": "Initiate Internal Org ARA request input. Required fields - Initiate ARA request details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AraInternalOrgRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Initiated Internal Org ARA Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AraInternalOrgResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Not Authorized to Initiate a ARA Request"
+          },
+          "404": {
+            "description": "The specified resource was not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/araservice/approveAraRequest": {
+      "post": {
+        "summary": "Approve ARA request",
+        "operationId": "approveAraRequest",
+        "tags": [
+          "ARA Internal Org Service"
+        ],
+        "requestBody": {
+          "description": "Approve Internal Org ARA request input. Required fields - Approve Internal Org ARA request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AraInternalOrgApproveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Approve Internal Org ARA Request Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AraInternalOrgResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Not Authorized to Approve a ARA Request"
+          },
+          "404": {
+            "description": "The specified resource was not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AraInternalOrgRequest": {
+        "type": "object",
+        "description": "Initiate Internal Org ARA Request Details.",
+        "properties": {
+          "requestingIc": {
+            "type": "string"
+          },
+          "requestingOrgId": {
+            "type": "long"
+          },
+          "requestorUserId": {
+            "type": "string",
+            "nullable": false
+          },
+          "piCommonsId": {
+            "type": "string",
+            "nullable": false
+          },
+          "orgName": {
+            "type": "string",
+            "nullable": false
+          },
+          "araTypeCode": {
+            "type": "object",
+            "description": "ARA Type Code",
+            "$ref": "#/components/schemas/AraType",
+            "nullable": false
+          },
+          "projectTitle": {
+            "type": "string",
+            "nullable": false
+          },
+          "receiptDate": {
+            "type": "string",
+            "nullable": false
+          },
+          "foa": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "councilDate": {
+            "type": "string",
+            "maxLength": 7
+          },
+          "programClassCode": {
+            "type": "string",
+            "maxLength": 8
+          },
+          "reasonForAra": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "grantApplTypeCode": {
+            "type": "string",
+            "maxLength": 1
+          },
+          "grantActivityCode": {
+            "type": "string",
+            "maxLength": 3
+          },
+          "grantIc": {
+            "type": "string",
+            "maxLength": 2
+          },
+          "grantAdminOrgId": {
+            "type": "long"
+          },
+          "grantSerialNum": {
+            "type": "string",
+            "maxLength": 6
+          },
+          "grantSupportYear": {
+            "type": "string",
+            "maxLength": 2
+          },
+          "grantSuffixCode": {
+            "type": "string",
+            "maxLength": 4
+          }
+        }
+      },
+      "AraInternalOrgResponse": {
+        "type": "object",
+        "description": "Initiated Internal Org ARA Response Details.",
+        "properties": {
+          "araId": {
+            "type": "long"
+          },
+          "successful": {
+            "type": "boolean"
+          },
+          "errorMessageList": {
+            "$ref": "#/components/schemas/ErrorMessageList"
+          }
+        }
+      },
+      "AraInternalOrgApproveRequest": {
+        "type": "object",
+        "description": "Internal org Approve ARA request Details.",
+        "required": [
+          "araInternalOrgRequest"
+        ],
+        "properties": {
+          "araId": {
+            "type": "string",
+            "nullable": true
+          },
+          "araInternalOrgRequest": {
+            "$ref": "#/components/schemas/AraInternalOrgRequest"
+          }
+        }
+      },
+      "AraType": {
+        "type": "string",
+        "enum": [
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "40"
+        ],
+        "description": "ARA Type Code Definition:\n  * 30 - Accept application that requests $500,000 or more\n  * 31 - Request for an assignment from IC\n  * 32 - Request for an assignment from IRG\n  * 33 - Request for an assignment from PI\n  * 34 - Request for an assignment from Other\n  * 35 - Request for a waiver\n  * 36 - Replacement pages\n  * 37 - Material to add with application\n  * 38 - Request for No Further Processing\n  * 39 - Take to...\n  * 40 - Other\n"
+      },
+      "ErrorMessageList": {
+        "type": "object",
+        "description": "API Error List.",
+        "properties": {
+          "errorMessageList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "description": "API Error.",
+        "properties": {
+          "errorType": {
+            "type": "object",
+            "description": "Error Type",
+            "$ref": "#/components/schemas/ErrorTypeCode"
+          },
+          "errorText": {
+            "type": "string",
+            "description": "Error Text"
+          },
+          "errorCode": {
+            "type": "string",
+            "description": "Error Code"
+          },
+          "errorParametersList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Error Parameters List"
+          }
+        }
+      },
+      "ErrorTypeCode": {
+        "type": "string",
+        "enum": [
+          "ERROR",
+          "WARNING",
+          "INFO"
+        ],
+        "description": "Error Type Code Definition:\n  * ERROR - Error\n  * WARNING - Warning\n  * INFO - Information \n"
+      }
+    }
+  }
+}

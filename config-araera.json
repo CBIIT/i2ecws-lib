@@ -1,0 +1,14 @@
+{
+  "ngVersion":"17.2.4",
+  "npmName": "@cbiit/araera-lib",
+  "groupId": "gov.nih.nci.cbiit.scimgmt",
+  "artifactId": "araera-lib",
+  "apiPackage": "gov.nih.nci.cbiit.scimgmt.araeraclient.api",
+  "modelPackage": "gov.nih.nci.cbiit.scimgmt.araeraclient.dto",
+  "invokerPackage": "gov.nih.nci.cbiit.scimgmt.araeraclient.invoker",
+  "java11": true,
+  "dateLibrary": "java11",
+  "artifactVersion": "1.0.0",
+  "tsVersion": ">=4.2.3 and <=5.4.2",
+  "hideGenerationTimestamp": true
+}
