@@ -11,11 +11,11 @@
     },
     "servers": [
         {
-            "url": "https://web-dev.aic.era.nih.gov",
+            "url": "https://services.external.dev.era.nih.gov",
             "description": "development"
         },
         {
-            "url": "https://web-test.aic.era.nih.gov",
+            "url": "https://services.external.test.era.nih.gov",
             "description": "test"
         },
         {
@@ -23,7 +23,7 @@
             "description": "staging"
         },
         {
-            "url": "https://web.aic.era.nih.gov",
+            "url": "https://services.external.era.nih.gov",
             "description": "production"
         }
     ],
