@@ -1,0 +1,436 @@
+{
+  "schemes": [
+    "https"
+  ], 
+  "basePath": "/icdata/api", 
+  "swagger": "2.0", 
+  "definitions": {
+    "ApplIcdProgClassDetail": {
+      "properties": {
+        "progClassCode": {
+          "type": "string"
+        }, 
+        "icMainFlag": {
+          "type": "string"
+        }, 
+        "asgnVersionCode": {
+          "type": "string"
+        }
+      }, 
+      "type": "object"
+    }, 
+    "ApiError": {
+      "properties": {
+        "businessErrorCode": {
+          "type": "integer"
+        }, 
+        "businessErrorMessage": {
+          "type": "string"
+        }
+      }, 
+      "type": "object", 
+      "description": "Error details"
+    }, 
+    "ResponsesIcdProgClass": {
+      "properties": {
+        "phsOrgCode": {
+          "type": "string"
+        }, 
+        "applIcdProgClassDetails": {
+          "type": "array", 
+          "items": {
+            "$ref": "#/definitions/ApplIcdProgClassDetail"
+          }
+        }, 
+        "applId": {
+          "type": "integer"
+        }
+      }, 
+      "type": "object"
+    }
+  }, 
+  "host": "services.internal.era.nih.gov", 
+  "responses": {
+    "UnauthorizedRequest": {
+      "schema": {
+        "$ref": "#/definitions/ApiError"
+      }, 
+      "description": "Unauthorized Request error"
+    }, 
+    "BadRequest": {
+      "schema": {
+        "$ref": "#/definitions/ApiError"
+      }, 
+      "description": "Invalid parameters or business error"
+    }, 
+    "IcdProgClass": {
+      "schema": {
+        "$ref": "#/definitions/ResponsesIcdProgClass"
+      }, 
+      "description": "IC PCC Data"
+    }
+  }, 
+  "info": {
+    "title": "IC Data API", 
+    "version": "1.0.0", 
+    "description": "A set of APIs used by IC Extension systems to update application specific information."
+  }, 
+  "paths": {
+    "/ice/ic-pcc/assign/{applId}": {
+      "post": {
+        "produces": [
+          "application/json"
+        ], 
+        "operationId": "assignICInvolvement", 
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }, 
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "default": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "401": {
+            "$ref": "#/responses/UnauthorizedRequest"
+          }
+        }, 
+        "description": "Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.assign_ic_pcc_proc stored procedure.", 
+        "parameters": [
+          {
+            "name": "applId", 
+            "in": "path", 
+            "description": "ID of the target application.", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "transactionType", 
+            "in": "query", 
+            "description": "Transaction type", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "phsOrgCode", 
+            "in": "query", 
+            "description": "Phs organization code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "oldPccCode", 
+            "in": "query", 
+            "description": "Old Program Class Code", 
+            "required": false, 
+            "type": "string"
+          }, 
+          {
+            "name": "newPccCode", 
+            "in": "query", 
+            "description": "New Program Class Code", 
+            "required": false, 
+            "type": "string"
+          }
+        ]
+      }
+    }, 
+    "/ice/pcc-details/{applId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ], 
+        "operationId": "getPcc", 
+        "responses": {
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "401": {
+            "$ref": "#/responses/UnauthorizedRequest"
+          }, 
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ResponsesIcdProgClass"
+            }, 
+            "description": "OK"
+          }, 
+          "default": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }, 
+        "description": "Fetch IC-PCC details for an application.", 
+        "parameters": [
+          {
+            "name": "applId", 
+            "in": "path", 
+            "description": "ID of the target application.", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "phsOrgCode", 
+            "in": "query", 
+            "description": "Phs organization code", 
+            "required": true, 
+            "type": "string"
+          }
+        ]
+      }
+    }, 
+    "/ice/main-pcc/assign/{applId}": {
+      "post": {
+        "produces": [
+          "application/json"
+        ], 
+        "operationId": "assignMainPccInvolvement", 
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }, 
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "default": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "401": {
+            "$ref": "#/responses/UnauthorizedRequest"
+          }
+        }, 
+        "description": "Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.assign_main_pcc_proc stored procedure.", 
+        "parameters": [
+          {
+            "name": "applId", 
+            "in": "path", 
+            "description": "ID of the target application.", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "phsOrgCode", 
+            "in": "query", 
+            "description": "Phs organization code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "progClassCode", 
+            "in": "query", 
+            "description": "Program Class Code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "overWriteFlag", 
+            "in": "query", 
+            "description": "Overwrite Flag. Default value \"Y\"", 
+            "required": false, 
+            "type": "string"
+          }
+        ]
+      }
+    }, 
+    "/ice/awd-fundings/assign/{applId}": {
+      "post": {
+        "produces": [
+          "application/json"
+        ], 
+        "operationId": "assignAwardFunding", 
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }, 
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "default": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "401": {
+            "$ref": "#/responses/UnauthorizedRequest"
+          }
+        }, 
+        "description": "Update tables in accordance with various business rules. Converted from ice_dbms_awfd_a_pkg.assign_proc stored procedure.", 
+        "parameters": [
+          {
+            "name": "applId", 
+            "in": "path", 
+            "description": "ID of the target application.", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "transType", 
+            "in": "query", 
+            "description": "Transaction Type", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "phsOrgCode", 
+            "in": "query", 
+            "description": "Phs organization code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "oldCan", 
+            "in": "query", 
+            "description": "Old CAN", 
+            "required": false, 
+            "type": "string"
+          }, 
+          {
+            "name": "newCan", 
+            "in": "query", 
+            "description": "New CAN", 
+            "required": false, 
+            "type": "string"
+          }, 
+          {
+            "name": "newPcc", 
+            "in": "query", 
+            "description": "New Program Class Code", 
+            "required": false, 
+            "type": "string"
+          }
+        ]
+      }
+    }, 
+    "/ice/appd-fundings/assign/{applId}": {
+      "post": {
+        "produces": [
+          "application/json"
+        ], 
+        "operationId": "assignApplPeriodFunding", 
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }, 
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "default": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "401": {
+            "$ref": "#/responses/UnauthorizedRequest"
+          }
+        }, 
+        "description": "Assign IC appl period funding for an application. Converted from ice_dbms_appd_a_pkg. assign_proc stored procedure.", 
+        "parameters": [
+          {
+            "name": "applId", 
+            "in": "path", 
+            "description": "ID of the target application.", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "transType", 
+            "in": "query", 
+            "description": "Transaction Type", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "phsOrgCode", 
+            "in": "query", 
+            "description": "Phs organization code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "totalPeriodAmt", 
+            "in": "query", 
+            "description": "Total Period Amount", 
+            "required": false, 
+            "type": "integer"
+          }, 
+          {
+            "name": "directCostAmt", 
+            "in": "query", 
+            "description": "Direct Cost Amount", 
+            "required": false, 
+            "type": "integer"
+          }, 
+          {
+            "name": "indirectCostAmt", 
+            "in": "query", 
+            "description": "Indirect Cost Amount", 
+            "required": false, 
+            "type": "integer"
+          }
+        ]
+      }
+    }, 
+    "/ice/fed-person-involvement/assign/{applId}": {
+      "post": {
+        "produces": [
+          "application/json"
+        ], 
+        "operationId": "assignFedPersonInvolvement", 
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }, 
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "default": {
+            "$ref": "#/responses/BadRequest"
+          }, 
+          "401": {
+            "$ref": "#/responses/UnauthorizedRequest"
+          }
+        }, 
+        "description": "Update Federal Person Involvement records for an application. Converted from ice_dbms_fedp_a_pkg.assign_proc stored procedure.", 
+        "parameters": [
+          {
+            "name": "applId", 
+            "in": "path", 
+            "description": "ID of the target application.", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "transactionType", 
+            "in": "query", 
+            "description": "Transaction type", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "phsOrgCode", 
+            "in": "query", 
+            "description": "Phs organization code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "roleTypeCode", 
+            "in": "query", 
+            "description": "Role type code", 
+            "required": true, 
+            "type": "string"
+          }, 
+          {
+            "name": "personId", 
+            "in": "query", 
+            "description": "Person ID", 
+            "required": true, 
+            "type": "integer"
+          }, 
+          {
+            "name": "versionCode", 
+            "in": "query", 
+            "description": "Version code. Default value = 'M'.", 
+            "required": false, 
+            "type": "string"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "eRA PAS Web Service API",
-        "description": "eRA PAS Web Service",
+        "title": "GPMATS Intent to Pay",
+        "description": "GPMATS ITP Web Service",
         "license": {
             "name": "Apache 2.0",
             "url": "http://springdoc.org"
@@ -19,7 +19,7 @@
             "description": "test"
         },
         {
-            "url": "https://web-stage.aic.era.nih.gov",
+            "url": "https://services.external.stage.era.nih.gov",
             "description": "staging"
         },
         {

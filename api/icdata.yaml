@@ -1,297 +1,297 @@
 swagger: "2.0"
 info:
-version: 1.0.0
-title: IC Data API
-description: A set of APIs used by IC Extension systems to update application specific information.
+  version: 1.0.0
+  title: IC Data API
+  description: A set of APIs used by IC Extension systems to update application specific information.
 host: services.internal.era.nih.gov
 basePath: /icdata/api
 schemes:
-- https
+  - https
 paths:
-/ice/fed-person-involvement/assign/{applId}:
-post:
-description: Update Federal Person Involvement records for an application. Converted from ice_dbms_fedp_a_pkg.assign_proc stored procedure.
-operationId: assignFedPersonInvolvement
-produces:
-- application/json
-parameters:
-- name: applId
-in: path
-description: ID of the target application.
-required: true
-type: integer
-- name: transactionType
-in: query
-description: Transaction type
-required: true
-type: string
-- name: phsOrgCode
-in: query
-description: Phs organization code
-required: true
-type: string
-- name: roleTypeCode
-in: query
-description: Role type code
-required: true
-type: string
-- name: personId
-in: query
-description: Person ID
-required: true
-type: integer
-- name: versionCode
-in: query
-description: Version code. Default value = 'M'.
-required: false
-type: string
+  /ice/fed-person-involvement/assign/{applId}:
+    post:
+      description: Update Federal Person Involvement records for an application. Converted from ice_dbms_fedp_a_pkg.assign_proc stored procedure.
+      operationId: assignFedPersonInvolvement
+      produces:
+        - application/json
+      parameters:
+        - name: applId
+          in: path
+          description: ID of the target application.
+          required: true
+          type: integer
+        - name: transactionType
+          in: query
+          description: Transaction type
+          required: true
+          type: string
+        - name: phsOrgCode
+          in: query
+          description: Phs organization code
+          required: true
+          type: string
+        - name: roleTypeCode
+          in: query
+          description: Role type code
+          required: true
+          type: string
+        - name: personId
+          in: query
+          description: Person ID
+          required: true
+          type: integer
+        - name: versionCode
+          in: query
+          description: Version code. Default value = 'M'.
+          required: false
+          type: string
+      responses:
+        200:
+          description: Successful response
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/UnauthorizedRequest"
+        default:
+          $ref: "#/responses/BadRequest"
+  /ice/ic-pcc/assign/{applId}:
+    post:
+      description: Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.assign_ic_pcc_proc stored procedure.
+      operationId: assignICInvolvement
+      produces:
+        - application/json
+      parameters:
+        - name: applId
+          in: path
+          description: ID of the target application.
+          required: true
+          type: integer
+        - name: transactionType
+          in: query
+          description: Transaction type
+          required: true
+          type: string
+        - name: phsOrgCode
+          in: query
+          description: Phs organization code
+          required: true
+          type: string
+        - name: oldPccCode
+          in: query
+          description: Old Program Class Code
+          required: false
+          type: string
+        - name: newPccCode
+          in: query
+          description: New Program Class Code
+          required: false
+          type: string
+      responses:
+        200:
+          description: Successful response
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/UnauthorizedRequest"
+        default:
+          $ref: "#/responses/BadRequest"
+  /ice/main-pcc/assign/{applId}:
+    post:
+      description: Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.assign_main_pcc_proc stored procedure.
+      operationId: assignMainPccInvolvement
+      produces:
+        - application/json
+      parameters:
+        - name: applId
+          in: path
+          description: ID of the target application.
+          required: true
+          type: integer
+        - name: phsOrgCode
+          in: query
+          description: Phs organization code
+          required: true
+          type: string
+        - name: progClassCode
+          in: query
+          description: Program Class Code
+          required: true
+          type: string
+        - name: overWriteFlag
+          in: query
+          description: Overwrite Flag. Default value "Y"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Successful response
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/UnauthorizedRequest"
+        default:
+          $ref: "#/responses/BadRequest"
+  /ice/awd-fundings/assign/{applId}:
+    post:
+      description: Update tables in accordance with various business rules. Converted from ice_dbms_awfd_a_pkg.assign_proc stored procedure.
+      operationId: assignAwardFunding
+      produces:
+        - application/json
+      parameters:
+        - name: applId
+          in: path
+          description: ID of the target application.
+          required: true
+          type: integer
+        - name: transType
+          in: query
+          description: Transaction Type
+          required: true
+          type: string
+        - name: phsOrgCode
+          in: query
+          description: Phs organization code
+          required: true
+          type: string
+        - name: oldCan
+          in: query
+          description: Old CAN
+          required: false
+          type: string
+        - name: newCan
+          in: query
+          description: New CAN
+          required: false
+          type: string
+        - name: newPcc
+          in: query
+          description: New Program Class Code
+          required: false
+          type: string
+      responses:
+        200:
+          description: Successful response
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/UnauthorizedRequest"
+        default:
+          $ref: "#/responses/BadRequest"
+  /ice/appd-fundings/assign/{applId}:
+    post:
+      description: Assign IC appl period funding for an application. Converted from ice_dbms_appd_a_pkg. assign_proc stored procedure.
+      operationId: assignApplPeriodFunding
+      produces:
+        - application/json
+      parameters:
+        - name: applId
+          in: path
+          description: ID of the target application.
+          required: true
+          type: integer
+        - name: transType
+          in: query
+          description: Transaction Type
+          required: true
+          type: string
+        - name: phsOrgCode
+          in: query
+          description: Phs organization code
+          required: true
+          type: string
+        - name: totalPeriodAmt
+          in: query
+          description: Total Period Amount
+          required: false
+          type: integer
+        - name: directCostAmt
+          in: query
+          description: Direct Cost Amount
+          required: false
+          type: integer
+        - name: indirectCostAmt
+          in: query
+          description: Indirect Cost Amount
+          required: false
+          type: integer
+      responses:
+        200:
+          description: Successful response
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/UnauthorizedRequest"
+        default:
+          $ref: "#/responses/BadRequest"
+  /ice/pcc-details/{applId}:
+    get:
+      description: Fetch IC-PCC details for an application.
+      operationId: getPcc
+      produces:
+      - application/json
+      parameters:
+        - name: applId
+          in: path
+          description: ID of the target application.
+          required: true
+          type: integer
+        - name: phsOrgCode
+          in: query
+          description: Phs organization code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: "#/definitions/ResponsesIcdProgClass"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/UnauthorizedRequest"
+        default:
+          $ref: "#/responses/BadRequest"
+
 responses:
-200:
-description: Successful response
-400:
-$ref: "#/responses/BadRequest"
-401:
-$ref: "#/responses/UnauthorizedRequest"
-default:
-$ref: "#/responses/BadRequest"
-/ice/ic-pcc/assign/{applId}:
-post:
-description: Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.
-assign_ic_pcc_proc stored procedure.
-operationId: assignICInvolvement
-produces:
-- application/json
-parameters:
-- name: applId
-in: path
-description: ID of the target application.
-required: true
-type: integer
-- name: transactionType
-in: query
-description: Transaction type
-required: true
-type: string
-- name: phsOrgCode
-in: query
-description: Phs organization code
-required: true
-type: string
-- name: oldPccCode
-in: query
-description: Old Program Class Code
-required: false
-type: string
-- name: newPccCode
-in: query
-description: New Program Class Code
-required: false
-type: string
-responses:
-200:
-description: Successful response
-400:
-$ref: "#/responses/BadRequest"
-401:
-$ref: "#/responses/UnauthorizedRequest"
-default:
-$ref: "#/responses/BadRequest"
-/ice/main-pcc/assign/{applId}:
-post:
-description: Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.
-assign_main_pcc_proc stored procedure.
-operationId: assignMainPccInvolvement
-produces:
-- application/json
-parameters:
-- name: applId
-in: path
-description: ID of the target application.
-required: true
-type: integer
-- name: phsOrgCode
-in: query
-description: Phs organization code
-required: true
-type: string
-- name: progClassCode
-in: query
-description: Program Class Code
-required: true
-type: string
-- name: overWriteFlag
-in: query
-description: Overwrite Flag. Default value "Y"
-required: false
-type: string
-responses:
-200:
-description: Successful response
-400:
-$ref: "#/responses/BadRequest"
-401:
-$ref: "#/responses/UnauthorizedRequest"
-default:
-$ref: "#/responses/BadRequest"
-/ice/awd-fundings/assign/{applId}:
-post:
-description: Update tables in accordance with various business rules. Converted from ice_dbms_awfd_a_pkg.assign_proc stored procedure.
-operationId: assignAwardFunding
-produces:
-- application/json
-parameters:
-- name: applId
-in: path
-description: ID of the target application.
-required: true
-type: integer
-- name: transType
-in: query
-description: Transaction Type
-required: true
-type: string
-- name: phsOrgCode
-in: query
-description: Phs organization code
-required: true
-type: string
-- name: oldCan
-in: query
-description: Old CAN
-required: false
-type: string
-- name: newCan
-in: query
-description: New CAN
-required: false
-type: string
-- name: newPcc
-in: query
-description: New Program Class Code
-required: false
-type: string
-responses:
-200:
-description: Successful response
-400:
-$ref: "#/responses/BadRequest"
-401:
-$ref: "#/responses/UnauthorizedRequest"
-default:
-$ref: "#/responses/BadRequest"
-/ice/appd-fundings/assign/{applId}:
-post:
-description: Assign IC appl period funding for an application. Converted from ice_dbms_appd_a_pkg. assign_proc stored procedure.
-operationId: assignApplPeriodFunding
-produces:
-- application/json
-parameters:
-- name: applId
-in: path
-description: ID of the target application.
-required: true
-type: integer
-- name: transType
-in: query
-description: Transaction Type
-required: true
-type: string
-- name: phsOrgCode
-in: query
-description: Phs organization code
-required: true
-type: string
-- name: totalPeriodAmt
-in: query
-description: Total Period Amount
-required: false
-type: integer
-- name: directCostAmt
-in: query
-description: Direct Cost Amount
-required: false
-type: integer
-- name: indirectCostAmt
-in: query
-description: Indirect Cost Amount
-required: false
-type: integer
-responses:
-200:
-description: Successful response
-400:
-$ref: "#/responses/BadRequest"
-401:
-$ref: "#/responses/UnauthorizedRequest"
-default:
-$ref: "#/responses/BadRequest"
-/ice/pcc-details/{applId}:
-get:
-description: Fetch IC-PCC details for an application.
-operationId: getPcc
-produces:
-- application/json
-parameters:
-- name: applId
-in: path
-description: ID of the target application.
-required: true
-type: integer
-- name: phsOrgCode
-in: query
-description: Phs organization code
-required: true
-type: string
-responses:
-'200':
-description: OK
-schema:
-$ref: "#/definitions/ResponsesIcdProgClass"
-400:
-$ref: "#/responses/BadRequest"
-401:
-$ref: "#/responses/UnauthorizedRequest"
-default:
-$ref: "#/responses/BadRequest"
-responses:
-BadRequest:
-description: Invalid parameters or business error
-schema:
-$ref: "#/definitions/ApiError"
-UnauthorizedRequest:
-description: Unauthorized Request error
-schema:
-$ref: "#/definitions/ApiError"
-IcdProgClass:
-description: IC PCC Data
-schema:
-$ref: "#/definitions/ResponsesIcdProgClass"
+  BadRequest:
+    description: Invalid parameters or business error
+    schema:
+      $ref: "#/definitions/ApiError"
+  UnauthorizedRequest:
+    description: Unauthorized Request error
+    schema:
+      $ref: "#/definitions/ApiError"
+  IcdProgClass:
+    description: IC PCC Data
+    schema:
+      $ref: "#/definitions/ResponsesIcdProgClass"
+
 definitions:
-ApiError:
-type: object
-description: Error details
-properties:
-businessErrorCode:
-type: integer
-businessErrorMessage:
-type: string
-ApplIcdProgClassDetail:
-type: object
-properties:
-progClassCode:
-type: string
-icMainFlag:
-type: string
-asgnVersionCode:
-type: string
-ResponsesIcdProgClass:
-type: object
-properties:
-applId:
-type: integer
-phsOrgCode:
-type: string
-applIcdProgClassDetails:
-type: array
-items:
-$ref: "#/definitions/ApplIcdProgClassDetail"
+  ApiError:
+    type: object
+    description: Error details
+    properties:
+      businessErrorCode:
+        type: integer
+      businessErrorMessage:
+        type: string
+  ApplIcdProgClassDetail:
+    type: object
+    properties:
+      progClassCode:
+        type: string
+      icMainFlag:
+        type: string
+      asgnVersionCode:
+        type: string
+  ResponsesIcdProgClass:
+    type: object
+    properties:
+      applId:
+        type: integer
+      phsOrgCode:
+        type: string
+      applIcdProgClassDetails:
+        type: array
+        items:
+          $ref: "#/definitions/ApplIcdProgClassDetail"
