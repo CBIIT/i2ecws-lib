@@ -1,22 +1,41 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.1",
   "info": {
-    "version": "1.0.0",
     "title": "IC Data API",
-    "description": "A set of APIs used by IC Extension systems to update application specific information."
+    "description": "A set of APIs used by IC Extension systems to update application specific information.",
+    "version": "1.0.0"
   },
-  "host": "services.internal.era.nih.gov",
-  "basePath": "/icdata/api",
-  "schemes": [
-    "https"
+  "servers": [
+    {
+      "url": "https://services.internal.dev.era.nih.gov",
+      "description": "development"
+    },
+    {
+      "url": "https://services.internal.test.era.nih.gov",
+      "description": "test"
+    },
+    {
+      "url": "https://services.internal.era.stage.nih.gov",
+      "description": "staging"
+    },
+    {
+      "url": "https://services.internal.era.nih.gov",
+      "description": "production"
+    }
+  ],
+  "tags": [
+    {
+        "name": "icdata-services-controller",
+        "description": "ICData REST Controller"
+    }
   ],
   "paths": {
-    "/ice/fed-person-involvement/assign/{applId}": {
+    "/icdata/api/ice/fed-person-involvement/assign/{applId}": {
       "post": {
         "description": "Update Federal Person Involvement records for an application. Converted from ice_dbms_fedp_a_pkg.assign_proc stored procedure.",
         "operationId": "assignFedPersonInvolvement",
-        "produces": [
-          "application/json"
+        "tags": [
+            "ICData Services Controller"
         ],
         "parameters": [
           {
@@ -24,66 +43,99 @@
             "in": "path",
             "description": "ID of the target application.",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "transactionType",
             "in": "query",
             "description": "Transaction type",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "phsOrgCode",
             "in": "query",
             "description": "Phs organization code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "roleTypeCode",
             "in": "query",
             "description": "Role type code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "personId",
             "in": "query",
             "description": "Person ID",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "versionCode",
             "in": "query",
             "description": "Version code. Default value = 'M'.",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {}
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/responses/UnauthorizedRequest"
+            "description": "Unauthorized Request error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/ice/ic-pcc/assign/{applId}": {
+    "/icdata/api/ice/ic-pcc/assign/{applId}": {
       "post": {
         "description": "Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.assign_ic_pcc_proc stored procedure.",
         "operationId": "assignICInvolvement",
-        "produces": [
-          "application/json"
+        "tags": [
+            "ICData Services Controller"
         ],
         "parameters": [
           {
@@ -91,59 +143,89 @@
             "in": "path",
             "description": "ID of the target application.",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "transactionType",
             "in": "query",
             "description": "Transaction type",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "phsOrgCode",
             "in": "query",
             "description": "Phs organization code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "oldPccCode",
             "in": "query",
             "description": "Old Program Class Code",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "newPccCode",
             "in": "query",
             "description": "New Program Class Code",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {}
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/responses/UnauthorizedRequest"
+            "description": "Unauthorized Request error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/ice/main-pcc/assign/{applId}": {
+    "/icdata/api/ice/main-pcc/assign/{applId}": {
       "post": {
         "description": "Assign IC involvement for an application. Converted from ice_dbms_icpcc_a_pkg.assign_main_pcc_proc stored procedure.",
         "operationId": "assignMainPccInvolvement",
-        "produces": [
-          "application/json"
+        "tags": [
+            "ICData Services Controller"
         ],
         "parameters": [
           {
@@ -151,52 +233,81 @@
             "in": "path",
             "description": "ID of the target application.",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "phsOrgCode",
             "in": "query",
             "description": "Phs organization code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "progClassCode",
             "in": "query",
             "description": "Program Class Code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "overWriteFlag",
             "in": "query",
             "description": "Overwrite Flag. Default value \"Y\"",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {}
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/responses/UnauthorizedRequest"
+            "description": "Unauthorized Request error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/ice/awd-fundings/assign/{applId}": {
+    "/icdata/api/ice/awd-fundings/assign/{applId}": {
       "post": {
         "description": "Update tables in accordance with various business rules. Converted from ice_dbms_awfd_a_pkg.assign_proc stored procedure.",
         "operationId": "assignAwardFunding",
-        "produces": [
-          "application/json"
+        "tags": [
+            "ICData Services Controller"
         ],
         "parameters": [
           {
@@ -204,66 +315,97 @@
             "in": "path",
             "description": "ID of the target application.",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "transType",
             "in": "query",
             "description": "Transaction Type",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "phsOrgCode",
             "in": "query",
             "description": "Phs organization code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "oldCan",
             "in": "query",
             "description": "Old CAN",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "newCan",
             "in": "query",
             "description": "New CAN",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "newPcc",
             "in": "query",
             "description": "New Program Class Code",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {}
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/responses/UnauthorizedRequest"
+            "description": "Unauthorized Request error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/ice/appd-fundings/assign/{applId}": {
+    "/icdata/api/ice/appd-fundings/assign/{applId}": {
       "post": {
         "description": "Assign IC appl period funding for an application. Converted from ice_dbms_appd_a_pkg. assign_proc stored procedure.",
         "operationId": "assignApplPeriodFunding",
-        "produces": [
-          "application/json"
+        "tags": [
+            "ICData Services Controller"
         ],
         "parameters": [
           {
@@ -271,66 +413,97 @@
             "in": "path",
             "description": "ID of the target application.",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "transType",
             "in": "query",
             "description": "Transaction Type",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "phsOrgCode",
             "in": "query",
             "description": "Phs organization code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "totalPeriodAmt",
             "in": "query",
             "description": "Total Period Amount",
-            "required": false,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "directCostAmt",
             "in": "query",
             "description": "Direct Cost Amount",
-            "required": false,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "indirectCostAmt",
             "in": "query",
             "description": "Indirect Cost Amount",
-            "required": false,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {}
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/responses/UnauthorizedRequest"
+            "description": "Unauthorized Request error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/ice/pcc-details/{applId}": {
+    "/icdata/api/ice/pcc-details/{applId}": {
       "get": {
         "description": "Fetch IC-PCC details for an application.",
         "operationId": "getPcc",
-        "produces": [
-          "application/json"
+        "tags": [
+            "ICData Services Controller"
         ],
         "parameters": [
           {
@@ -338,99 +511,143 @@
             "in": "path",
             "description": "ID of the target application.",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "phsOrgCode",
             "in": "query",
             "description": "Phs organization code",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/ResponsesIcdProgClass"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsesIcdProgClass"
+                }
+              }
             }
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/responses/UnauthorizedRequest"
+            "description": "Unauthorized Request error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Invalid parameters or business error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     }
   },
-  "responses": {
-    "BadRequest": {
-      "description": "Invalid parameters or business error",
-      "schema": {
-        "$ref": "#/definitions/ApiError"
-      }
-    },
-    "UnauthorizedRequest": {
-      "description": "Unauthorized Request error",
-      "schema": {
-        "$ref": "#/definitions/ApiError"
-      }
-    },
-    "IcdProgClass": {
-      "description": "IC PCC Data",
-      "schema": {
-        "$ref": "#/definitions/ResponsesIcdProgClass"
-      }
-    }
-  },
-  "definitions": {
-    "ApiError": {
-      "type": "object",
-      "description": "Error details",
-      "properties": {
-        "businessErrorCode": {
-          "type": "integer"
+  "components": {
+    "schemas": {
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "businessErrorCode": {
+            "type": "integer"
+          },
+          "businessErrorMessage": {
+            "type": "string"
+          }
         },
-        "businessErrorMessage": {
-          "type": "string"
+        "description": "Error details"
+      },
+      "ApplIcdProgClassDetail": {
+        "type": "object",
+        "properties": {
+          "progClassCode": {
+            "type": "string"
+          },
+          "icMainFlag": {
+            "type": "string"
+          },
+          "asgnVersionCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponsesIcdProgClass": {
+        "type": "object",
+        "properties": {
+          "applId": {
+            "type": "integer"
+          },
+          "phsOrgCode": {
+            "type": "string"
+          },
+          "applIcdProgClassDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplIcdProgClassDetail"
+            }
+          }
         }
       }
     },
-    "ApplIcdProgClassDetail": {
-      "type": "object",
-      "properties": {
-        "progClassCode": {
-          "type": "string"
-        },
-        "icMainFlag": {
-          "type": "string"
-        },
-        "asgnVersionCode": {
-          "type": "string"
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid parameters or business error",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
         }
-      }
-    },
-    "ResponsesIcdProgClass": {
-      "type": "object",
-      "properties": {
-        "applId": {
-          "type": "integer"
-        },
-        "phsOrgCode": {
-          "type": "string"
-        },
-        "applIcdProgClassDetails": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ApplIcdProgClassDetail"
+      },
+      "UnauthorizedRequest": {
+        "description": "Unauthorized Request error",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
+        }
+      },
+      "IcdProgClass": {
+        "description": "IC PCC Data",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponsesIcdProgClass"
+            }
           }
         }
       }
     }
-  }
+  },
+  "x-original-swagger-version": "2.0"
 }

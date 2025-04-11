@@ -1,12 +1,12 @@
 $Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.14_7";
 
-$output_path="projects\era-pas\java-client" 
+$output_path="projects\icdata\java-client" 
 
-$swagger_opts="-i api\era-pas.json"
+$swagger_opts="-i api\icdata.json"
 
 $template_opts="-t templates\Java"
 
-$config_opts="-c .\config.json"
+$config_opts="-c .\config-icdata.json"
 
 $output_opts="-o $output_path"
 
