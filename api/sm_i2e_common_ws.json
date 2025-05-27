@@ -1715,13 +1715,7 @@
                     "fullName": {
                         "type": "string"
                     },
-                    "i2eMiddleName": {
-                        "type": "string"
-                    },
-                    "fullNameLF": {
-                        "type": "string"
-                    },
-                    "activeFlag": {
+                    "nihNetworkId": {
                         "type": "string"
                     },
                     "roles": {
@@ -1733,6 +1727,13 @@
                     "oracleId": {
                         "type": "string"
                     },
+                    "fullNameLF": {
+                        "type": "string"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
                     "emailAddress": {
                         "type": "string"
                     },
@@ -1742,30 +1743,29 @@
                     "firstName": {
                         "type": "string"
                     },
-                    "nihNetworkId": {
-                        "type": "string"
-                    },
-                    "inactiveDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "parentNedOrgPath": {
-                        "type": "string"
-                    },
-                    "npnId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "i2eLastName": {
                         "type": "string"
                     },
                     "i2eFirstName": {
                         "type": "string"
                     },
+                    "inactiveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "i2eFullNameLF": {
                         "type": "string"
                     },
                     "i2eFullName": {
+                        "type": "string"
+                    },
+                    "parentNedOrgPath": {
+                        "type": "string"
+                    },
+                    "i2eMiddleName": {
+                        "type": "string"
+                    },
+                    "activeFlag": {
                         "type": "string"
                     }
                 }
@@ -1791,17 +1791,17 @@
                     "enabled": {
                         "type": "boolean"
                     },
-                    "accountNonExpired": {
-                        "type": "boolean"
+                    "password": {
+                        "type": "string"
                     },
-                    "credentialsNonExpired": {
+                    "accountNonExpired": {
                         "type": "boolean"
                     },
                     "accountNonLocked": {
                         "type": "boolean"
                     },
-                    "password": {
-                        "type": "string"
+                    "credentialsNonExpired": {
+                        "type": "boolean"
                     }
                 }
             },

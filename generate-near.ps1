@@ -6,7 +6,7 @@ $swagger_opts="-i api\era-pas.json"
 
 $template_opts="-t templates\Java"
 
-$config_opts="-c .\config.json"
+$config_opts="-c .\config-near.json"
 
 $output_opts="-o $output_path"
 
@@ -21,3 +21,4 @@ $misc_opts=
 Remove-Item -Force -Recurse $output_path -Confirm:$false
 
 Invoke-Expression "java -jar bin\swagger-codegen-cli-3.0.68.jar generate $swagger_opts $template_opts $lang_opts $output_opts $config_opts $misc_opts"
+ 

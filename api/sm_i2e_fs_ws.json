@@ -6910,9 +6910,6 @@
                     "altPdEmailAddress": {
                         "type": "string"
                     },
-                    "fundedByFundingPlan": {
-                        "type": "boolean"
-                    },
                     "justificationUploaded": {
                         "type": "boolean"
                     },
@@ -6921,6 +6918,9 @@
                         "items": {
                             "$ref": "#/components/schemas/DocumentsT"
                         }
+                    },
+                    "fundedByFundingPlan": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -7184,6 +7184,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "activityCode": {
+                        "type": "string"
                     },
                     "docAbbreviation": {
                         "type": "string"
@@ -7611,11 +7614,11 @@
                     "ro": {
                         "type": "boolean"
                     },
-                    "wbsearch": {
-                        "type": "boolean"
-                    },
                     "composedGrantNumber": {
                         "type": "string"
+                    },
+                    "wbsearch": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -9595,13 +9598,13 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "referralDescription": {
+                        "type": "string"
+                    },
                     "id": {
                         "type": "string"
                     },
                     "text": {
-                        "type": "string"
-                    },
-                    "referralDescription": {
                         "type": "string"
                     }
                 }

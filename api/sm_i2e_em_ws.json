@@ -1812,10 +1812,10 @@
                     "i2eMiName": {
                         "type": "string"
                     },
-                    "typeAheadDisplayName": {
+                    "nedLegalFullNameLFM": {
                         "type": "string"
                     },
-                    "nedLegalFullNameLFM": {
+                    "typeAheadDisplayName": {
                         "type": "string"
                     }
                 }
@@ -2239,7 +2239,7 @@
                         "type": "integer",
                         "format": "int32"
                     },
-                    "orgPath": {
+                    "description": {
                         "type": "string"
                     },
                     "noeOrgType": {
@@ -2255,12 +2255,12 @@
                     "docAbbreviation": {
                         "type": "string"
                     },
+                    "orgPath": {
+                        "type": "string"
+                    },
                     "docOrgId": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "description": {
-                        "type": "string"
                     }
                 }
             },

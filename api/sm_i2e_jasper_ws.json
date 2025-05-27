@@ -811,11 +811,11 @@
                     "ro": {
                         "type": "boolean"
                     },
-                    "wbsearch": {
-                        "type": "boolean"
-                    },
                     "composedGrantNumber": {
                         "type": "string"
+                    },
+                    "wbsearch": {
+                        "type": "boolean"
                     }
                 }
             },

@@ -1,0 +1,488 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "I2E Mail Service API",
+        "description": "I2E Mail Service",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
+        },
+        "version": "v1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://i2e-dev.nci.nih.gov/i2emailsvc",
+            "description": "dev"
+        },
+        {
+            "url": "https://i2e-test.nci.nih.gov/i2emailsvc",
+            "description": "test"
+        },
+        {
+            "url": "https://i2e-stage.nci.nih.gov/i2emailsvc",
+            "description": "stage"
+        },
+        {
+            "url": "https://i2e.nci.nih.gov/i2emailsvc",
+            "description": "prod"
+        }
+    ],
+    "paths": {
+        "/api/v1/mailer/send": {
+            "post": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "sendMail",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendPayloadDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/send-immediate": {
+            "post": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "sendImmediate",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendPayloadDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/send-arbitrary": {
+            "post": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "sendArbitrary",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendPayloadDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/send-arbitrary-immediate": {
+            "post": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "sendArbitraryImmediate",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendPayloadDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/resend/{id}": {
+            "post": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "resendMail",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/resend-immediate/{id}": {
+            "post": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "resendImmediate",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/cancel/{id}": {
+            "patch": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "cancelMail",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mailer/status/{id}": {
+            "get": {
+                "tags": [
+                    "mail-sender-controller"
+                ],
+                "operationId": "getStatus",
+                "parameters": [
+                    {
+                        "name": "SM_USER",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailQueueDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SendPayloadDto": {
+                "type": "object",
+                "properties": {
+                    "applicationId": {
+                        "type": "string"
+                    },
+                    "templateId": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "from": {
+                        "type": "string"
+                    },
+                    "fromDisplay": {
+                        "type": "string"
+                    },
+                    "to": {
+                        "type": "string"
+                    },
+                    "cc": {
+                        "type": "string"
+                    },
+                    "bcc": {
+                        "type": "string"
+                    }
+                }
+            },
+            "MailQueueDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "templateId": {
+                        "type": "string"
+                    },
+                    "params": {
+                        "type": "string"
+                    },
+                    "applicationName": {
+                        "type": "string"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "mailFrom": {
+                        "type": "string"
+                    },
+                    "mailFromDisplay": {
+                        "type": "string"
+                    },
+                    "recipients": {
+                        "type": "string"
+                    },
+                    "ccRecipients": {
+                        "type": "string"
+                    },
+                    "bccRecipients": {
+                        "type": "string"
+                    },
+                    "currentStatus": {
+                        "type": "string"
+                    },
+                    "currentStatusMessage": {
+                        "type": "string"
+                    },
+                    "currentStatusDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "currentStatusUserId": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createUserId": {
+                        "type": "string"
+                    },
+                    "lastChangeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastChangeUserId": {
+                        "type": "string"
+                    },
+                    "history": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MailQueueHistoryDto"
+                        }
+                    }
+                }
+            },
+            "MailQueueHistoryDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "mqtId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "statusMessage": {
+                        "type": "string"
+                    },
+                    "statusDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "statusUserId": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -3960,14 +3960,14 @@
                     "messageExist": {
                         "type": "string"
                     },
-                    "wbsearch": {
-                        "type": "boolean"
-                    },
                     "ro": {
                         "type": "boolean"
                     },
                     "composedGrantNumber": {
                         "type": "string"
+                    },
+                    "wbsearch": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -4395,19 +4395,19 @@
                     "hideMessages": {
                         "type": "boolean"
                     },
-                    "miniRefGrantPayload": {
-                        "$ref": "#/components/schemas/MiniRefGrantPayload"
+                    "studySectionName": {
+                        "type": "string"
                     },
                     "currentReferralStatusDescDisplay": {
                         "type": "string"
                     },
-                    "studySectionName": {
-                        "type": "string"
-                    },
-                    "rejected": {
-                        "type": "boolean"
+                    "miniRefGrantPayload": {
+                        "$ref": "#/components/schemas/MiniRefGrantPayload"
                     },
                     "hasFormerGrantNum": {
+                        "type": "boolean"
+                    },
+                    "rejected": {
                         "type": "boolean"
                     }
                 }
@@ -4695,52 +4695,52 @@
                     "nihNetworkId": {
                         "type": "string"
                     },
-                    "i2eFullName": {
-                        "type": "string"
-                    },
-                    "oracleId": {
-                        "type": "string"
-                    },
                     "roles": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/I2ERoles"
                         }
                     },
-                    "activeFlag": {
+                    "oracleId": {
+                        "type": "string"
+                    },
+                    "npnId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "fullNameLF": {
+                        "type": "string"
+                    },
+                    "lastName": {
                         "type": "string"
                     },
                     "firstName": {
+                        "type": "string"
+                    },
+                    "i2eLastName": {
+                        "type": "string"
+                    },
+                    "i2eFirstName": {
                         "type": "string"
                     },
                     "inactiveDate": {
                         "type": "string",
                         "format": "date-time"
                     },
-                    "i2eMiddleName": {
-                        "type": "string"
-                    },
-                    "lastName": {
-                        "type": "string"
-                    },
                     "emailAddress": {
-                        "type": "string"
-                    },
-                    "fullNameLF": {
-                        "type": "string"
-                    },
-                    "i2eFirstName": {
-                        "type": "string"
-                    },
-                    "i2eLastName": {
                         "type": "string"
                     },
                     "i2eFullNameLF": {
                         "type": "string"
                     },
-                    "npnId": {
-                        "type": "integer",
-                        "format": "int32"
+                    "i2eFullName": {
+                        "type": "string"
+                    },
+                    "activeFlag": {
+                        "type": "string"
+                    },
+                    "i2eMiddleName": {
+                        "type": "string"
                     },
                     "parentNedOrgPath": {
                         "type": "string"
@@ -5072,14 +5072,14 @@
                     "thtCode": {
                         "type": "string"
                     },
-                    "noticeNumberDescp": {
-                        "type": "string"
-                    },
                     "xcanCan": {
                         "type": "string"
                     },
                     "expired": {
                         "type": "boolean"
+                    },
+                    "noticeNumberDescp": {
+                        "type": "string"
                     }
                 }
             },
@@ -5241,17 +5241,17 @@
                     "actionDateDateTimeFormat": {
                         "type": "string"
                     },
+                    "payType4Comment": {
+                        "type": "string"
+                    },
                     "payType4RequestNumber": {
                         "type": "integer",
                         "format": "int32"
                     },
-                    "payType4Action": {
-                        "type": "string"
-                    },
                     "payType4": {
                         "type": "boolean"
                     },
-                    "payType4Comment": {
+                    "payType4Action": {
                         "type": "string"
                     }
                 }
@@ -5469,13 +5469,13 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "referralDescription": {
+                        "type": "string"
+                    },
                     "id": {
                         "type": "string"
                     },
                     "text": {
-                        "type": "string"
-                    },
-                    "referralDescription": {
                         "type": "string"
                     }
                 }
