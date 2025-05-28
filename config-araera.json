@@ -6,6 +6,7 @@
   "apiPackage": "gov.nih.nci.cbiit.scimgmt.ara.era.client.api",
   "modelPackage": "gov.nih.nci.cbiit.scimgmt.ara.era.client.dto",
   "invokerPackage": "gov.nih.nci.cbiit.scimgmt.ara.era.client.invoker",
+  "modelNameSuffix": "Dto",
   "java11": true,
   "dateLibrary": "java11",
   "library": "resttemplate",
