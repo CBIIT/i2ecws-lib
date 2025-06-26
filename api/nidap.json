@@ -1,0 +1,119 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "I2E Enterprise Maintenance Web Services API",
+        "description": "NIDAP Web Service",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://springdoc.org"
+        },
+        "version": "v2.1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/i2eemws",
+            "description": "local"
+        },
+        {
+            "url": "https://i2e-dev.nci.nih.gov/i2eemws",
+            "description": "dev"
+        },
+        {
+            "url": "https://i2e-test.nci.nih.gov/i2eemws",
+            "description": "test"
+        },
+        {
+            "url": "https://i2e-stage.nci.nih.gov/i2eemws",
+            "description": "stage"
+        },
+        {
+            "url": "https://i2e.nci.nih.gov/i2eemws",
+            "description": "prod"
+        }
+    ],
+    "paths": {
+        "/api/v1/nidap/update-last-login/{userId}": {
+            "get": {
+                "tags": [
+                    "nidap-controller"
+                ],
+                "operationId": "updateLastLogin",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NidapPayload"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/nidap/update-last-login-batch/": {
+            "get": {
+                "tags": [
+                    "nidap-controller"
+                ],
+                "operationId": "updateLastLoginBatch",
+                "parameters": [
+                    {
+                        "name": "userIds",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NidapPayload"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "NidapPayload": {
+                "type": "object",
+                "properties": {
+                    "updateCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "errorCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "results": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
