@@ -2,7 +2,7 @@
   "ngVersion":"17.2.4",
   "npmName": "@cbiit/login-server-lib",
   "groupId": "gov.nih.nci.cbiit.scimgmt",
-  "artifactId": "login-lib",
+  "artifactId": "login-server-lib",
   "apiPackage": "gov.nih.nci.cbiit.scimgmt.login.server.api",
   "modelPackage": "gov.nih.nci.cbiit.scimgmt.login.server.dto",
   "invokerPackage": "gov.nih.nci.cbiit.scimgmt.login.server.invoker",
