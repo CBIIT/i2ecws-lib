@@ -2,7 +2,7 @@
     "openapi": "3.0.1",
     "info": {
         "title": "I2E Enterprise Maintenance Web Services API",
-        "description": "NIDAP Web Service",
+        "description": "EM Webservice to Update User Last Login",
         "license": {
             "name": "Apache 2.0",
             "url": "http://springdoc.org"
@@ -32,10 +32,43 @@
         }
     ],
     "paths": {
-        "/api/v1/nidap/update-last-login/{userId}": {
+        "/api/v1/login/update-last-login-batch": {
+            "post": {
+                "tags": [
+                    "user-last-login-controller"
+                ],
+                "operationId": "updateLastLoginBatchPost",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LastLoginResultsPayload"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login/update-last-login/{userId}": {
             "get": {
                 "tags": [
-                    "nidap-controller"
+                    "user-last-login-controller"
                 ],
                 "operationId": "updateLastLogin",
                 "parameters": [
@@ -54,7 +87,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/NidapPayload"
+                                    "$ref": "#/components/schemas/LastLoginResultsPayload"
                                 }
                             }
                         }
@@ -62,12 +95,12 @@
                 }
             }
         },
-        "/api/v1/nidap/update-last-login-batch/": {
+        "/api/v1/login/update-last-login-batch/": {
             "get": {
                 "tags": [
-                    "nidap-controller"
+                    "user-last-login-controller"
                 ],
-                "operationId": "updateLastLoginBatch",
+                "operationId": "updateLastLoginBatchGet",
                 "parameters": [
                     {
                         "name": "userIds",
@@ -84,7 +117,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/NidapPayload"
+                                    "$ref": "#/components/schemas/LastLoginResultsPayload"
                                 }
                             }
                         }
@@ -95,7 +128,7 @@
     },
     "components": {
         "schemas": {
-            "NidapPayload": {
+            "LastLoginResultsPayload": {
                 "type": "object",
                 "properties": {
                     "updateCount": {

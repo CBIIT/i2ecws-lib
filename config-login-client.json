@@ -1,0 +1,17 @@
+{
+  "ngVersion":"17.2.4",
+  "npmName": "@cbiit/login-client-lib",
+  "groupId": "gov.nih.nci.cbiit.scimgmt",
+  "artifactId": "login-lib",
+  "apiPackage": "gov.nih.nci.cbiit.scimgmt.login.client.api",
+  "modelPackage": "gov.nih.nci.cbiit.scimgmt.login.client.dto",
+  "invokerPackage": "gov.nih.nci.cbiit.scimgmt.login.client.invoker",
+  "modelNameSuffix": "Dto",
+  "java11": true,
+  "dateLibrary": "java11",
+  "library": "resttemplate",
+  "artifactVersion": "1.0.0",
+  "tsVersion": ">=4.2.3 and <=5.4.2",
+  "hideGenerationTimestamp": true,
+  "jakarta": true
+}

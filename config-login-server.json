@@ -1,0 +1,20 @@
+{
+  "ngVersion":"17.2.4",
+  "npmName": "@cbiit/login-server-lib",
+  "groupId": "gov.nih.nci.cbiit.scimgmt",
+  "artifactId": "login-lib",
+  "apiPackage": "gov.nih.nci.cbiit.scimgmt.login.server.api",
+  "modelPackage": "gov.nih.nci.cbiit.scimgmt.login.server.dto",
+  "invokerPackage": "gov.nih.nci.cbiit.scimgmt.login.server.invoker",
+  "configPackage": "gov.nih.nci.cbiit.scimgmt.login.server.config",
+  "modelNameSuffix": "Dto",
+  "java11": true,
+  "dateLibrary": "java11",
+  "library": "spring-boot3",
+  "artifactVersion": "1.0.0",
+  "tsVersion": ">=4.2.3 and <=5.4.2",
+  "hideGenerationTimestamp": true,
+  "jakarta": true,
+  "springBoot3Version": "3.3.4",
+  "springBoot3JavaVersion": "17"
+}
