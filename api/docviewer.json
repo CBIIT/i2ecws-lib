@@ -1,0 +1,425 @@
+{
+  "openapi": "3.0.1", 
+  "tags": [
+    {
+      "name": "g-f-documentInfo", 
+      "description": "Grant Folder Document Information Rest Controller"
+    }
+  ], 
+  "components": {
+    "schemas": {
+      "PIRole": {
+        "enum": [
+          "PI", 
+          "MPI"
+        ], 
+        "description": "PIRole", 
+        "type": "string"
+      }, 
+      "GrantCorrespondenceData": {
+        "description": "Details of each Correspondence Data like notificationName, emailContent, fromAddress etc.", 
+        "properties": {
+          "notificationName": {
+            "description": "notificationName", 
+            "type": "string"
+          }, 
+          "ccAddress": {
+            "description": "toAddress", 
+            "type": "string"
+          }, 
+          "subject": {
+            "description": "subject", 
+            "type": "string"
+          }, 
+          "description": {
+            "description": "description", 
+            "type": "string"
+          }, 
+          "fromAddress": {
+            "description": "fromAddress", 
+            "type": "string"
+          }, 
+          "toAddress": {
+            "description": "toAddress", 
+            "type": "string"
+          }, 
+          "emailContent": {
+            "description": "emailContent", 
+            "type": "string"
+          }, 
+          "bccAddress": {
+            "description": "bccAddress", 
+            "type": "string"
+          }, 
+          "sentDate": {
+            "format": "date", 
+            "description": "sentDate", 
+            "type": "string"
+          }, 
+          "Id": {
+            "description": "Id", 
+            "type": "string"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "GrantDocumentInfo": {
+        "description": "Details of each document like applId, grantNumber, piDetails etc.", 
+        "properties": {
+          "projectTitle": {
+            "description": "projectTitle", 
+            "type": "string"
+          }, 
+          "applId": {
+            "format": "int64", 
+            "description": "applId", 
+            "type": "integer"
+          }, 
+          "councilMeetingDate": {
+            "description": "councilMeetingDate", 
+            "type": "string"
+          }, 
+          "piDetails": {
+            "description": "piDetails", 
+            "items": {
+              "$ref": "#/components/schemas/PIDetails"
+            }, 
+            "type": "array"
+          }, 
+          "grantNumber": {
+            "$ref": "#/components/schemas/GrantNumber", 
+            "description": "grantNumber", 
+            "type": "object"
+          }, 
+          "institution": {
+            "description": "institution", 
+            "type": "string"
+          }, 
+          "documentMetaDataInfo": {
+            "description": "docMetaDataInfo List", 
+            "items": {
+              "$ref": "#/components/schemas/DocumentMetaDataInfo"
+            }, 
+            "type": "array"
+          }, 
+          "applicationStatus": {
+            "description": "applicationStatus", 
+            "type": "string"
+          }, 
+          "orgPath": {
+            "description": "orgPath", 
+            "type": "string"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "GrantCorrespondenceResponse": {
+        "description": "Wrapper response object to hold list of GrantCorrespondenceInfo objects", 
+        "properties": {
+          "GrantCorrespondenceInfo": {
+            "$ref": "#/components/schemas/GrantCorrespondenceInfo", 
+            "type": "object"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "GrantDocumentInfoResponse": {
+        "description": "Wrapper response object to hold list of Grant Document info objects", 
+        "properties": {
+          "grantDocumentInfo": {
+            "$ref": "#/components/schemas/GrantDocumentInfo", 
+            "type": "object"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "PIDetails": {
+        "description": "PIDetails", 
+        "properties": {
+          "piPersonID": {
+            "format": "int64", 
+            "description": "piPersonID", 
+            "type": "integer"
+          }, 
+          "piName": {
+            "description": "piName", 
+            "type": "string"
+          }, 
+          "PIRole": {
+            "$ref": "#/components/schemas/PIRole", 
+            "description": "PIRole", 
+            "type": "string"
+          }
+        }
+      }, 
+      "GrantCorrespondenceInfo": {
+        "description": "Wrapper response object to hold list of GrantCorrespondenceData objects", 
+        "properties": {
+          "applId": {
+            "format": "int64", 
+            "description": "applId", 
+            "type": "integer"
+          }, 
+          "correspondenceData": {
+            "items": {
+              "$ref": "#/components/schemas/GrantCorrespondenceData"
+            }, 
+            "type": "array"
+          }
+        }
+      }, 
+      "GrantNumber": {
+        "description": "GrantNumber", 
+        "properties": {
+          "subprojectID": {
+            "description": "subprojectID", 
+            "type": "string"
+          }, 
+          "activityCode": {
+            "description": "activityCode", 
+            "type": "string"
+          }, 
+          "fullGrantNumber": {
+            "description": "fullGrantNumber", 
+            "type": "string"
+          }, 
+          "suffixCode": {
+            "description": "suffixCode", 
+            "type": "string"
+          }, 
+          "supportYear": {
+            "description": "supportYear", 
+            "type": "string"
+          }, 
+          "applTypeCode": {
+            "description": "applTypeCode", 
+            "type": "string"
+          }, 
+          "serialNum": {
+            "description": "serialNum", 
+            "type": "string"
+          }
+        }
+      }, 
+      "DocumentMetaDataInfo": {
+        "description": "DocMetaData", 
+        "properties": {
+          "fileName": {
+            "description": "fileName", 
+            "type": "string"
+          }, 
+          "createdDate": {
+            "format": "date", 
+            "description": "createdDate", 
+            "type": "string"
+          }, 
+          "mimeType": {
+            "description": "mimeType", 
+            "type": "string"
+          }, 
+          "docType": {
+            "description": "docType", 
+            "type": "string"
+          }, 
+          "fileSize": {
+            "description": "fileSize", 
+            "type": "string"
+          }, 
+          "location": {
+            "description": "location", 
+            "items": {
+              "$ref": "#/components/schemas/DocMetadataNameValuePair"
+            }, 
+            "type": "array"
+          }, 
+          "appData": {
+            "items": {
+              "$ref": "#/components/schemas/DocMetadataNameValuePair"
+            }, 
+            "description": "appdata", 
+            "type": "array"
+          }, 
+          "userData": {
+            "items": {
+              "$ref": "#/components/schemas/DocMetadataNameValuePair"
+            }, 
+            "description": "userdata", 
+            "type": "array"
+          }, 
+          "id": {
+            "description": "id", 
+            "type": "string"
+          }, 
+          "submitter": {
+            "description": "submitter", 
+            "type": "string"
+          }, 
+          "submittedFileDate": {
+            "format": "date", 
+            "description": "submittedFileDate", 
+            "type": "string"
+          }
+        }
+      }, 
+      "GrantDocumentInfoRequest": {
+        "description": "Grant folder documents Request with attribues applId, docType.", 
+        "properties": {
+          "applId": {
+            "format": "int64", 
+            "description": "applId", 
+            "type": "integer"
+          }, 
+          "docType": {
+            "description": "docType code", 
+            "type": "string"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "GrantCorrespondenceRequest": {
+        "description": "Grant folder Correspondence Request with attribues applId", 
+        "properties": {
+          "applId": {
+            "format": "int64", 
+            "description": "applId", 
+            "type": "integer"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "DocMetadataNameValuePair": {
+        "description": "NameValuePair", 
+        "properties": {
+          "value": {
+            "description": "value", 
+            "type": "string"
+          }, 
+          "name": {
+            "description": "name", 
+            "type": "string"
+          }
+        }
+      }
+    }
+  }, 
+  "info": {
+    "version": "1.0.0", 
+    "description": "Document Information.", 
+    "title": "GF Document Info Rest Controller API"
+  }, 
+  "paths": {
+    "/gfdocuments/getGrantCorrespondence": {
+      "post": {
+        "summary": "retrieves Grant Correspondence Infomation", 
+        "operationId": "getGrantCorrespondence", 
+        "responses": {
+          "200": {
+            "description": "OK", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantCorrespondenceResponse"
+                }
+              }
+            }
+          }, 
+          "403": {
+            "description": "Forbidden", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }, 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantCorrespondenceRequest"
+              }
+            }
+          }, 
+          "required": true
+        }, 
+        "tags": [
+          "g-f-documentInfo"
+        ]
+      }
+    }, 
+    "/gfdocuments/getGrantDocumentInfo": {
+      "post": {
+        "summary": "retrieves Grant Document Infomation", 
+        "operationId": "getGrantDocumentInfo", 
+        "responses": {
+          "200": {
+            "description": "OK", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantDocumentInfoResponse"
+                }
+              }
+            }
+          }, 
+          "403": {
+            "description": "Forbidden", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }, 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantDocumentInfoRequest"
+              }
+            }
+          }, 
+          "required": true
+        }, 
+        "tags": [
+          "g-f-documentInfo"
+        ]
+      }
+    }
+  }, 
+  "servers": [
+    {
+      "url": "https://web.aic.era.nih.gov/grantfolder/dataservices"
+    },
+    {
+      "url": "https://services.external.stage.era.nih.gov/grantfolder/api/gfdocuments"
+    },
+    {
+      "url": "https://services.external.era.nih.gov/grantfolder/api/gfdocuments"
+    }
+  ]
+}

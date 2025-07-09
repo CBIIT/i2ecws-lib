@@ -1,4 +1,4 @@
-$Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.14_7";
+$Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.15_6";
 
 $output_path="projects\era-pas\java-client" 
 

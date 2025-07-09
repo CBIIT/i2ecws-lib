@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "I2E Enterprise Maintenance Web Services API",
+        "title": "I2E EM Web Service Last Login API",
         "description": "EM Webservice to Update User Last Login",
         "license": {
             "name": "Apache 2.0",

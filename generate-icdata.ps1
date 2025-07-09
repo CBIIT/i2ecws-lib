@@ -1,4 +1,4 @@
-$Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.14_7";
+$Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.15_6";
 
 $output_path="projects\icdata\java-client" 
 
@@ -21,3 +21,4 @@ $misc_opts=
 Remove-Item -Force -Recurse $output_path -Confirm:$false
 
 Invoke-Expression "java -jar bin\swagger-codegen-cli-3.0.68.jar generate $swagger_opts $template_opts $lang_opts $output_opts $config_opts $misc_opts"
+

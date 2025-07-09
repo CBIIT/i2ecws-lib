@@ -1,16 +1,16 @@
 $Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.15_6";
 
-$output_path="projects\icdata\java-server"
+$output_path="projects\docviewer\java-client" 
 
-$swagger_opts="-i api\icdata.json"
+$swagger_opts="-i api\docviewer.json"
 
-$template_opts="-t templates\JavaSpring"
+$template_opts="-t templates\Java"
 
-$config_opts="-c .\config-icdata-server.json"
+$config_opts="-c .\config-docviewer.json"
 
 $output_opts="-o $output_path"
 
-$lang_opts="-l spring"
+$lang_opts="-l java"
 
 $sys_opts=
 
