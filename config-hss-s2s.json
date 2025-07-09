@@ -1,0 +1,21 @@
+{
+  "groupId": "gov.nih.nci.cbiit",
+  "artifactId": "hss-s2s-client",
+  "artifactVersion": "1.0.0",
+  "library": "resttemplate",
+  "apiPackage": "gov.nih.nci.cbiit.hss.client.api",
+  "modelPackage": "gov.nih.nci.cbiit.hss.client.model",
+  "invokerPackage": "gov.nih.nci.cbiit.hss.client.invoker",
+  "dateLibrary": "java8",
+  "java8": true,
+  "hideGenerationTimestamp": true,
+  "serializableModel": true,
+  "fullJavaUtil": true,
+  "sourceFolder": "src/main/java",
+  "interfaceOnly": false,
+  "delegatePattern": false,
+  "useTags": true,
+  "useBeanValidation": true,
+  "performBeanValidation": true,
+  "withXml": false
+}

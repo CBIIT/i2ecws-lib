@@ -1,0 +1,119 @@
+openapi: 3.0.1
+info:
+  title: HSS-S2S REST Web Service API
+  description: HSS-S2S REST Web Service API as described in the Technical User Guide
+  license:
+    name: Apache 2.0
+    url: http://springdoc.org
+  version: v1.0.0
+servers:
+  - url: http://localhost/hss-s2s
+    description: local
+  - url: https://dev-server/hss-s2s
+    description: dev
+  - url: https://test-server/hss-s2s
+    description: test
+  - url: https://stage-server/hss-s2s
+    description: stage
+  - url: https://prod-server/hss-s2s
+    description: prod
+paths:
+  /api/v1/example-endpoint:
+    get:
+      tags:
+        - example-controller
+      summary: Example endpoint
+      description: This is a placeholder endpoint. Replace with actual endpoints from the HSS-S2S-REST-Web-Service-Technical-User-Guide.pdf
+      operationId: exampleOperation
+      parameters:
+        - name: exampleParam
+          in: query
+          description: An example parameter
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - example-controller
+      summary: Example post endpoint
+      description: This is a placeholder endpoint. Replace with actual endpoints from the HSS-S2S-REST-Web-Service-Technical-User-Guide.pdf
+      operationId: examplePostOperation
+      requestBody:
+        description: Example request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExampleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    ExampleRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Example ID
+        name:
+          type: string
+          description: Example name
+        value:
+          type: integer
+          format: int32
+          description: Example value
+    ExampleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Example ID
+        status:
+          type: string
+          description: Status of the operation
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the operation
+        data:
+          type: object
+          description: Response data
+          additionalProperties:
+            type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
