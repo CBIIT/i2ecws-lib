@@ -1,105 +1,116 @@
 package {{configPackage}};
 
-import feign.Logger;
+{{#authMethods}}
+{{#isBasicBasic}}
 import feign.auth.BasicAuthRequestInterceptor;
+{{^hasApiKeyMethods}}
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+{{/hasApiKeyMethods}}
+{{/isBasicBasic}}
+{{/authMethods}}
+{{#hasAuthMethods}}
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
-import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
-import org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails;
-import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
-import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitResourceDetails;
-import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
-import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
-import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+{{#hasApiKeyMethods}}
+import org.springframework.beans.factory.annotation.Value;
+{{/hasApiKeyMethods}}
+{{#hasOAuthMethods}}
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.http.HttpHeaders;
 
-@Configuration
-@EnableConfigurationProperties
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+
+{{/hasOAuthMethods}}
+{{/hasAuthMethods}}
+import org.springframework.context.annotation.Configuration;
+
+
 public class ClientConfiguration {
 
 {{#authMethods}}
-    {{#isBasic}}
-  {{=<% %>=}}@Value("${<%title%>.security.<%name%>.username:}")<%={{ }}=%>
+    {{#isBasicBasic}}
+  @Value("${{openbrace}}{{#lambda.lowercase}}{{{title}}}{{/lambda.lowercase}}.security.{{{name}}}.username:{{closebrace}}")
   private String {{{name}}}Username;
 
-  {{=<% %>=}}@Value("${<%title%>.security.<%name%>.password:}")<%={{ }}=%>
+  @Value("${{openbrace}}{{#lambda.lowercase}}{{{title}}}{{/lambda.lowercase}}.security.{{{name}}}.password:{{closebrace}}")
   private String {{{name}}}Password;
 
   @Bean
-  @ConditionalOnProperty(name = "{{{title}}}.security.{{{name}}}.username")
+  @ConditionalOnProperty(name = "{{#lambda.lowercase}}{{{title}}}{{/lambda.lowercase}}.security.{{{name}}}.username")
   public BasicAuthRequestInterceptor {{{name}}}RequestInterceptor() {
     return new BasicAuthRequestInterceptor(this.{{{name}}}Username, this.{{{name}}}Password);
   }
 
-    {{/isBasic}}
+    {{/isBasicBasic}}
     {{#isApiKey}}
-  {{=<% %>=}}@Value("${<%title%>.security.<%name%>.key:}")<%={{ }}=%>
+  @Value("${{openbrace}}{{#lambda.lowercase}}{{{title}}}{{/lambda.lowercase}}.security.{{{name}}}.key:{{closebrace}}")
   private String {{{name}}}Key;
 
   @Bean
-  @ConditionalOnProperty(name = "{{{title}}}.security.{{{name}}}.key")
+  @ConditionalOnProperty(name = "{{#lambda.lowercase}}{{{title}}}{{/lambda.lowercase}}.security.{{{name}}}.key")
   public ApiKeyRequestInterceptor {{{name}}}RequestInterceptor() {
     return new ApiKeyRequestInterceptor({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{{keyParamName}}}", this.{{{name}}}Key);
   }
 
     {{/isApiKey}}
     {{#isOAuth}}
+  private static final String CLIENT_PRINCIPAL_{{#lambda.uppercase}}{{{flow}}}{{/lambda.uppercase}} = "oauth2FeignClient";
+
   @Bean
-  @ConditionalOnProperty("{{{title}}}.security.{{{name}}}.client-id")
-  public OAuth2FeignRequestInterceptor {{{name}}}RequestInterceptor() {
-    return new OAuth2FeignRequestInterceptor(new DefaultOAuth2ClientContext(), {{{name}}}ResourceDetails());
+  @ConditionalOnProperty( prefix = "spring.security.oauth2.client.registration.{{{name}}}{{#lambda.pascalcase}}{{{flow}}}{{/lambda.pascalcase}}", name = "enabled", havingValue = "true" )
+  public OAuth2RequestInterceptor {{{flow}}}OAuth2RequestInterceptor(final OAuth2AuthorizedClientManager {{{flow}}}AuthorizedClientManager ) {
+     return new OAuth2RequestInterceptor(OAuth2AuthorizeRequest.withClientRegistrationId("{{{name}}}{{#lambda.pascalcase}}{{{flow}}}{{/lambda.pascalcase}}")
+            .principal( new AnonymousAuthenticationToken( CLIENT_PRINCIPAL_{{#lambda.uppercase}}{{{flow}}}{{/lambda.uppercase}}, CLIENT_PRINCIPAL_{{#lambda.uppercase}}{{{flow}}}{{/lambda.uppercase}}, AuthorityUtils.createAuthorityList( "ROLE_ANONYMOUS" ) ) )
+            .build(), {{{flow}}}AuthorizedClientManager );
   }
 
-        {{#isCode}}
   @Bean
-  @ConditionalOnProperty("{{{title}}}.security.{{{name}}}.client-id")
-  @ConfigurationProperties("{{{title}}}.security.{{{name}}}")
-  public AuthorizationCodeResourceDetails {{{name}}}ResourceDetails() {
-    AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-    details.setAccessTokenUri("{{{tokenUrl}}}");
-    details.setUserAuthorizationUri("{{{authorizationUrl}}}");
-    return details;
+  @ConditionalOnProperty( prefix = "spring.security.oauth2.client.registration.{{{name}}}{{#lambda.pascalcase}}{{{flow}}}{{/lambda.pascalcase}}", name = "enabled", havingValue = "true" )
+  public OAuth2AuthorizedClientManager {{{flow}}}AuthorizedClientManager(ClientRegistrationRepository clientRegistrationRepository,
+        OAuth2AuthorizedClientService authorizedClientService ) {
+    return new AuthorizedClientServiceOAuth2AuthorizedClientManager( clientRegistrationRepository, authorizedClientService );
   }
-
-        {{/isCode}}
-        {{#isPassword}}
-  @Bean
-  @ConditionalOnProperty("{{{title}}}.security.{{{name}}}.client-id")
-  @ConfigurationProperties("{{{title}}}.security.{{{name}}}")
-  public ResourceOwnerPasswordResourceDetails {{{name}}}ResourceDetails() {
-    ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
-    details.setAccessTokenUri("{{{tokenUrl}}}");
-    return details;
-  }
-
-        {{/isPassword}}
-        {{#isApplication}}
-  @Bean
-  @ConditionalOnProperty("{{{title}}}.security.{{{name}}}.client-id")
-  @ConfigurationProperties("{{{title}}}.security.{{{name}}}")
-  public ClientCredentialsResourceDetails {{{name}}}ResourceDetails() {
-    ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
-    details.setAccessTokenUri("{{{tokenUrl}}}");
-    return details;
-  }
-
-        {{/isApplication}}
-        {{#isImplicit}}
-  @Bean
-  @ConditionalOnProperty("{{{title}}}.security.{{{name}}}.client-id")
-  @ConfigurationProperties("{{{title}}}.security.{{{name}}}")
-  public ImplicitResourceDetails {{{name}}}ResourceDetails() {
-    ImplicitResourceDetails details = new ImplicitResourceDetails();
-    details.setUserAuthorizationUri("{{{authorizationUrl}}}");
-    return details;
-  }
-
-        {{/isImplicit}}
     {{/isOAuth}}
 {{/authMethods}}
+{{#hasOAuthMethods}}
+  public static class OAuth2RequestInterceptor implements RequestInterceptor {
+
+    private final OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
+    private final OAuth2AuthorizeRequest oAuth2AuthorizeRequest;
+
+    public OAuth2RequestInterceptor(OAuth2AuthorizeRequest oAuth2AuthorizeRequest,OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager){
+      this.oAuth2AuthorizeRequest = oAuth2AuthorizeRequest;
+      this.oAuth2AuthorizedClientManager = oAuth2AuthorizedClientManager;
+    }
+
+    @Override
+    public void apply( final RequestTemplate template ) {
+      template.header( HttpHeaders.AUTHORIZATION, getBearerToken() );
+    }
+
+    public OAuth2AccessToken getAccessToken() {
+      final OAuth2AuthorizedClient authorizedClient = oAuth2AuthorizedClientManager.authorize(oAuth2AuthorizeRequest);
+      if (authorizedClient == null) {
+        throw new OAuth2AuthenticationException( "Client failed to authenticate");
+      }
+     return authorizedClient.getAccessToken();
+    }
+
+    public String getBearerToken() {
+      final OAuth2AccessToken accessToken = getAccessToken();
+      return String.format( "%s %s", accessToken.getTokenType().getValue(), accessToken.getTokenValue() );
+    }
+  }
+{{/hasOAuthMethods}}
+
 }

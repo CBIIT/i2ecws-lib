@@ -1,3 +1,5 @@
+{{>licenseInfo}}
+
 package {{invokerPackage}};
 
 import java.util.Arrays;
@@ -32,6 +34,10 @@ public class CollectionFormats {
         public String toString() {
             return StringUtil.join(params.toArray(new String[0]), ",");
         }
+
+    }
+
+    public static class SPACEParams extends SSVParams {
 
     }
 

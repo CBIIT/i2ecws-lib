@@ -2,14 +2,12 @@
 
 package {{package}};
 
-{{^x-is-composed-model}}
-{{^supportJava6}}
+{{#useReflectionEqualsHashCode}}
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+{{/useReflectionEqualsHashCode}}
 import java.util.Objects;
 import java.util.Arrays;
-{{/supportJava6}}
-{{#supportJava6}}
-import org.apache.commons.lang3.ObjectUtils;
-{{/supportJava6}}
 {{#imports}}
 import {{import}};
 {{/imports}}
@@ -17,35 +15,54 @@ import {{import}};
 import java.io.Serializable;
 {{/serializableModel}}
 {{#jackson}}
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 {{#withXml}}
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 {{/withXml}}
+{{#vendorExtensions.x-has-readonly-properties}}
+import com.fasterxml.jackson.annotation.JsonCreator;
+{{/vendorExtensions.x-has-readonly-properties}}
 {{/jackson}}
 {{#withXml}}
-import javax.xml.bind.annotation.*;
+import {{javaxPackage}}.xml.bind.annotation.*;
+import {{javaxPackage}}.xml.bind.annotation.adapters.*;
+import io.github.threetenjaxb.core.*;
 {{/withXml}}
+{{#jsonb}}
+import java.lang.reflect.Type;
+import {{javaxPackage}}.json.bind.annotation.JsonbTypeDeserializer;
+import {{javaxPackage}}.json.bind.annotation.JsonbTypeSerializer;
+import {{javaxPackage}}.json.bind.serializer.DeserializationContext;
+import {{javaxPackage}}.json.bind.serializer.JsonbDeserializer;
+import {{javaxPackage}}.json.bind.serializer.JsonbSerializer;
+import {{javaxPackage}}.json.bind.serializer.SerializationContext;
+import {{javaxPackage}}.json.stream.JsonGenerator;
+import {{javaxPackage}}.json.stream.JsonParser;
+import {{javaxPackage}}.json.bind.annotation.JsonbProperty;
+{{#vendorExtensions.x-has-readonly-properties}}
+import {{javaxPackage}}.json.bind.annotation.JsonbCreator;
+{{/vendorExtensions.x-has-readonly-properties}}
+{{/jsonb}}
 {{#parcelableModel}}
 import android.os.Parcelable;
 import android.os.Parcel;
 {{/parcelableModel}}
 {{#useBeanValidation}}
-{{#jakarta}}
-import jakarta.validation.constraints.*;
-import jakarta.validation.Valid;
-{{/jakarta}}
-{{^jakarta}}
-import javax.validation.constraints.*;
-import javax.validation.Valid;
-{{/jakarta}}
+import {{javaxPackage}}.validation.constraints.*;
+import {{javaxPackage}}.validation.Valid;
 {{/useBeanValidation}}
-{{/x-is-composed-model}}
+{{#performBeanValidation}}
+import org.hibernate.validator.constraints.*;
+{{/performBeanValidation}}
+{{#supportUrlQuery}}
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.StringJoiner;
+{{/supportUrlQuery}}
+
 {{#models}}
 {{#model}}
-{{#isComposedModel}}
-{{>interface}}
-{{/isComposedModel}}
-{{^isComposedModel}}
-{{#is this 'enum'}}{{>modelEnum}}{{/is}}{{#isNot this 'enum'}}{{>pojo}}{{/isNot}}
-{{/isComposedModel}}
+{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{#vendorExtensions.x-is-one-of-interface}}{{>oneof_interface}}{{/vendorExtensions.x-is-one-of-interface}}{{^vendorExtensions.x-is-one-of-interface}}{{>pojo}}{{/vendorExtensions.x-is-one-of-interface}}{{/isEnum}}
 {{/model}}
 {{/models}}

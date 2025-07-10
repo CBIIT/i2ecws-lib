@@ -3,29 +3,39 @@ lazy val root = (project in file(".")).
     organization := "{{groupId}}",
     name := "{{artifactId}}",
     version := "{{artifactVersion}}",
-    scalaVersion := "2.11.4",
+    scalaVersion := "2.11.12",
     scalacOptions ++= Seq("-feature"),
-    javacOptions in compile ++= Seq("-Xlint:deprecation"),
-    publishArtifact in (Compile, packageDoc) := false,
+    compile / javacOptions ++= Seq("-Xlint:deprecation"),
+    Compile / packageDoc / publishArtifact := false,
     resolvers += Resolver.mavenLocal,
     libraryDependencies ++= Seq(
-      {{#useOas2}}
-      "io.swagger" % "swagger-annotations" % "1.5.15",
-      {{/useOas2}}
-      {{^useOas2}}
-      "io.swagger.core.v3" % "swagger-annotations" % "2.0.0",
-      {{/useOas2}}
-      "com.squareup.okhttp" % "okhttp" % "2.7.5",
-      "com.squareup.okhttp" % "logging-interceptor" % "2.7.5",
-      "com.google.code.gson" % "gson" % "2.8.1",
-      "io.gsonfire" % "gson-fire" % "1.8.3" % "compile",
+      "io.swagger" % "swagger-annotations" % "1.6.5",
+      "com.squareup.okhttp3" % "okhttp" % "4.12.0",
+      "com.squareup.okhttp3" % "logging-interceptor" % "4.12.0",
+      "com.google.code.gson" % "gson" % "2.9.1",
+      "org.apache.commons" % "commons-lang3" % "3.17.0",
+      "jakarta.ws.rs" % "jakarta.ws.rs-api" % "2.1.6",
+      {{#openApiNullable}}
+      "org.openapitools" % "jackson-databind-nullable" % "0.2.6",
+      {{/openApiNullable}}
+      {{#withAWSV4Signature}}
+      "software.amazon.awssdk" % "auth" % "2.20.157",
+      {{/withAWSV4Signature}}
+      {{#hasOAuthMethods}}
+      "org.apache.oltu.oauth2" % "org.apache.oltu.oauth2.client" % "1.0.2",
+      {{/hasOAuthMethods}}
       {{#joda}}
       "joda-time" % "joda-time" % "2.9.9" % "compile",
       {{/joda}}
-      {{#threetenbp}}
-      "org.threeten" % "threetenbp" % "1.3.5" % "compile",
-      {{/threetenbp}}
-      "junit" % "junit" % "4.12" % "test",
-      "com.novocode" % "junit-interface" % "0.10" % "test"
+      {{#dynamicOperations}}
+      "io.swagger.parser.v3" % "swagger-parser-v3" "2.0.30" % "compile"
+      {{/dynamicOperations}}
+      "io.gsonfire" % "gson-fire" % "1.9.0" % "compile",
+      "jakarta.annotation" % "jakarta.annotation-api" % "1.3.5" % "compile",
+      "com.google.code.findbugs" % "jsr305" % "3.0.2" % "compile",
+      "jakarta.annotation" % "jakarta.annotation-api" % "1.3.5" % "compile",
+      "org.junit.jupiter" % "junit-jupiter-api" % "5.10.3" % "test",
+      "com.novocode" % "junit-interface" % "0.10" % "test",
+      "org.mockito" % "mockito-core" % "3.12.4" % "test"
     )
   )

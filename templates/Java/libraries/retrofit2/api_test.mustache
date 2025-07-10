@@ -3,27 +3,22 @@ package {{package}};
 import {{invokerPackage}}.ApiClient;
 {{#imports}}import {{import}};
 {{/imports}}
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-{{#wiremock}}
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import java.net.HttpURLConnection;
-import org.junit.AfterClass;
-{{/wiremock}}
-
-{{^fullJavaUtil}}
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-{{/fullJavaUtil}}
 
-{{#wiremock}}
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-{{/wiremock}}
+{{#useBeanValidation}}
+import {{javaxPackage}}.validation.constraints.*;
+import {{javaxPackage}}.validation.Valid;
 
+{{/useBeanValidation}}
 /**
  * API tests for {{classname}}
  */
@@ -31,42 +26,13 @@ public class {{classname}}Test {
 
     private {{classname}} api;
 
-    {{#wiremock}}
-    private static WireMockServer wireMockServer;
-
-    @Before
-    public void setup() {
-        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort());
-        wireMockServer.start();
-        configureFor(wireMockServer.port());
-        ApiClient apiClient = new ApiClient();
-        apiClient.getAdapterBuilder().setEndpoint("http://localhost:" + wireMockServer.port());
-        api = apiClient.createService({{classname}}.class);
-
-        {{#operations}}{{#operation}}
-        stubFor({{toLowerCase httpMethod}}(urlPathMatching("{{{path}}}"))
-                .willReturn(aResponse()
-                        .withStatus(HttpURLConnection.HTTP_OK)));
-        {{/operation}}{{/operations}}
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        wireMockServer.stop();
-    }
-    {{/wiremock}}
-    {{^wiremock}}
-    @Before
+    @BeforeEach
     public void setup() {
         api = new ApiClient().createService({{classname}}.class);
     }
-    {{/wiremock}}
 
     {{#operations}}
     {{#operation}}
-    {{#contents}}
-    {{#@first}}
-
     /**
      * {{summary}}
      *
@@ -74,15 +40,13 @@ public class {{classname}}Test {
      */
     @Test
     public void {{operationId}}Test() {
-        {{#parameters}}
+        {{#allParams}}
         {{{dataType}}} {{paramName}} = null;
-        {{/parameters}}
-        // {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#parameters}}{{paramName}}{{#has this 'more'}}, {{/has}}{{/parameters}});
+        {{/allParams}}
+        // {{#returnType}}{{{.}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
 
         // TODO: test validations
     }
-    {{/@first}}
-    {{/contents}}
     {{/operation}}
     {{/operations}}
 }

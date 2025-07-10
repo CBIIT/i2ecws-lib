@@ -2,64 +2,80 @@ package {{package}};
 
 import {{invokerPackage}}.ApiException;
 import {{invokerPackage}}.ApiClient;
+import {{invokerPackage}}.ApiResponse;
 import {{invokerPackage}}.Configuration;
 import {{invokerPackage}}.Pair;
 
-{{#jakarta}}
-import jakarta.ws.rs.core.GenericType;
-{{/jakarta}}
-{{^jakarta}}
-import javax.ws.rs.core.GenericType;
-{{/jakarta}}
+import {{javaxPackage}}.ws.rs.core.GenericType;
 
 {{#imports}}import {{import}};
 {{/imports}}
 
-{{^fullJavaUtil}}
+{{#useBeanValidation}}
+import {{javaxPackage}}.validation.constraints.*;
+import {{javaxPackage}}.validation.Valid;
+
+{{/useBeanValidation}}
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-{{/fullJavaUtil}}
 
 {{>generatedAnnotation}}
+
 {{#operations}}
 public class {{classname}} {
-  private ApiClient {{localVariablePrefix}}apiClient;
-  private Map<String, String> headers;
+  private ApiClient apiClient;
 
   public {{classname}}() {
     this(Configuration.getDefaultApiClient());
   }
 
   public {{classname}}(ApiClient apiClient) {
-    this.{{localVariablePrefix}}apiClient = apiClient;
+    this.apiClient = apiClient;
   }
 
+  /**
+   * Get the API client
+   *
+   * @return API client
+   */
   public ApiClient getApiClient() {
-    return {{localVariablePrefix}}apiClient;
+    return apiClient;
   }
 
+  /**
+   * Set the API client
+   *
+   * @param apiClient an instance of API client
+   */
   public void setApiClient(ApiClient apiClient) {
-    this.{{localVariablePrefix}}apiClient = apiClient;
-  }
-
-  public void setHeadersOverrides(Map<String, String> headers) {
-    this.headers = headers;
+    this.apiClient = apiClient;
   }
 
   {{#operation}}
-  {{#contents}}
+  {{^vendorExtensions.x-group-parameters}}
   /**
    * {{summary}}
    * {{notes}}
-   {{#parameters}}
-   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-   {{/parameters}}
+   {{#allParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}
+   {{/allParams}}
    {{#returnType}}
-   * @return {{returnType}}
+   * @return {{.}}
    {{/returnType}}
    * @throws ApiException if fails to make API call
+   {{#responses.0}}
+   * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       {{#responses}}
+       <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
+       {{/responses}}
+     </table>
+   {{/responses.0}}
    {{#isDeprecated}}
    * @deprecated
    {{/isDeprecated}}
@@ -71,70 +87,212 @@ public class {{classname}} {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#parameters}}{{{dataType}}} {{paramName}}{{#has this 'more'}}, {{/has}}{{/parameters}}) throws ApiException {
-    Object {{localVariablePrefix}}localVarPostBody = {{^isForm}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}{{/isForm}}{{#isForm}}null{{/isForm}};
-    {{#parameters}}
+  public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
+    {{#returnType}}return {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}){{#returnType}}.getData(){{/returnType}};
+  }
+  {{/vendorExtensions.x-group-parameters}}
+
+  {{^vendorExtensions.x-group-parameters}}
+  /**
+   * {{summary}}
+   * {{notes}}
+   {{#allParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}
+   {{/allParams}}
+   * @return ApiResponse&lt;{{returnType}}{{^returnType}}Void{{/returnType}}&gt;
+   * @throws ApiException if fails to make API call
+   {{#responses.0}}
+   * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       {{#responses}}
+       <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
+       {{/responses}}
+     </table>
+   {{/responses.0}}
+   {{#isDeprecated}}
+   * @deprecated
+   {{/isDeprecated}}
+   {{#externalDocs}}
+   * {{description}}
+   * @see <a href="{{url}}">{{summary}} Documentation</a>
+   {{/externalDocs}}
+   */
+  {{#isDeprecated}}
+  @Deprecated
+  {{/isDeprecated}}
+  public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}} ApiResponse<{{{returnType}}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
+    {{#hasRequiredParams}}
+    // Check required parameters
+    {{#allParams}}
     {{#required}}
-    // verify the required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
       throw new ApiException(400, "Missing the required parameter '{{paramName}}' when calling {{operationId}}");
     }
     {{/required}}
-    {{/parameters}}
-    // create path and map variables
-    String {{localVariablePrefix}}localVarPath = "{{{path}}}"{{#pathParams}}
-      .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+    {{/allParams}}
 
-    // query params
-    {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
-    {{javaUtilPrefix}}Map<String, String> {{localVariablePrefix}}localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String, String>();
-    {{javaUtilPrefix}}Map<String, Object> {{localVariablePrefix}}localVarFormParams = new {{javaUtilPrefix}}HashMap<String, Object>();
+    {{/hasRequiredParams}}
+    {{#hasPathParams}}
+    // Path parameters
+    String localVarPath = "{{{path}}}"{{#pathParams}}
+            .replaceAll({{=% %=}}"\\{%baseName%}"%={{ }}=%, apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
+    {{/hasPathParams}}
     {{#queryParams}}
-    {{localVariablePrefix}}localVarQueryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));
+    {{#-first}}
+    // Query parameters
+    List<Pair> localVarQueryParams = new ArrayList<>(
+            apiClient.parameterToPairs("{{{collectionFormat}}}", "{{baseName}}", {{paramName}})
+    );
+    {{/-first}}
+    {{^-first}}
+    localVarQueryParams.addAll(apiClient.parameterToPairs("{{{collectionFormat}}}", "{{baseName}}", {{paramName}}));
+    {{/-first}}
+    {{#-last}}
+
+    {{/-last}}
     {{/queryParams}}
-
     {{#headerParams}}
-    if ({{paramName}} != null)
-      {{localVariablePrefix}}localVarHeaderParams.put("{{baseName}}", {{localVariablePrefix}}apiClient.parameterToString({{paramName}}));
+    {{#-first}}
+    // Header parameters
+    Map<String, String> localVarHeaderParams = new LinkedHashMap<>();
+    {{/-first}}
+    {{^required}}if ({{paramName}} != null) {
+      {{/required}}localVarHeaderParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));{{^required}}
+    }{{/required}}
+    {{#-last}}
+
+    {{/-last}}
     {{/headerParams}}
-    {{#isForm}}
+    {{#cookieParams}}
+    {{#-first}}
+    // Cookie parameters
+    Map<String, String> localVarCookieParams = new LinkedHashMap<>();
+    {{/-first}}
+    {{^required}}if ({{paramName}} != null) {
+      {{/required}}localVarCookieParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));{{^required}}
+    }{{/required}}
+    {{#-last}}
+
+    {{/-last}}
+    {{/cookieParams}}
     {{#formParams}}
-    if ({{paramName}} != null)
-      {{localVariablePrefix}}localVarFormParams.put("{{baseName}}", {{paramName}});
+    {{#-first}}
+    // Form parameters
+    Map<String, Object> localVarFormParams = new LinkedHashMap<>();
+    {{/-first}}
+    {{^required}}if ({{paramName}} != null) {
+      {{/required}}localVarFormParams.put("{{baseName}}", {{paramName}});{{^required}}
+    }{{/required}}
+    {{#-last}}
+
+    {{/-last}}
     {{/formParams}}
-    {{/isForm}}
-
-    final String[] {{localVariablePrefix}}localVarAccepts = {
-      {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}}
-    };
-    final String {{localVariablePrefix}}localVarAccept = {{localVariablePrefix}}apiClient.selectHeaderAccept({{localVariablePrefix}}localVarAccepts);
-
-    final String[] {{localVariablePrefix}}localVarContentTypes = {
-      {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}
-    };
-    final String {{localVariablePrefix}}localVarContentType = {{localVariablePrefix}}apiClient.selectHeaderContentType({{localVariablePrefix}}localVarContentTypes);
-
-    String[] {{localVariablePrefix}}localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{#has this 'more'}}, {{/has}}{{/authMethods}} };
-
+    String localVarAccept = apiClient.selectHeaderAccept({{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}});
+    String localVarContentType = apiClient.selectHeaderContentType({{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}});
+    {{#hasAuthMethods}}
+    String[] localVarAuthNames = {{=% %=}}new String[] {%#authMethods%"%name%"%^-last%, %/-last%%/authMethods%};%={{ }}=%
+    {{/hasAuthMethods}}
     {{#returnType}}
-    GenericType<{{{returnType}}}> {{localVariablePrefix}}localVarReturnType = new GenericType<{{{returnType}}}>() {};
-
-    if (headers != null) {
-      localVarHeaderParams.putAll(headers);
-    }
-
-    return {{localVariablePrefix}}apiClient.invokeAPI({{localVariablePrefix}}localVarPath, "{{httpMethod}}", {{localVariablePrefix}}localVarQueryParams, {{localVariablePrefix}}localVarPostBody, {{localVariablePrefix}}localVarHeaderParams, {{localVariablePrefix}}localVarFormParams, {{localVariablePrefix}}localVarAccept, {{localVariablePrefix}}localVarContentType, {{localVariablePrefix}}localVarAuthNames, {{localVariablePrefix}}localVarReturnType);
-    {{/returnType}}{{^returnType}}
-
-    if (headers != null) {
-      localVarHeaderParams.putAll(headers);
-    }
-
-    {{localVariablePrefix}}apiClient.invokeAPI({{localVariablePrefix}}localVarPath, "{{httpMethod}}", {{localVariablePrefix}}localVarQueryParams, {{localVariablePrefix}}localVarPostBody, {{localVariablePrefix}}localVarHeaderParams, {{localVariablePrefix}}localVarFormParams, {{localVariablePrefix}}localVarAccept, {{localVariablePrefix}}localVarContentType, {{localVariablePrefix}}localVarAuthNames, null);
+    GenericType<{{{returnType}}}> localVarReturnType = new GenericType<{{{returnType}}}>() {};
     {{/returnType}}
+    return apiClient.invokeAPI("{{classname}}.{{operationId}}", {{#hasPathParams}}localVarPath{{/hasPathParams}}{{^hasPathParams}}"{{{path}}}"{{/hasPathParams}}, "{{httpMethod}}", {{#queryParams}}{{#-first}}localVarQueryParams{{/-first}}{{/queryParams}}{{^queryParams}}new ArrayList<>(){{/queryParams}}, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}},
+                               {{#headerParams}}{{#-first}}localVarHeaderParams{{/-first}}{{/headerParams}}{{^headerParams}}new LinkedHashMap<>(){{/headerParams}}, {{#cookieParams}}{{#-first}}localVarCookieParams{{/-first}}{{/cookieParams}}{{^cookieParams}}new LinkedHashMap<>(){{/cookieParams}}, {{#formParams}}{{#-first}}localVarFormParams{{/-first}}{{/formParams}}{{^formParams}}new LinkedHashMap<>(){{/formParams}}, localVarAccept, localVarContentType,
+                               {{#hasAuthMethods}}localVarAuthNames{{/hasAuthMethods}}{{^hasAuthMethods}}null{{/hasAuthMethods}}, {{#returnType}}localVarReturnType{{/returnType}}{{^returnType}}null{{/returnType}}, {{#bodyParam}}{{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}}{{/bodyParam}}{{^bodyParam}}false{{/bodyParam}});
   }
-  {{/contents}}
+  {{#vendorExtensions.x-group-parameters}}
+
+  public class API{{operationId}}Request {
+    {{#allParams}}
+    {{>nullable_var_annotations}}{{! prevent indent}}
+    private {{{dataType}}} {{paramName}};
+    {{/allParams}}
+
+    private API{{operationId}}Request({{#pathParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/pathParams}}) {
+      {{#pathParams}}
+      this.{{paramName}} = {{paramName}};
+      {{/pathParams}}
+    }
+    {{#allParams}}
+    {{^isPathParam}}
+
+    /**
+     * Set {{paramName}}
+     * @param {{paramName}} {{description}} ({{^required}}optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}{{/required}}{{#required}}required{{/required}})
+     * @return API{{operationId}}Request
+     */
+    public API{{operationId}}Request {{paramName}}({{>nullable_var_annotations}} {{{dataType}}} {{paramName}}) {
+      this.{{paramName}} = {{paramName}};
+      return this;
+    }
+    {{/isPathParam}}
+    {{/allParams}}
+
+    /**
+     * Execute {{operationId}} request
+     {{#returnType}}* @return {{.}}{{/returnType}}
+     * @throws ApiException if fails to make API call
+     {{#responses.0}}
+     * @http.response.details
+       <table border="1">
+       <caption>Response Details</caption>
+         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+         {{#responses}}
+         <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
+         {{/responses}}
+       </table>
+     {{/responses.0}}
+     {{#isDeprecated}}* @deprecated{{/isDeprecated}}
+     */
+    {{#isDeprecated}}@Deprecated{{/isDeprecated}}
+    public {{{returnType}}}{{^returnType}}void{{/returnType}} execute() throws ApiException {
+      {{#returnType}}return {{/returnType}}this.executeWithHttpInfo().getData();
+    }
+
+    /**
+     * Execute {{operationId}} request with HTTP info returned
+     * @return ApiResponse&lt;{{returnType}}{{^returnType}}Void{{/returnType}}&gt;
+     * @throws ApiException if fails to make API call
+     {{#responses.0}}
+     * @http.response.details
+       <table border="1">
+       <caption>Response Details</caption>
+         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+         {{#responses}}
+         <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} </td></tr>
+         {{/responses}}
+       </table>
+     {{/responses.0}}
+     {{#isDeprecated}}
+     * @deprecated{{/isDeprecated}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public ApiResponse<{{{returnType}}}{{^returnType}}Void{{/returnType}}> executeWithHttpInfo() throws ApiException {
+      return {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
+    }
+  }
+
+  /**
+   * {{summary}}
+   * {{notes}}{{#pathParams}}
+   * @param {{paramName}} {{description}} (required){{/pathParams}}
+   * @return {{operationId}}Request
+   * @throws ApiException if fails to make API call
+   {{#isDeprecated}}* @deprecated{{/isDeprecated}}
+   {{#externalDocs}}* {{description}}
+   * @see <a href="{{url}}">{{summary}} Documentation</a>{{/externalDocs}}
+   */
+  {{#isDeprecated}}
+  @Deprecated
+  {{/isDeprecated}}
+  public API{{operationId}}Request {{operationId}}({{#pathParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/pathParams}}) throws ApiException {
+    return new API{{operationId}}Request({{#pathParams}}{{paramName}}{{^-last}}, {{/-last}}{{/pathParams}});
+  }
+  {{/vendorExtensions.x-group-parameters}}
   {{/operation}}
 }
 {{/operations}}

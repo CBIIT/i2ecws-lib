@@ -1,19 +1,11 @@
 package {{apiPackage}};
 
-{{#jakarta}}
-import jakarta.xml.bind.annotation.XmlTransient;
-{{/jakarta}}
-{{^jakarta}}
-import javax.xml.bind.annotation.XmlTransient;
-{{/jakarta}}
+import {{javaxPackage}}.annotation.Generated;
+import {{javaxPackage}}.xml.bind.annotation.XmlTransient;
 
 {{>generatedAnnotation}}
-{{#jakarta}}
-@jakarta.xml.bind.annotation.XmlRootElement
-{{/jakarta}}
-{{^jakarta}}
-@javax.xml.bind.annotation.XmlRootElement
-{{/jakarta}}
+
+@{{javaxPackage}}.xml.bind.annotation.XmlRootElement
 public class ApiResponseMessage {
     public static final int ERROR = 1;
     public static final int WARNING = 2;

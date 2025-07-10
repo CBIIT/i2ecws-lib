@@ -5,51 +5,44 @@ import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.Configuration;
 import {{invokerPackage}}.Pair;
 
-{{#jakarta}}
-import jakarta.ws.rs.core.GenericType;
-{{/jakarta}}
-{{^jakarta}}
-import javax.ws.rs.core.GenericType;
-{{/jakarta}}
+import {{javaxPackage}}.ws.rs.core.GenericType;
 
 {{#imports}}import {{import}};
 {{/imports}}
 
-{{^fullJavaUtil}}
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-{{/fullJavaUtil}}
 
 {{>generatedAnnotation}}
+
 {{#operations}}
 public class {{classname}} {
-  private ApiClient {{localVariablePrefix}}apiClient;
+  private ApiClient apiClient;
 
   public {{classname}}() {
     this(Configuration.getDefaultApiClient());
   }
 
   public {{classname}}(ApiClient apiClient) {
-    this.{{localVariablePrefix}}apiClient = apiClient;
+    this.apiClient = apiClient;
   }
 
   public ApiClient getApiClient() {
-    return {{localVariablePrefix}}apiClient;
+    return apiClient;
   }
 
   public void setApiClient(ApiClient apiClient) {
-    this.{{localVariablePrefix}}apiClient = apiClient;
+    this.apiClient = apiClient;
   }
 
   {{#operation}}
-  {{#contents}}
   /**
    * {{summary}}
-   * {{notes}}{{#parameters}}
-   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{/parameters}}{{#returnType}}
-   * @return {{{returnType}}}{{/returnType}}
+   * {{notes}}{{#allParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{/allParams}}{{#returnType}}
+   * @return a {@code {{{returnType}}}}{{/returnType}}
    * @throws ApiException if fails to make API call
    {{#isDeprecated}}
    * @deprecated
@@ -62,56 +55,59 @@ public class {{classname}} {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#parameters}}{{{dataType}}} {{paramName}}{{#has this 'more'}}, {{/has}}{{/parameters}}) throws ApiException {
-    Object {{localVariablePrefix}}localVarPostBody = {{^isForm}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}{{/isForm}}{{#isForm}}null{{/isForm}};
-    {{#parameters}}{{#required}}
+  public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
+    Object localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
       throw new ApiException(400, "Missing the required parameter '{{paramName}}' when calling {{operationId}}");
     }
-    {{/required}}{{/parameters}}
+    {{/required}}{{/allParams}}
     // create path and map variables
-    String {{localVariablePrefix}}localVarPath = "{{{path}}}".replaceAll("\\{format\\}","json"){{#pathParams}}
-      .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+    String localVarPath = "{{{path}}}".replaceAll("\\{format\\}","json"){{#pathParams}}
+      .replaceAll("\\{" + "{{baseName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
     // query params
-    {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
-    {{javaUtilPrefix}}Map<String, String> {{localVariablePrefix}}localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String, String>();
-    {{javaUtilPrefix}}Map<String, Object> {{localVariablePrefix}}localVarFormParams = new {{javaUtilPrefix}}HashMap<String, Object>();
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     {{#queryParams}}
-    {{localVariablePrefix}}localVarQueryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("{{{collectionFormat}}}", "{{baseName}}", {{paramName}}));
     {{/queryParams}}
 
     {{#headerParams}}if ({{paramName}} != null)
-      {{localVariablePrefix}}localVarHeaderParams.put("{{baseName}}", {{localVariablePrefix}}apiClient.parameterToString({{paramName}}));
+      localVarHeaderParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
     {{/headerParams}}
-    {{#isForm}}
+
+    {{#cookieParams}}if ({{paramName}} != null)
+      localVarCookieParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
+    {{/cookieParams}}
+
     {{#formParams}}if ({{paramName}} != null)
-      {{localVariablePrefix}}localVarFormParams.put("{{baseName}}", {{paramName}});
+      localVarFormParams.put("{{baseName}}", {{paramName}});
     {{/formParams}}
-    {{/isForm}}
 
-    final String[] {{localVariablePrefix}}localVarAccepts = {
-      {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}}
+    final String[] localVarAccepts = {
+      {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}
     };
-    final String {{localVariablePrefix}}localVarAccept = {{localVariablePrefix}}apiClient.selectHeaderAccept({{localVariablePrefix}}localVarAccepts);
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
-    final String[] {{localVariablePrefix}}localVarContentTypes = {
-      {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}
+    final String[] localVarContentTypes = {
+      {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}}
     };
-    final String {{localVariablePrefix}}localVarContentType = {{localVariablePrefix}}apiClient.selectHeaderContentType({{localVariablePrefix}}localVarContentTypes);
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-    String[] {{localVariablePrefix}}localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{#has this 'more'}}, {{/has}}{{/authMethods}} };
+    String[] localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{^-last}}, {{/-last}}{{/authMethods}} };
 
     {{#returnType}}
-    GenericType<{{{returnType}}}> {{localVariablePrefix}}localVarReturnType = new GenericType<{{{returnType}}}>() {};
-    return {{localVariablePrefix}}apiClient.invokeAPI({{localVariablePrefix}}localVarPath, "{{httpMethod}}", {{localVariablePrefix}}localVarQueryParams, {{localVariablePrefix}}localVarPostBody, {{localVariablePrefix}}localVarHeaderParams, {{localVariablePrefix}}localVarFormParams, {{localVariablePrefix}}localVarAccept, {{localVariablePrefix}}localVarContentType, {{localVariablePrefix}}localVarAuthNames, {{localVariablePrefix}}localVarReturnType);
+    GenericType<{{{returnType}}}> localVarReturnType = new GenericType<{{{returnType}}}>() {};
+    return apiClient.invokeAPI(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     {{/returnType}}{{^returnType}}
-    {{localVariablePrefix}}apiClient.invokeAPI({{localVariablePrefix}}localVarPath, "{{httpMethod}}", {{localVariablePrefix}}localVarQueryParams, {{localVariablePrefix}}localVarPostBody, {{localVariablePrefix}}localVarHeaderParams, {{localVariablePrefix}}localVarFormParams, {{localVariablePrefix}}localVarAccept, {{localVariablePrefix}}localVarContentType, {{localVariablePrefix}}localVarAuthNames, null);
+    apiClient.invokeAPI(localVarPath, "{{httpMethod}}", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
     {{/returnType}}
   }
-  {{/contents}}
   {{/operation}}
 }
 {{/operations}}

@@ -37,8 +37,11 @@
                 "tags": [
                     "user-last-login-controller"
                 ],
+                "summary": "Update last login timestamp for multiple users",
+                "description": "Updates the last login timestamp for a batch of users provided as an array of user IDs",
                 "operationId": "updateLastLoginBatchPost",
                 "requestBody": {
+                    "description": "Array of user IDs to update last login timestamps",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -70,11 +73,14 @@
                 "tags": [
                     "user-last-login-controller"
                 ],
+                "summary": "Update last login timestamp for a single user",
+                "description": "Updates the last login timestamp for a specific user identified by their user ID",
                 "operationId": "updateLastLogin",
                 "parameters": [
                     {
                         "name": "userId",
                         "in": "path",
+                        "description": "Unique identifier of the user whose last login timestamp needs to be updated",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -100,11 +106,14 @@
                 "tags": [
                     "user-last-login-controller"
                 ],
+                "summary": "Update last login timestamp for multiple users using query parameter",
+                "description": "Updates the last login timestamp for multiple users specified by a comma-separated list of user IDs in the query parameter",
                 "operationId": "updateLastLoginBatchGet",
                 "parameters": [
                     {
                         "name": "userIds",
                         "in": "query",
+                        "description": "Comma-separated list of user IDs whose last login timestamps need to be updated",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -130,19 +139,24 @@
         "schemas": {
             "LastLoginResultsPayload": {
                 "type": "object",
+                "description": "Response payload containing the results of the last login update operation",
                 "properties": {
                     "updateCount": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "description": "Number of user records successfully updated with new last login timestamp"
                     },
                     "errorCount": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "description": "Number of user records that failed to update"
                     },
                     "results": {
                         "type": "object",
+                        "description": "Detailed results of the update operation with user IDs as keys and status messages as values",
                         "additionalProperties": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "Status message for each user ID indicating success or failure reason"
                         }
                     }
                 }

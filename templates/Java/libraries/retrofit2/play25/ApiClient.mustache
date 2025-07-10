@@ -1,3 +1,5 @@
+{{>licenseInfo}}
+
 package {{invokerPackage}};
 
 import java.io.IOException;
@@ -8,6 +10,10 @@ import java.util.*;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+{{#openApiNullable}}
+import org.openapitools.jackson.nullable.JsonNullableModule;
+{{/openApiNullable}}
 
 import play.libs.Json;
 import play.libs.ws.WSClient;
@@ -25,13 +31,13 @@ import {{invokerPackage}}.auth.Authentication;
 public class ApiClient {
 
     /** Underlying HTTP-client */
-    private WSClient wsClient;
+    protected WSClient wsClient;
 
     /** Supported auths */
-    private Map<String, Authentication> authentications;
+    protected Map<String, Authentication> authentications;
 
     /** API base path */
-    private String basePath = "{{{basePath}}}";
+    protected String basePath = "{{{basePath}}}";
 
     public ApiClient(WSClient wsClient) {
         this();
@@ -40,10 +46,10 @@ public class ApiClient {
 
     public ApiClient() {
         // Setup authentications (key: authentication name, value: authentication).
-        authentications = new HashMap<>();{{#authMethods}}{{#is this 'basic'}}
-        // authentications.put("{{name}}", new HttpBasicAuth());{{/is}}{{#is this 'api-key'}}
-        authentications.put("{{name}}", new ApiKeyAuth({{#is this 'key-in-header'}}"header"{{/is}}{{#isNot this 'key-in-header'}}"query"{{/isNot}}, "{{keyParamName}}"));{{/is}}{{#is this 'oauth'}}
-        // authentications.put("{{name}}", new OAuth());{{/is}}{{/authMethods}}
+        authentications = new HashMap<>();{{#authMethods}}{{#isBasicBasic}}
+        // authentications.put("{{name}}", new HttpBasicAuth());{{/isBasicBasic}}{{#isApiKey}}
+        authentications.put("{{name}}", new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInCookie}}"query"{{/isKeyInCookie}}, "{{keyParamName}}"));{{/isApiKey}}{{#isOAuth}}
+        // authentications.put("{{name}}", new OAuth());{{/isOAuth}}{{/authMethods}}
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
 
@@ -58,20 +64,27 @@ public class ApiClient {
         }
 
         Map<String, String> extraHeaders = new HashMap<>();
+        Map<String, String> extraCookies = new HashMap<>();
         List<Pair> extraQueryParams = new ArrayList<>();
 
         for (String authName : authentications.keySet()) {
             Authentication auth = authentications.get(authName);
             if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
 
-            auth.applyToParams(extraQueryParams, extraHeaders);
+            auth.applyToParams(extraQueryParams, extraHeaders, extraCookies);
         }
+
+        ObjectMapper mapper = Json.mapper();
+        {{#openApiNullable}}
+        JsonNullableModule jnm = new JsonNullableModule();
+        mapper.registerModule(jnm);
+        {{/openApiNullable}}
 
         return new Retrofit.Builder()
                        .baseUrl(basePath)
                        .addConverterFactory(ScalarsConverterFactory.create())
-                       .addConverterFactory(JacksonConverterFactory.create(Json.mapper()))
-                       .callFactory(new Play25CallFactory(wsClient, extraHeaders, extraQueryParams))
+                       .addConverterFactory(JacksonConverterFactory.create(mapper))
+                       .callFactory(new Play25CallFactory(wsClient, extraHeaders, extraCookies, extraQueryParams))
                        .addCallAdapterFactory(new Play25CallAdapterFactory())
                        .build()
                        .create(serviceClass);
@@ -132,5 +145,3 @@ public class ApiClient {
 
 
 }
-
-

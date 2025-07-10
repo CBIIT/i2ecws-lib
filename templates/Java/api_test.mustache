@@ -2,87 +2,50 @@
 
 package {{package}};
 
+import {{invokerPackage}}.ApiException;
 {{#imports}}import {{import}};
 {{/imports}}
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-{{#wiremock}}
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import java.net.HttpURLConnection;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-{{/wiremock}}
-
-{{^fullJavaUtil}}
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-{{/fullJavaUtil}}
-
-{{#wiremock}}
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-{{/wiremock}}
 
 /**
  * API tests for {{classname}}
  */
-@Ignore
-public class {{classname}}Test {
+class {{classname}}Test {
 
     private final {{classname}} api = new {{classname}}();
-    {{#wiremock}}
-    private static WireMockServer wireMockServer;
-
-    public {{classname}}Test() {
-        api.getApiClient().setBasePath("http://localhost:" + wireMockServer.port());
-    }
-
-    @BeforeClass
-    public static void setUp() {
-        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort());
-        wireMockServer.start();
-        configureFor(wireMockServer.port());
-    {{#operations}}
-    {{#operation}}
-        stubFor({{toLowerCase httpMethod}}(urlPathMatching("{{{path}}}"))
-                .willReturn(aResponse()
-                        .withStatus(HttpURLConnection.HTTP_OK)));
-    {{/operation}}
-    {{/operations}}
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        wireMockServer.stop();
-    }
-    {{/wiremock}}
 
     {{#operations}}
     {{#operation}}
-    {{#contents}}
-    {{#@first}}
     /**
-     * {{summary}}
+    {{#summary}}
+     * {{.}}
      *
-     * {{notes}}
+    {{/summary}}
+    {{#notes}}
+     * {{.}}
      *
-     * @throws Exception
+    {{/notes}}
+     * @throws ApiException
      *          if the Api call fails
      */
     @Test
-    public void {{operationId}}Test() throws Exception {
-        {{#parameters}}
-        {{{dataType}}} {{paramName}} = null;
-        {{/parameters}}
-        {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#parameters}}{{paramName}}{{#has this 'more'}}, {{/has}}{{/parameters}});
+    void {{operationId}}Test() throws ApiException {
+        //{{#allParams}}
+        //{{{dataType}}} {{paramName}} = null;
+        //{{/allParams}}
+        //{{#returnType}}{{{.}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
 
         // TODO: test validations
     }
-    {{/@first}}
-    {{/contents}}
     {{/operation}}
     {{/operations}}
 }

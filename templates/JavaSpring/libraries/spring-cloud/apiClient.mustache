@@ -1,13 +1,8 @@
 package {{package}};
 
-{{^isOpenFeign}}
-import org.springframework.cloud.netflix.feign.FeignClient;
-{{/isOpenFeign}}
-{{#isOpenFeign}}
 import org.springframework.cloud.openfeign.FeignClient;
-{{/isOpenFeign}}
 import {{configPackage}}.ClientConfiguration;
 
-@FeignClient({{#isOpenFeign}}contextId="{{classname}}Client", {{/isOpenFeign}}name="${{braces "left"}}{{title}}.name:{{title}}{{braces "right"}}", url="${{braces "left"}}{{title}}.url:{{^wiremock}}{{basePath}}{{/wiremock}}{{#wiremock}}wiremock.base.path{{/wiremock}}{{braces "right"}}", configuration = ClientConfiguration.class)
+@FeignClient(name="${{openbrace}}{{classVarName}}.name:{{classVarName}}{{closebrace}}", {{#useFeignClientContextId}}contextId="${{openbrace}}{{classVarName}}.contextId:${{openbrace}}{{classVarName}}.name{{closebrace}}{{closebrace}}",{{/useFeignClientContextId}} {{#useFeignClientUrl}}url="${{openbrace}}{{classVarName}}.url:{{basePath}}{{closebrace}}",{{/useFeignClientUrl}} configuration = ClientConfiguration.class)
 public interface {{classname}}Client extends {{classname}} {
 }

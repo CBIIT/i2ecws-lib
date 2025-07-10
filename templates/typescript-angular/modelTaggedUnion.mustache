@@ -1,5 +1,5 @@
 {{#discriminator}}
-export type {{classname}} = {{#children}}{{^@first}} | {{/@first}}{{classname}}{{/children}};
+export type {{classname}} = {{#children}}{{^-first}} | {{/-first}}{{classname}}{{/children}};
 {{/discriminator}}
 {{^discriminator}}
 {{#parent}}
@@ -7,15 +7,17 @@ export interface {{classname}} { {{>modelGenericAdditionalProperties}}
 {{#allVars}}
     {{#description}}
     /**
-    * {{{description}}}
+    * {{{.}}}
     */
     {{/description}}
-    {{name}}{{^required}}?{{/required}}: {{#discriminatorValue}}'{{discriminatorValue}}'{{/discriminatorValue}}{{^discriminatorValue}}{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}{{/discriminatorValue}};
+    {{name}}{{^required}}?{{/required}}: {{#discriminatorValue}}'{{.}}'{{/discriminatorValue}}{{^discriminatorValue}}{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{/discriminatorValue}}{{#isNullable}} | null{{/isNullable}};
 {{/allVars}}
 }
 {{>modelGenericEnums}}
+
 {{/parent}}
 {{^parent}}
 {{>modelGeneric}}
+
 {{/parent}}
 {{/discriminator}}

@@ -1,16 +1,16 @@
 {{>licenseInfo}}
 {{#models}}
 {{#model}}
-
 {{#tsImports}}
-import { {{classname}} } from './{{filename}}';
+import { {{classname}} } from '{{filename}}';
 {{/tsImports}}
+
 
 {{#description}}
 /**
- * {{{description}}}
+ * {{{.}}}
  */
 {{/description}}
-{{#is this 'enum'}}{{>modelEnum}}{{/is}}{{#isNot this 'enum'}}{{#is this 'alias'}}{{>modelAlias}}{{/is}}{{#isNot this 'alias'}}{{#taggedUnions}}{{>modelTaggedUnion}}{{/taggedUnions}}{{^taggedUnions}}{{>modelGeneric}}{{/taggedUnions}}{{/isNot}}{{/isNot}}
+{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{#isAlias}}{{>modelAlias}}{{/isAlias}}{{^isAlias}}{{#taggedUnions}}{{>modelTaggedUnion}}{{/taggedUnions}}{{^taggedUnions}}{{#oneOf}}{{#-first}}{{>modelOneOf}}{{/-first}}{{/oneOf}}{{^oneOf}}{{>modelGeneric}}{{/oneOf}}{{/taggedUnions}}{{/isAlias}}{{/isEnum}}
 {{/model}}
 {{/models}}

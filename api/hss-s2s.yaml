@@ -1,119 +1,164 @@
 openapi: 3.0.1
 info:
-  title: HSS-S2S REST Web Service API
-  description: HSS-S2S REST Web Service API as described in the Technical User Guide
-  license:
-    name: Apache 2.0
-    url: http://springdoc.org
-  version: v1.0.0
+  title: HSS ExternalService REST Web Service - performHSSCheck Endpoint
+  description: |
+    This specification describes the performHSSCheck operation of the Human Subjects System (HSS) External REST Web Service .
+    This service is designed to fetch whether an application has passed Human Subjects System (HSS) validation and provides any associated message details (errors or warnings) .
+
+    Security and Access:
+    Access to this service requires a Secure Socket Layer (SSL) client certificate for both authentication and authorization. The caller must have a certificate from an eRA-supported provider, and this certificate needs to be registered with eRA [2, 5]. The certificate account must be assigned the `HSCT_S2S_SERVICE_IC_READ_ROLE` to retrieve study data .
+    eRA requires clients to use valid, up-to-date certificates issued by a recognized and supported authority, with all certificates in the chain being version 3 and within their validity period . The full certificate chain must be provided by the calling application .
+  version: 1.0.0
 servers:
-  - url: http://localhost/hss-s2s
-    description: local
-  - url: https://dev-server/hss-s2s
-    description: dev
-  - url: https://test-server/hss-s2s
-    description: test
-  - url: https://stage-server/hss-s2s
-    description: stage
-  - url: https://prod-server/hss-s2s
-    description: prod
+  - url: https://services.internal.era.nih.gov/hsct/api
+    description: Production environment URL for ICs
+  - url: https://services.internal.stage.era.nih.gov/hsct/api
+    description: Staging environment URL for ICs
+  - url: https://services.internal.test.era.nih.gov/hsct/api
+    description: Test environment URL for ICs
+security:
+  - clientCertificateAuth: []
+components:
+  securitySchemes:
+    clientCertificateAuth:
+      type: http
+      scheme: Bearer # This is a common way to denote mTLS when an explicit scheme type isn't available in OpenAPI.
+      description: |
+        This service specifically requires Secure Socket Layer (SSL) client certificate for authentication and authorization (mutual TLS).
+        The certificate account needs to be assigned the `HSCT_S2S_SERVICE_IC_READ_ROLE` role for retrieving study data .
+  schemas:
+    HSSCheckRequest:
+      type: object
+      properties:
+        applId:
+          type: integer
+          format: int64 # Inferred from example values and error messages
+          description: |
+            Unique eRA application ID for which the HSS Check needs to be performed .
+            For complex applications with subprojects, a parent application ID must be passed to `performHSSCheck` .
+          example: 11046112
+      required:
+        - applId
+    HSSCheckResponse:
+      type: object
+      properties:
+        passedValidation:
+          type: boolean
+          description: Indicates whether the HSS Check passed validation (`true`) or not (`false`).
+          example: true
+        messageList:
+          type: array
+          description: List of messages (errors or warnings) related to the HSS Check validation .
+          items:
+            $ref: "#/components/schemas/ResponseMessage"
+    ResponseMessage:
+      type: object
+      properties:
+        messageCode:
+          type: string
+          description: Code of the message, used for cross-referencing with the web service .
+          example: "ClinicalTrials.gov information does not match-266553"
+        messageSeverity:
+          type: string
+          description: Severity of the message. Valid values are `Error` or `Warning` .
+          enum: [Error, Warning]
+          example: "Error"
+        messageText:
+          type: string
+          description: The descriptive text of the message .
+          example: 'Some of the Information provided in study "Decreasing the Temporal Window" (Recruitment Status) does not match the information in Clinicaltrials.gov for the Clinicaltrials.gov identifier provided "NCT04128761".Please contact the PO to address this issue with the recipient.'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP status code or an internal error code.
+          example: "403"
+        message:
+          type: string
+          description: Detailed error message from the service.
+          example: "Service account does not have privileges for this operation."
+
 paths:
-  /api/v1/example-endpoint:
-    get:
-      tags:
-        - example-controller
-      summary: Example endpoint
-      description: This is a placeholder endpoint. Replace with actual endpoints from the HSS-S2S-REST-Web-Service-Technical-User-Guide.pdf
-      operationId: exampleOperation
-      parameters:
-        - name: exampleParam
-          in: query
-          description: An example parameter
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExampleResponse'
-        '400':
-          description: Bad request
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not found
-        '500':
-          description: Internal server error
+  /performHSSCheck:
     post:
       tags:
-        - example-controller
-      summary: Example post endpoint
-      description: This is a placeholder endpoint. Replace with actual endpoints from the HSS-S2S-REST-Web-Service-Technical-User-Guide.pdf
-      operationId: examplePostOperation
+        - HssCheckController
+      summary: Perform HSS Check for Application
+      description: This operation fetches whether a given eRA application has passed Human Subjects System (HSS) validation and provides any associated message details (errors or warnings) .
+      operationId: performHSSCheck
       requestBody:
-        description: Example request body
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ExampleRequest'
+        description: Request body containing the application ID for the HSS check .
         required: true
+        content:
+          application/xml: # The request media type for this operation is application/xml.
+            schema:
+              $ref: "#/components/schemas/HSSCheckRequest"
+            examples:
+              performHSSCheckRequest:
+                summary: Example HSSCheckRequest
+                value: |
+                  <hsc:HSSCheckRequest xmlns:hsc="http://era.nih.gov/hsct/HsctExternalService">
+                    <hsc:applId>11046112</hsc:applId>
+                  </hsc:HSSCheckRequest>
       responses:
-        '200':
-          description: Successful operation
+        "200":
+          description: Success. Indicates whether the HSS Check passed validation .
+          content:
+            application/xml: # The success response content is application/xml .
+              schema:
+                $ref: "#/components/schemas/HSSCheckResponse"
+              examples:
+                successResponse:
+                  summary: Example Success Response where validation passed
+                  value: |
+                    <HSSCheckResponse xmlns="http://era.nih.gov/hsct/HsctExternalService" xmlns:ns2="http://era.nih.gov/hsct/HsctCommonTypes-V1.0">
+                      <passedValidation>true</passedValidation>
+                    </HSSCheckResponse>
+                failureResponseWithMessages:
+                  summary: Example Failure Response with messages where validation did not pass
+                  value: |
+                    <HSSCheckResponse xmlns:ns8="http://apply.grants.gov/system/GlobalLibrary-V2.0" xmlns:ns7="http://era.nih.gov/hsct/HsctCommonTypes-V1.0" xmlns:ns6="http://era.nih.gov/hsct/HsctDelayedOnsetStudy-V1.0" xmlns:ns5="http://era.nih.gov/hsct/HsctStudy-V3.0" xmlns:ns4="http://apply.grants.gov/system/Global-V1.0" xmlns:ns3="http://apply.grants.gov/system/Attachments-V1.0" xmlns:ns2="http://apply.grants.gov/forms/HumanSubjectStudy_3_0-V3.0" xmlns="http://era.nih.gov/hsct/HsctExternalService">
+                      <passedValidation>false</passedValidation>
+                      <messageList>
+                        <ns7:messageCode>ClinicalTrials.gov information does not match-266553</ns7:messageCode>
+                        <ns7:messageSeverity>Error</ns7:messageSeverity>
+                        <ns7:messageText>Some of the Information provided in study "Decreasing the Temporal Window" (Recruitment Status) does not match the information in Clinicaltrials.gov for the Clinicaltrials.gov identifier provided "NCT04128761".Please contact the PO to address this issue with the recipient.</ns7:messageText>
+                      </messageList>
+                    </HSSCheckResponse>
+        "403":
+          description: Access denied. This indicates insufficient privilege for the calling account .
+          content:
+            application/json: # Error responses are provided in JSON format in the sources.
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                accessDenied:
+                  summary: 403 Error Example
+                  value:
+                    code: "403"
+                    message: "Service account does not have privileges for this operation. ErrorId : 1729880102787"
+        "422":
+          description: Unprocessable Entity. This error typically occurs when the application ID provided does not exist.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleResponse'
-        '400':
-          description: Bad request
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '500':
-          description: Internal server error
-components:
-  schemas:
-    ExampleRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Example ID
-        name:
-          type: string
-          description: Example name
-        value:
-          type: integer
-          format: int32
-          description: Example value
-    ExampleResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Example ID
-        status:
-          type: string
-          description: Status of the operation
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the operation
-        data:
-          type: object
-          description: Response data
-          additionalProperties:
-            type: object
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-security:
-  - bearerAuth: []
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                applicationNotFound:
+                  summary: 422 Error Example
+                  value:
+                    code: "422"
+                    message: "Application ID 1104611289 does not exist. Error ID : 1729879888550"
+        "500":
+          description: Internal server error. This indicates a code issue or if underlying systems are down .
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalError:
+                  summary: 500 Error Example
+                  value:
+                    code: "500"
+                    message: " Error ID: 1729879961241 Could not unmarshal to [class gov.nih.era.hsct. hsctexternalservice.auto.HSSCheckRequest]: null; nested exception is javax.xml.bind.UnmarshalException\n - with linked exception:\n[org.xml.sax.SAXParseException; lineNumber: 2; columnNumber: 27; cvc-datatype-valid.1.2.1: '' is not a valid value for 'integer'].]"
