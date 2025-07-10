@@ -10,14 +10,14 @@ info:
     eRA requires clients to use valid, up-to-date certificates issued by a recognized and supported authority, with all certificates in the chain being version 3 and within their validity period . The full certificate chain must be provided by the calling application .
   version: 1.0.0
 servers:
+  - url: https://services.internal.test.era.nih.gov/hsct/api
+    description: Test environment URL for ICs
   - url: https://services.internal.era.nih.gov/hsct/api
     description: Production environment URL for ICs
   - url: https://services.internal.stage.era.nih.gov/hsct/api
     description: Staging environment URL for ICs
-  - url: https://services.internal.test.era.nih.gov/hsct/api
-    description: Test environment URL for ICs
 security:
-  - clientCertificateAuth: []
+  - clientCertificateAuth: [ ]
 components:
   securitySchemes:
     clientCertificateAuth:
@@ -61,7 +61,7 @@ components:
         messageSeverity:
           type: string
           description: Severity of the message. Valid values are `Error` or `Warning` .
-          enum: [Error, Warning]
+          enum: [ Error, Warning ]
           example: "Error"
         messageText:
           type: string
