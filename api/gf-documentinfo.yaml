@@ -1,0 +1,301 @@
+openapi: 3.0.1
+info:
+  title: GF Document Info Rest Controller API
+  description: Document Information.
+  version: 1.0.0
+servers:
+  - url: https://web.aic.era.nih.gov/grantfolder/dataservices
+tags:
+  - name: g-f-documentInfo
+    description: Grant Folder Document Information Rest Controller
+paths:
+  /gfdocuments/getGrantDocumentInfo:
+    post:
+      summary: retrieves Grant Document Information
+      operationId: getGrantDocumentInfo
+      tags:
+        - g-f-documentInfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrantDocumentInfoRequest'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrantDocumentInfoResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+  /gfdocuments/getGrantCorrespondence:
+    post:
+      summary: retrieves Grant Correspondence Information
+      operationId: getGrantCorrespondence
+      tags:
+        - g-f-documentInfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrantCorrespondenceRequest'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrantCorrespondenceResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    GrantDocumentInfoRequest:
+      type: object
+      description: Grant folder documents Request with attribues applId, docType.
+      properties:
+        applId:
+          description: applId
+          type: integer
+          format: int64
+        docType:
+          description: docType code
+          type: string
+
+    GrantDocumentInfoResponse:
+      type: object
+      description: Wrapper response object to hold list of Grant Document info objects
+      properties:
+        grantDocumentInfo:
+          $ref: '#/components/schemas/GrantDocumentInfo'
+
+    GrantDocumentInfo:
+      type: object
+      description: Details of each document like applId, grantNumber, piDetails etc.
+      properties:
+        grantNumber:
+          $ref: '#/components/schemas/GrantNumber'
+        piDetails:
+          type: array
+          description: piDetails
+          items:
+            $ref: '#/components/schemas/PIDetails'
+        projectTitle:
+          type: string
+          description: projectTitle
+        applicationStatus:
+          type: string
+          description: applicationStatus
+        institution:
+          type: string
+          description: institution
+        orgPath:
+          type: string
+          description: orgPath
+        councilMeetingDate:
+          type: string
+          description: councilMeetingDate
+        applId:
+          description: applId
+          type: integer
+          format: int64
+        documentMetaDataInfo:
+          description: docMetaDataInfo List
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentMetaDataInfo'
+
+    GrantNumber:
+      description: GrantNumber
+      properties:
+        fullGrantNumber:
+          type: string
+          description: fullGrantNumber
+        applTypeCode:
+          type: string
+          description: applTypeCode
+        activityCode:
+          type: string
+          description: activityCode
+        serialNum:
+          type: string
+          description: serialNum
+        supportYear:
+          type: string
+          description: supportYear
+        suffixCode:
+          type: string
+          description: suffixCode
+        subprojectID:
+          type: string
+          description: subprojectID
+
+    PIDetails:
+      description: PIDetails
+      properties:
+        piPersonID:
+          type: integer
+          format: int64
+          description: piPersonID
+        piName:
+          type: string
+          description: piName
+        PIRole:
+          $ref: '#/components/schemas/PIRole'
+
+
+    PIRole:
+      description: PIRole
+      type: string
+      enum:
+        - PI
+        - MPI
+
+    DocMetadataNameValuePair:
+      description: NameValuePair
+      properties:
+        name:
+          type: string
+          description: name
+        value:
+          type: string
+          description: value
+
+
+    DocumentMetaDataInfo:
+      description: DocMetaData
+      properties:
+        docType:
+          type: string
+          description: docType
+        id:
+          type: string
+          description: id
+        fileName:
+          type: string
+          description: fileName
+        submittedFileDate:
+          type: array
+          items:
+            type: number
+            format: int32
+          description: submittedFileDate
+        mimeType:
+          type: string
+          description: mimeType
+        fileSize:
+          type: string
+          description: fileSize
+        createdDate:
+          type: array
+          items:
+            type: number
+            format: int32
+          description: createdDate
+        submitter:
+          type: string
+          description: submitter
+        location:
+          description: location
+          type: array
+          items:
+            $ref: '#/components/schemas/DocMetadataNameValuePair'
+        appData:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocMetadataNameValuePair'
+          description: appdata
+        userData:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocMetadataNameValuePair'
+          description: userdata
+    GrantCorrespondenceRequest:
+      type: object
+      description: Grant folder Correspondence Request with attribues applId
+      properties:
+        applId:
+          description: applId
+          type: integer
+          format: int64
+
+    GrantCorrespondenceResponse:
+      type: object
+      description: Wrapper response object to hold list of GrantCorrespondenceInfo objects
+      properties:
+        GrantCorrespondenceInfo:
+          $ref: '#/components/schemas/GrantCorrespondenceInfo'
+
+    GrantCorrespondenceInfo:
+      description: Wrapper response object to hold list of GrantCorrespondenceData objects
+      properties:
+        applId:
+          type: integer
+          format: int64
+          description: applId
+        correspondenceData:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantCorrespondenceData'
+
+    GrantCorrespondenceData:
+      type: object
+      description: Details of each Correspondence Data like notificationName, emailContent, fromAddress etc.
+      properties:
+        notificationName:
+          type: string
+          description: notificationName
+        Id:
+          type: string
+          description: Id
+        description:
+          type: string
+          description: description
+        sentDate:
+          type: array
+          items:
+              type: number
+              format: int32
+          description: sentDate
+        fromAddress:
+          type: string
+          description: fromAddress
+        toAddress:
+          type: string
+          description: toAddress
+        ccAddress:
+          type: string
+          description: toAddress
+        bccAddress:
+          type: string
+          description: bccAddress
+        subject:
+          type: string
+          description: subject
+        emailContent:
+          type: string
+          description: emailContent

@@ -32,7 +32,53 @@
     }
   ],
   "paths": {
-    "/api/v1/login/update-last-login-batch": {
+    "/api/v1/login/update-last-login/{userId}": {
+      "get": {
+        "tags": [
+          "user-last-login-controller"
+        ],
+        "summary": "Update last login timestamp for a single user",
+        "description": "Updates the last login timestamp for a specific user identified by their user ID",
+        "operationId": "updateLastLogin",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "Unique identifier of the user whose last login timestamp needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "john.doe_123"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LastLoginResultsPayload"
+                },
+                "examples": {
+                  "successfulUpdate": {
+                    "summary": "Successful Single User Update",
+                    "value": {
+                      "updateCount": 1,
+                      "errorCount": 0,
+                      "results": {
+                        "john.doe_123": "Successfully updated last login timestamp."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/login/update-last-login-batch/": {
       "post": {
         "tags": [
           "user-last-login-controller"
@@ -97,55 +143,7 @@
             }
           }
         }
-      }
-    },
-    "/api/v1/login/update-last-login/{userId}": {
-      "get": {
-        "tags": [
-          "user-last-login-controller"
-        ],
-        "summary": "Update last login timestamp for a single user",
-        "description": "Updates the last login timestamp for a specific user identified by their user ID",
-        "operationId": "updateLastLogin",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "Unique identifier of the user whose last login timestamp needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "john.doe_123"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LastLoginResultsPayload"
-                },
-                "examples": {
-                  "successfulUpdate": {
-                    "summary": "Successful Single User Update",
-                    "value": {
-                      "updateCount": 1,
-                      "errorCount": 0,
-                      "results": {
-                        "john.doe_123": "Successfully updated last login timestamp."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/login/update-last-login-batch/": {
+      },
       "get": {
         "tags": [
           "user-last-login-controller"

@@ -2,7 +2,7 @@ $Env:JAVA_HOME="C:\Users\kanozad\dev\java\jdk17.0.15_6";
 
 $output_path="projects\docviewer\java-client" 
 
-$swagger_opts="-i api\docviewer.json"
+$swagger_opts="-i api\gf-documentinfo.json"
 
 $template_opts="-t templates\Java"
 
