@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vm-list": "openapi-generator-cli version-manager list"
+    "vm-list": "NODE_TLS_REJECT_UNAUTHORIZED='0' openapi-generator-cli version-manager list"
   },
   "author": "",
   "license": "ISC",
