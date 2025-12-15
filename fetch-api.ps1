@@ -17,7 +17,7 @@ $basedir = "C:\Users\kanozad\dev\workspaces\service-workspace\"
 
 $swaggerdir = "\target\swagger\"
 
-$targetdir = "C:\Users\kanozad\dev\workspaces\swagger-codegen-workspace\i2ecws-lib\api\"
+$targetdir = "C:\Users\kanozad\dev\workspaces\swagger-codegen-workspace\i2ecws-lib\api-specs\"
 
 # Loop through each directory
 foreach ($dir in $directories) {

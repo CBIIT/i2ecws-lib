@@ -1,0 +1,216 @@
+components:
+  schemas:
+    AraInternalOrgApproveRequest:
+      description: Internal org Approve ARA request Details.
+      properties:
+        araId:
+          nullable: true
+          type: string
+        araInternalOrgRequest:
+          $ref: '#/components/schemas/AraInternalOrgRequest'
+      required:
+      - araInternalOrgRequest
+      type: object
+    AraInternalOrgRequest:
+      description: Initiate Internal Org ARA Request Details.
+      properties:
+        araTypeCode:
+          $ref: '#/components/schemas/AraType'
+          description: ARA Type Code
+          nullable: false
+          type: object
+        councilDate:
+          maxLength: 7
+          type: string
+        foa:
+          maxLength: 10
+          type: string
+        grantActivityCode:
+          maxLength: 3
+          type: string
+        grantAdminOrgId:
+          type: long
+        grantApplTypeCode:
+          maxLength: 1
+          type: string
+        grantIc:
+          maxLength: 2
+          type: string
+        grantSerialNum:
+          maxLength: 6
+          type: string
+        grantSuffixCode:
+          maxLength: 4
+          type: string
+        grantSupportYear:
+          maxLength: 2
+          type: string
+        orgName:
+          nullable: false
+          type: string
+        piCommonsId:
+          nullable: false
+          type: string
+        programClassCode:
+          maxLength: 8
+          type: string
+        projectTitle:
+          nullable: false
+          type: string
+        reasonForAra:
+          maxLength: 500
+          type: string
+        receiptDate:
+          nullable: false
+          type: string
+        requestingIc:
+          type: string
+        requestingOrgId:
+          type: long
+        requestorUserId:
+          nullable: false
+          type: string
+      type: object
+    AraInternalOrgResponse:
+      description: Initiated Internal Org ARA Response Details.
+      properties:
+        araId:
+          type: long
+        errorMessageList:
+          $ref: '#/components/schemas/ErrorMessageList'
+        successful:
+          type: boolean
+      type: object
+    AraType:
+      description: "ARA Type Code Definition:\n  * 30 - Accept application that requests\
+        \ $500,000 or more\n  * 31 - Request for an assignment from IC\n  * 32 - Request\
+        \ for an assignment from IRG\n  * 33 - Request for an assignment from PI\n\
+        \  * 34 - Request for an assignment from Other\n  * 35 - Request for a waiver\n\
+        \  * 36 - Replacement pages\n  * 37 - Material to add with application\n \
+        \ * 38 - Request for No Further Processing\n  * 39 - Take to...\n  * 40 -\
+        \ Other\n"
+      enum:
+      - '30'
+      - '31'
+      - '32'
+      - '33'
+      - '34'
+      - '35'
+      - '36'
+      - '37'
+      - '38'
+      - '39'
+      - '40'
+      type: string
+    ErrorMessage:
+      description: API Error.
+      properties:
+        errorCode:
+          description: Error Code
+          type: string
+        errorParametersList:
+          description: Error Parameters List
+          items:
+            type: string
+          type: array
+        errorText:
+          description: Error Text
+          type: string
+        errorType:
+          $ref: '#/components/schemas/ErrorTypeCode'
+          description: Error Type
+          type: object
+      type: object
+    ErrorMessageList:
+      description: API Error List.
+      properties:
+        errorMessageList:
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+          type: array
+      type: object
+    ErrorTypeCode:
+      description: "Error Type Code Definition:\n  * ERROR - Error\n  * WARNING -\
+        \ Warning\n  * INFO - Information \n"
+      enum:
+      - ERROR
+      - WARNING
+      - INFO
+      type: string
+info:
+  description: ARA API to Initiate Internal Org ARA Request and Approve Internal Org
+    ARA Request.
+  title: ARA Internal Org Rest Services
+  version: 0.0.1
+openapi: 3.0.0
+paths:
+  /ara/api/araservice/approveAraRequest:
+    post:
+      operationId: approveAraRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AraInternalOrgApproveRequest'
+        description: Approve Internal Org ARA request input. Required fields - Approve
+          Internal Org ARA request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AraInternalOrgResponse'
+          description: Approve Internal Org ARA Request Successfully
+        '400':
+          description: Bad Request
+        '403':
+          description: Not Authorized to Approve a ARA Request
+        '404':
+          description: The specified resource was not found
+        '500':
+          description: Internal Server Error
+      summary: Approve ARA request
+      tags:
+      - ARA Internal Org Service
+  /ara/api/araservice/initiateAraRequest:
+    post:
+      operationId: initiateAraRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AraInternalOrgRequest'
+        description: Initiate Internal Org ARA request input. Required fields - Initiate
+          ARA request details
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AraInternalOrgResponse'
+          description: Initiated Internal Org ARA Response
+        '400':
+          description: Bad Request
+        '403':
+          description: Not Authorized to Initiate a ARA Request
+        '404':
+          description: The specified resource was not found
+        '500':
+          description: Internal Server Error
+      summary: Initiates Internal Org ARA request
+      tags:
+      - ARA Internal Org Service
+servers:
+- description: development
+  url: https://services.external.dev.era.nih.gov
+- description: test
+  url: https://services.external.test.era.nih.gov
+- description: staging
+  url: https://services.external.stage.era.nih.gov
+- description: production
+  url: https://services.external.era.nih.gov
+tags:
+- description: ARA Internal Org Services Rest Controller
+  name: ara-internal-org-services-controller
