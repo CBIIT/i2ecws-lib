@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: eRA Document Upload Web Service
+  version: 1.0.0
+  description: >
+    REST Web Service for systems to upload documents into the eRA database using the HTTP protocol.
+    Access requires an SSL client certificate mapped to an IMPACII account with the ACCESS_DOC_UPLOAD_SERV role.
+servers:
+  - url: https://services.internal.era.nih.gov/docservice/document
+    description: Production Environment
+  - url: https://services.internal.stage.era.nih.gov/docservice/document
+    description: Staging Environment
+  - url: https://services.internal.test.era.nih.gov/docservice/document
+    description: Test Environment
+paths:
+  '/{docType}/{id}':
+    post:
+      summary: Upload a document
+      description: >
+        Adds a new document to the eRA database. A successful operation returns a confirmation token.
+      parameters:
+        - name: docType
+          in: path
+          required: true
+          description: A 3-character string indicating the document type (e.g., CRU, CCR, NPC, NGC).
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 3
+        - name: id
+          in: path
+          required: true
+          description: A unique string used to identify the document, such as an Application ID.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                docFile:
+                  type: string
+                  format: binary
+                  description: >
+                    The document file content. The multipart name must be "docFile". 
+                    If multiple parts share the same name, only the first is processed.
+            encoding:
+              docFile:
+                contentType: application/pdf
+      responses:
+        '200':
+          description: Document was uploaded successfully.
+          headers:
+            x-docservice-token:
+              description: A token serving as confirmation of the operation for auditing and troubleshooting.
+              schema:
+                type: string
+            x-docservice-response-time:
+              description: The time in milliseconds taken to process the request.
+              schema:
+                type: number
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Document was uploaded successfully: <token>"
+        '400':
+          description: Invalid parameters (e.g., invalid doc type, id, or missing content).
+        '403':
+          description: Access denied due to insufficient privileges.
+        '409':
+          description: Document already exists; POST cannot overwrite.
+        '415':
+          description: File type not allowed for upload (Service requires application/pdf).
+        '500':
+          description: Internal server error.
+components:
+  securitySchemes:
+    ClientCertificate:
+      type: mutualTLS
+      description: SSL client certificate is required for authentication.
+security:
+  - ClientCertificate: []
