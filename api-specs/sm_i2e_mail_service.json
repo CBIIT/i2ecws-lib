@@ -1,488 +1,562 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-        "title": "I2E Mail Service API",
-        "description": "I2E Mail Service",
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://springdoc.org"
-        },
-        "version": "v1.0.0"
+  "openapi": "3.0.1",
+  "info": {
+    "title": "I2E Mail Service API",
+    "description": "Centralized mail service for I2E applications. Provides REST endpoints to send emails using Thymeleaf templates or arbitrary content, with a database-backed mail queue for reliability and retry.",
+    "contact": { "name": "I2E Support", "email": "NCII2ESupport@mail.nih.gov" },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
     },
-    "servers": [
-        {
-            "url": "https://i2e-dev.nci.nih.gov/i2emailsvc",
-            "description": "dev"
-        },
-        {
-            "url": "https://i2e-test.nci.nih.gov/i2emailsvc",
-            "description": "test"
-        },
-        {
-            "url": "https://i2e-stage.nci.nih.gov/i2emailsvc",
-            "description": "stage"
-        },
-        {
-            "url": "https://i2e.nci.nih.gov/i2emailsvc",
-            "description": "prod"
-        }
-    ],
-    "paths": {
-        "/api/v1/mailer/send": {
-            "post": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "sendMail",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SendPayloadDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/send-immediate": {
-            "post": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "sendImmediate",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SendPayloadDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/send-arbitrary": {
-            "post": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "sendArbitrary",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SendPayloadDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/send-arbitrary-immediate": {
-            "post": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "sendArbitraryImmediate",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SendPayloadDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/resend/{id}": {
-            "post": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "resendMail",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/resend-immediate/{id}": {
-            "post": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "resendImmediate",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/cancel/{id}": {
-            "patch": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "cancelMail",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/mailer/status/{id}": {
-            "get": {
-                "tags": [
-                    "mail-sender-controller"
-                ],
-                "operationId": "getStatus",
-                "parameters": [
-                    {
-                        "name": "SM_USER",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MailQueueDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    "version": "v1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost/i2emailsvc", "description": "local" },
+    { "url": "https://i2e-dev.nci.nih.gov/i2emailsvc", "description": "dev" },
+    { "url": "https://i2e-test.nci.nih.gov/i2emailsvc", "description": "test" },
+    {
+      "url": "https://i2e-stage.nci.nih.gov/i2emailsvc",
+      "description": "stage"
     },
-    "components": {
-        "schemas": {
-            "SendPayloadDto": {
-                "type": "object",
-                "properties": {
-                    "applicationId": {
-                        "type": "string"
-                    },
-                    "templateId": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "object"
-                        }
-                    },
-                    "subject": {
-                        "type": "string"
-                    },
-                    "body": {
-                        "type": "string"
-                    },
-                    "from": {
-                        "type": "string"
-                    },
-                    "fromDisplay": {
-                        "type": "string"
-                    },
-                    "to": {
-                        "type": "string"
-                    },
-                    "cc": {
-                        "type": "string"
-                    },
-                    "bcc": {
-                        "type": "string"
-                    }
-                }
-            },
-            "MailQueueDto": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "templateId": {
-                        "type": "string"
-                    },
-                    "params": {
-                        "type": "string"
-                    },
-                    "applicationName": {
-                        "type": "string"
-                    },
-                    "subject": {
-                        "type": "string"
-                    },
-                    "body": {
-                        "type": "string"
-                    },
-                    "mailFrom": {
-                        "type": "string"
-                    },
-                    "mailFromDisplay": {
-                        "type": "string"
-                    },
-                    "recipients": {
-                        "type": "string"
-                    },
-                    "ccRecipients": {
-                        "type": "string"
-                    },
-                    "bccRecipients": {
-                        "type": "string"
-                    },
-                    "currentStatus": {
-                        "type": "string"
-                    },
-                    "currentStatusMessage": {
-                        "type": "string"
-                    },
-                    "currentStatusDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "currentStatusUserId": {
-                        "type": "string"
-                    },
-                    "createDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "createUserId": {
-                        "type": "string"
-                    },
-                    "lastChangeDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "lastChangeUserId": {
-                        "type": "string"
-                    },
-                    "history": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MailQueueHistoryDto"
-                        }
-                    }
-                }
-            },
-            "MailQueueHistoryDto": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "mqtId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "statusMessage": {
-                        "type": "string"
-                    },
-                    "statusDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "statusUserId": {
-                        "type": "string"
-                    }
-                }
-            }
-        }
+    { "url": "https://i2e.nci.nih.gov/i2emailsvc", "description": "prod" }
+  ],
+  "tags": [
+    {
+      "name": "Mail Operations",
+      "description": "Send, queue, and manage email messages"
     }
+  ],
+  "paths": {
+    "/api/v1/mailer/send": {
+      "post": {
+        "tags": ["Mail Operations"],
+        "summary": "Queue a template-based email",
+        "description": "Queue an email for delivery using a registered Thymeleaf template. The message is persisted to the mail queue and will be sent by the next scheduled send cycle. Provide templateId, data (template variables), and applicationId in the request body.",
+        "operationId": "sendMail",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SendPayloadDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Message queued successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          },
+          "400": { "description": "Template not found or invalid payload" }
+        }
+      }
+    },
+    "/api/v1/mailer/send-immediate": {
+      "post": {
+        "tags": ["Mail Operations"],
+        "summary": "Send a template-based email immediately",
+        "description": "Send an email immediately using a registered Thymeleaf template, bypassing the queue. The message is still recorded in the mail queue for auditing. Provide templateId, data (template variables), and applicationId in the request body.",
+        "operationId": "sendImmediate",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SendPayloadDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          },
+          "400": { "description": "Template not found or invalid payload" }
+        }
+      }
+    },
+    "/api/v1/mailer/send-arbitrary": {
+      "post": {
+        "tags": ["Mail Operations"],
+        "summary": "Queue an arbitrary email",
+        "description": "Queue a raw email for delivery without using a template. Provide subject, body, recipient addresses, and optionally sender information in the request body. The message will be sent by the next scheduled send cycle.",
+        "operationId": "sendArbitrary",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SendPayloadDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Message queued successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mailer/send-arbitrary-immediate": {
+      "post": {
+        "tags": ["Mail Operations"],
+        "summary": "Send an arbitrary email immediately",
+        "description": "Send a raw email immediately without using a template, bypassing the queue. The message is still recorded in the mail queue for auditing. Provide subject, body, recipient addresses, and optionally sender information in the request body.",
+        "operationId": "sendArbitraryImmediate",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SendPayloadDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mailer/resend/{id}": {
+      "post": {
+        "tags": ["Mail Operations"],
+        "summary": "Requeue a failed email",
+        "description": "Reset a FAILED message back to PENDING so it will be picked up by the next scheduled send cycle.",
+        "operationId": "resendMail",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of the queued email message to resend",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" },
+            "example": 12345
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message requeued successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Message not found or not in a requeueable state"
+          }
+        }
+      }
+    },
+    "/api/v1/mailer/resend-immediate/{id}": {
+      "post": {
+        "tags": ["Mail Operations"],
+        "summary": "Resend a message immediately",
+        "description": "Immediately send a previously queued message by its ID, bypassing the scheduled send cycle.",
+        "operationId": "resendImmediate",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of the queued email message to resend immediately",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" },
+            "example": 12345
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message sent successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Message not found or not in a sendable state"
+          }
+        }
+      }
+    },
+    "/api/v1/mailer/cancel/{id}": {
+      "patch": {
+        "tags": ["Mail Operations"],
+        "summary": "Cancel a queued email",
+        "description": "Cancel a message that is in PENDING or FAILED status. Messages already SENT cannot be canceled.",
+        "operationId": "cancelMail",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of the queued email message to cancel",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" },
+            "example": 12345
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message canceled successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Message not found, invalid ID, or message is not in a cancelable state"
+          }
+        }
+      }
+    },
+    "/api/v1/mailer/status/{id}": {
+      "get": {
+        "tags": ["Mail Operations"],
+        "summary": "Get email status",
+        "description": "Retrieve the current status, details, and full status-change history of a queued email message.",
+        "operationId": "getStatus",
+        "parameters": [
+          {
+            "name": "SM_USER",
+            "in": "header",
+            "description": "User ID for audit tracking. Sent automatically by SiteMinder.",
+            "required": false,
+            "schema": { "type": "string" },
+            "example": "SMITHJ"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of the queued email message",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" },
+            "example": 12345
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailQueueDto" }
+              }
+            }
+          },
+          "400": { "description": "Message not found or invalid ID" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SendPayloadDto": {
+        "required": ["applicationId"],
+        "type": "object",
+        "properties": {
+          "applicationId": {
+            "type": "string",
+            "description": "Identifier of the calling application",
+            "example": "I2ECWS"
+          },
+          "templateId": {
+            "type": "string",
+            "description": "Short identifier of the email template (template-based mode). Must reference an active template in APP_MAIL_TEMPLATE_T.",
+            "example": "WELCOME_EMAIL"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "description": "Template variable map passed to the Thymeleaf engine (template-based mode). Keys correspond to variable names used in the template body.",
+              "example": {
+                "recipientName": "John Doe",
+                "grantNumber": "R01CA123456"
+              }
+            },
+            "description": "Template variable map passed to the Thymeleaf engine (template-based mode). Keys correspond to variable names used in the template body.",
+            "example": {
+              "recipientName": "John Doe",
+              "grantNumber": "R01CA123456"
+            }
+          },
+          "subject": {
+            "type": "string",
+            "description": "Email subject line (arbitrary mode)",
+            "example": "Grant Status Update"
+          },
+          "body": {
+            "type": "string",
+            "description": "Email body content, may contain HTML (arbitrary mode)",
+            "example": "<p>Your grant application has been approved.</p>"
+          },
+          "from": {
+            "type": "string",
+            "description": "Sender email address (arbitrary mode). Defaults to the configured mail.from if not provided.",
+            "example": "noreply@nih.gov"
+          },
+          "fromDisplay": {
+            "type": "string",
+            "description": "Sender display name (arbitrary mode)",
+            "example": "I2E Grants System"
+          },
+          "to": {
+            "type": "string",
+            "description": "Comma-separated list of recipient email addresses",
+            "example": "user@nih.gov,admin@nih.gov"
+          },
+          "cc": {
+            "type": "string",
+            "description": "Comma-separated list of CC recipient email addresses",
+            "example": "manager@nih.gov"
+          },
+          "bcc": {
+            "type": "string",
+            "description": "Comma-separated list of BCC recipient email addresses",
+            "example": "audit@nih.gov"
+          }
+        },
+        "description": "Request payload for sending an email. Supports two modes: (1) Template-based — provide templateId, data, and applicationId. (2) Arbitrary — provide subject, body, to, and optionally from, fromDisplay, cc, bcc, and applicationId."
+      },
+      "MailQueueDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier of the queued message",
+            "format": "int32",
+            "readOnly": true,
+            "example": 12345
+          },
+          "templateId": {
+            "type": "string",
+            "description": "Template short identifier used to compose this email, if template-based",
+            "example": "WELCOME_EMAIL"
+          },
+          "params": {
+            "type": "string",
+            "description": "JSON-encoded template parameters, if template-based",
+            "readOnly": true
+          },
+          "applicationName": {
+            "type": "string",
+            "description": "Name of the application that submitted this email",
+            "example": "I2ECWS"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Email subject line",
+            "example": "Grant Status Update"
+          },
+          "body": {
+            "type": "string",
+            "description": "Email body content (may contain HTML)"
+          },
+          "mailFrom": {
+            "type": "string",
+            "description": "Sender email address",
+            "example": "ms-noreply@nih.gov"
+          },
+          "mailFromDisplay": {
+            "type": "string",
+            "description": "Sender display name",
+            "example": "MailService-noreply"
+          },
+          "recipients": {
+            "type": "string",
+            "description": "Comma-separated list of recipient email addresses",
+            "example": "user@nih.gov"
+          },
+          "ccRecipients": {
+            "type": "string",
+            "description": "Comma-separated list of CC recipient email addresses"
+          },
+          "bccRecipients": {
+            "type": "string",
+            "description": "Comma-separated list of BCC recipient email addresses"
+          },
+          "currentStatus": {
+            "type": "string",
+            "description": "Current processing status of this message",
+            "example": "PENDING",
+            "enum": ["PENDING", "SENT", "FAILED", "CANCELED"]
+          },
+          "currentStatusMessage": {
+            "type": "string",
+            "description": "Human-readable message describing the current status",
+            "example": "Message queued for delivery"
+          },
+          "currentStatusDate": {
+            "type": "string",
+            "description": "Timestamp of the most recent status change",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "currentStatusUserId": {
+            "type": "string",
+            "description": "User ID that triggered the most recent status change",
+            "example": "SMITHJ"
+          },
+          "createDate": {
+            "type": "string",
+            "description": "Timestamp when the message was originally created",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "createUserId": {
+            "type": "string",
+            "description": "User ID that created the message",
+            "readOnly": true,
+            "example": "SMITHJ"
+          },
+          "lastChangeDate": {
+            "type": "string",
+            "description": "Timestamp of the last modification",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastChangeUserId": {
+            "type": "string",
+            "description": "User ID that last modified the message",
+            "readOnly": true
+          },
+          "history": {
+            "type": "array",
+            "description": "Chronological list of status changes for this message",
+            "items": { "$ref": "#/components/schemas/MailQueueHistoryDto" }
+          },
+          "sendAttempts": {
+            "type": "integer",
+            "description": "Number of times the system has attempted to send this message",
+            "format": "int32",
+            "readOnly": true,
+            "example": 0
+          }
+        },
+        "description": "Represents a queued email message and its processing history"
+      },
+      "MailQueueHistoryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier of this history entry",
+            "format": "int32",
+            "readOnly": true,
+            "example": 501
+          },
+          "mqtId": {
+            "type": "integer",
+            "description": "ID of the parent mail queue record",
+            "format": "int32",
+            "readOnly": true,
+            "example": 12345
+          },
+          "status": {
+            "type": "string",
+            "description": "Status value recorded at this point in time",
+            "example": "SENT",
+            "enum": ["PENDING", "SENT", "FAILED", "CANCELED"]
+          },
+          "statusMessage": {
+            "type": "string",
+            "description": "Human-readable message describing this status transition",
+            "example": "Message delivered successfully"
+          },
+          "statusDate": {
+            "type": "string",
+            "description": "Timestamp when this status change occurred",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "statusUserId": {
+            "type": "string",
+            "description": "User ID associated with this status change",
+            "example": "SYSTEM"
+          }
+        },
+        "description": "A single status-change entry in the audit history of a queued email message"
+      }
+    }
+  }
 }
