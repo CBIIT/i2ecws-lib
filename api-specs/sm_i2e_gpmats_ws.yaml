@@ -1,0 +1,5986 @@
+openapi: 3.1.0
+info:
+  title: I2E GPMATS Web Services API
+  description: I2GPMATS Web Services
+  license:
+    name: Apache 2.0
+    url: http://springdoc.org
+  version: v2.1.0
+servers:
+  - url: http://localhost/i2egpmatsws
+    description: local
+  - url: https://i2e-dev.nci.nih.gov/i2egpmatsws
+    description: dev
+  - url: https://i2e-test.nci.nih.gov/i2egpmatsws
+    description: test
+  - url: https://i2e-stage.nci.nih.gov/i2egpmatsws
+    description: stage
+  - url: https://i2e.nci.nih.gov/i2egpmatsws
+    description: prod
+paths:
+  /api/v1/workflow/update-pgm-gs-ready-flag/{actionId}/{ready}:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: updatePgmGsReadyFlag
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: ready
+          in: path
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/workflow/update-action:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: updateAction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateActionDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionDto'
+  /api/v1/workflow/update-action-mass:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: updateActionMass
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionMassUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionDto'
+  /api/v1/workflow/unlock-greensheet/{applId}/{actionId}/{roleCode}:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: unlockGreensheet
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: roleCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/workflow/change-status:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: submitWorkflow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowSubmissionDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionSearchVwDto'
+  /api/v1/whatif/search:
+    post:
+      tags:
+        - whatif-draft-controller
+      operationId: searchWhatif
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WhatifSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatifSearchResults'
+  /api/v1/whatif/save:
+    post:
+      tags:
+        - whatif-draft-controller
+      operationId: saveWhatifDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WifDatasetUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /api/v1/whatif/generate-report:
+    post:
+      tags:
+        - whatif-draft-controller
+      operationId: generateWifReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WifReportCriteriaDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  /api/v1/whatif/export:
+    post:
+      tags:
+        - whatif-draft-controller
+      operationId: exportWhatifResults
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WhatifSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/whatif/apply-process:
+    post:
+      tags:
+        - whatif-draft-controller
+      operationId: applyWifProcess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WifReportCriteriaDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  /api/v1/specialist-assignments/update:
+    post:
+      tags:
+        - specialist-assignments-controller
+      operationId: updateSpecialistAssignment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecialistAssignmentUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecialistRulesVwDto'
+  /api/v1/specialist-assignments/search:
+    post:
+      tags:
+        - specialist-assignment-search-controller
+      operationId: searchSpecialistAssignments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecialistAssignmentSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecialistAssignmentSearchResults'
+  /api/v1/specialist-assignments/export:
+    post:
+      tags:
+        - specialist-assignment-search-controller
+      operationId: exportSearchResults
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecialistAssignmentSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/search:
+    post:
+      tags:
+        - gpmats-search-controller
+      operationId: search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmActionSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GmActionSearchResults'
+  /api/v1/search/{filter}:
+    post:
+      tags:
+        - gpmats-search-controller
+      operationId: searchByFilter
+      parameters:
+        - name: filter
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchFilterPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GmActionSearchResults'
+  /api/v1/save-action:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: saveAction
+      responses:
+        '200':
+          description: OK
+  /api/v1/save-action-request:
+    post:
+      tags:
+        - gpmats-workflow-controller
+      operationId: saveActionRequest
+      responses:
+        '200':
+          description: OK
+  /api/v1/reconcile/reconcile/{actionId}/{applId}:
+    post:
+      tags:
+        - gpmats-reconciliation-controller
+      operationId: reconcile
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionDto'
+  /api/v1/institution-assignments/update:
+    post:
+      tags:
+        - institution-rules-controller
+      operationId: updateInstitutionAssignment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstitutionAssignmentUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstitutionRulesVwDto'
+  /api/v1/institution-assignments/search:
+    post:
+      tags:
+        - institution-assignment-search-controller
+      operationId: searchInstitutionAssignments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstitutionAssignmentSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstitutionAssignmentSearchResults'
+  /api/v1/institution-assignments/search-org:
+    post:
+      tags:
+        - institution-assignment-search-controller
+      operationId: searchOrg
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstitutionOrgDto'
+  /api/v1/institution-assignments/export:
+    post:
+      tags:
+        - institution-assignment-search-controller
+      operationId: exportSearchResults_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstitutionAssignmentSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/gpmats-filters:
+    post:
+      tags:
+        - gpmats-filter-controller
+      operationId: saveGpmatsFilter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserFiltersTDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFiltersTDto'
+  /api/v1/gpmats-filters/{id}:
+    post:
+      tags:
+        - gpmats-filter-controller
+      operationId: deleteGpmatsFilter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/v1/gpmats-filters/filter-exists/:
+    post:
+      tags:
+        - gpmats-filter-controller
+      operationId: doesFilterNameExist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterNameCheckPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/export:
+    post:
+      tags:
+        - gpmats-export-controller
+      operationId: exportSearchResults_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmActionSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/export/{filter}:
+    post:
+      tags:
+        - gpmats-export-controller
+      operationId: exportFilter
+      parameters:
+        - name: filter
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchFilterPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/export/applids:
+    post:
+      tags:
+        - gpmats-export-controller
+      operationId: exportApplIds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int32
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/export/actionIds:
+    post:
+      tags:
+        - gpmats-export-controller
+      operationId: exportActionIds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int32
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/count:
+    post:
+      tags:
+        - gpmats-search-controller
+      operationId: count
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmActionSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GmActionSearchResults'
+  /api/v1/ca-branch-mapping/update:
+    post:
+      tags:
+        - ca-branch-mapping-controller
+      operationId: updateCaBranchMapping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaBranchMappingUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /api/v1/ca-branch-mapping/search:
+    post:
+      tags:
+        - ca-branch-mapping-search-controller
+      operationId: searchCaBranchMapping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaBranchMappingSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaBranchMappingSearchResults'
+  /api/v1/ca-branch-mapping/export:
+    post:
+      tags:
+        - ca-branch-mapping-search-controller
+      operationId: exportSearchResults_3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaBranchMappingSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/action-requests:
+    post:
+      tags:
+        - gpmats-action-request-controller
+      operationId: saveActionRequest_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmActionRequestsVwDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GmActionRequestsVwDto'
+  /api/v1/action-requests/search:
+    post:
+      tags:
+        - gpmats-action-request-search-controller
+      operationId: searchActionRequests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmActionRequestSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GmActionRequestSearchResults'
+  /api/v1/action-request-grants/search:
+    post:
+      tags:
+        - gpmats-action-request-search-controller
+      operationId: searchActionRequestGrants
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GmGrantsVwSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GmGrantsSearchResults'
+  /api/v1/action-notes/:
+    post:
+      tags:
+        - gpmats-notes-controller
+      operationId: saveNote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotesTDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotesTDto'
+  /api/v1/workflow/check-pgm-spec-greensheets/{actionId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: checkPgmSpecGreensheets
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowValidationDto'
+  /api/v1/whatif/spec-changes/{wifId}:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: getWifSpecChanges
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WifChangePreviewDto'
+  /api/v1/whatif/institute-changes/{wifId}:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: getWifInstituteChanges
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WifChangePreviewDto'
+  /api/v1/whatif/export-spec-changes/{wifId}:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: exportWifSpecChanges
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/whatif/export-institution-changes/{wifId}:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: exportWifInstitutionChanges
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/whatif/export-ca-changes/{wifId}:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: exportWifCaBranchChanges
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/whatif/ca-changes/{wifId}:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: getWifCaChanges
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WifChangePreviewDto'
+  /api/v1/whatif/assignments-last-update-date:
+    get:
+      tags:
+        - whatif-draft-controller
+      operationId: getAssignmentLastUpdateDate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: date-time
+  /api/v1/test-itp:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: testItpService
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/test-itp-nightly:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: testItpNightly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/supervisors:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getSupervisors
+      parameters:
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllSupervisorsVwDto'
+  /api/v1/specialists:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getSpecialists
+      parameters:
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllSpecialistsVwDto'
+  /api/v1/specialists/{specialistId}:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getSpecialist
+      parameters:
+        - name: specialistId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllSpecialistsVwDto'
+  /api/v1/specialist-assignments/rules:
+    get:
+      tags:
+        - specialist-assignments-controller
+      operationId: getSpecialistRules
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialistRulesVwDto'
+  /api/v1/specialist-assignments/other-existing-r13:
+    get:
+      tags:
+        - specialist-assignments-controller
+      operationId: getOtherExistingR13
+      parameters:
+        - name: personId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialistRulesVwDto'
+  /api/v1/specialist-assignments/other-existing-r13-all:
+    get:
+      tags:
+        - specialist-assignments-controller
+      operationId: getOtherExistingR13All
+      parameters:
+        - name: personId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialistRulesVwDto'
+  /api/v1/specialist-assignments/by-person:
+    get:
+      tags:
+        - specialist-assignment-search-controller
+      operationId: getSpecialistRuleByPerson
+      parameters:
+        - name: specPersonId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecialistRulesVwDto'
+  /api/v1/specialist-assignments/audit-history:
+    get:
+      tags:
+        - specialist-assignment-search-controller
+      operationId: getSpecialistRuleAuditsBySpecRuleId
+      parameters:
+        - name: specRuleId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialistRuleAuditVwDto'
+  /api/v1/revision-types:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getRevisionTypes
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RevisionTypesVwDto'
+  /api/v1/reviewers:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getReviewers
+      parameters:
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllReviewersVwDto'
+  /api/v1/reviewers/{reviewerId}:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getReviewer
+      parameters:
+        - name: reviewerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllReviewersVwDto'
+  /api/v1/returnspec-reasons:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getActiveReturnspecReasons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReturnspecReasonTypesVwDto'
+  /api/v1/return-spec-reasons/{actionId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: getReturnSpecReasons
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /api/v1/return-spec-in-error/{actionId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: getReturnSpecInError
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/related-actions/{serialNum}/{actionFy}/{actionId}:
+    get:
+      tags:
+        - gpmats-business-process-controller
+      operationId: getRelatedActionsByActionId
+      parameters:
+        - name: serialNum
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: actionFy
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelatedActionsVwDto'
+  /api/v1/reconcile/get/{applId}/{dummyActionFlag}:
+    get:
+      tags:
+        - gpmats-reconciliation-controller
+      operationId: getReconciliations
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: dummyActionFlag
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GrantReconciliationVwDto'
+  /api/v1/pgm-spec-greensheets-exist/{applId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: hasPgmSpecGreensheets
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/pd-orgs:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getPdOrgs
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PdOrgVwDto'
+  /api/v1/oga-trackings/{actionId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: getOgaTrackings
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActionTrackingVwDto'
+  /api/v1/oga-tracking-codes:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getOgaTrackingCodes
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OgaTrackingCodesVwDto'
+  /api/v1/notices:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getNotices
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RfaPaNoticesVwDto'
+  /api/v1/mechanisms:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getMechanisms
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityCodesVwDto'
+  /api/v1/institution-assignments/rules-by-specialist:
+    get:
+      tags:
+        - institution-rules-controller
+      operationId: getInstitutionRulesForSpecialist
+      parameters:
+        - name: specPersonId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstitutionRulesVwDto'
+  /api/v1/institution-assignments/rules-by-institution:
+    get:
+      tags:
+        - institution-rules-controller
+      operationId: getInstitutionRulesForInstitution
+      parameters:
+        - name: externalOrgId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstitutionRulesVwDto'
+  /api/v1/institution-assignments/audit-transactions:
+    get:
+      tags:
+        - institution-assignment-search-controller
+      operationId: getInstitutionChangeTransactionsByExternalOrgId
+      parameters:
+        - name: externalOrgId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstitutionRuleAuditTransactionDto'
+  /api/v1/grant-categories:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getGrantCategories
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GrantCategoriesVwDto'
+  /api/v1/gpmats-filters/{personId}:
+    get:
+      tags:
+        - gpmats-filter-controller
+      operationId: getGpmatsFiltersByPersonId
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserFiltersTDto'
+  /api/v1/gpmats-filters/{personId}/{filterName}:
+    get:
+      tags:
+        - gpmats-filter-controller
+      operationId: isFilterNameExists
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: filterName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/gm-action-status-history/{actionId}:
+    get:
+      tags:
+        - gpmats-business-process-controller
+      operationId: getGmActionStatusHistoryByActionId
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusHistoryVwDto'
+  /api/v1/gm-action-opera-alert-flags/{applId}:
+    get:
+      tags:
+        - gpmats-search-controller
+      operationId: getOperaAlertFlagDetails
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OperaGrantAlertsVwDto'
+  /api/v1/gm-action-detail-history/{actionId}:
+    get:
+      tags:
+        - gpmats-business-process-controller
+      operationId: getActionDetailHistoryByActionId
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditHistoryVwDto'
+  /api/v1/discrepancy-report/specialist:
+    get:
+      tags:
+        - disprepancy-report-controller
+      operationId: generateSpecialistDiscrepancyReport
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDiscrepancyReport'
+  /api/v1/discrepancy-report/specialist/export:
+    get:
+      tags:
+        - disprepancy-report-controller
+      operationId: exportSpecialistDiscrepancyReport
+      parameters:
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/discrepancy-report/institution:
+    get:
+      tags:
+        - disprepancy-report-controller
+      operationId: generateInstitutionDiscrepancyReport
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDiscrepancyReport'
+  /api/v1/discrepancy-report/institution/export:
+    get:
+      tags:
+        - disprepancy-report-controller
+      operationId: exportInstitutionDiscrepancyReport
+      parameters:
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/discrepancy-report/ca-branch:
+    get:
+      tags:
+        - disprepancy-report-controller
+      operationId: generateCaBranchDiscrepancyReport
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDiscrepancyReport'
+  /api/v1/discrepancy-report/ca-branch/export:
+    get:
+      tags:
+        - disprepancy-report-controller
+      operationId: exportCaBranchDiscrepancyReport
+      parameters:
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/count/{filter}:
+    get:
+      tags:
+        - gpmats-search-controller
+      operationId: countByFilter
+      parameters:
+        - name: filter
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: specPersonId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: reviewerPersonId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: fiscalYear
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+  /api/v1/count-spec-greensheets/{applId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: countSpecGreensheets
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  /api/v1/count-pgm-greensheets/{applId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: countPgmGreensheets
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  /api/v1/check-add-funds-funding-requests/{frqId}/{fy}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: checkAddFundsFundingRequests
+      parameters:
+        - name: frqId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: fy
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  /api/v1/cancer-activities:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getCancerActivities
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancerActivitiesVwDto'
+  /api/v1/cancel-reasons:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getCancelReasons
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancelReasonsVwDto'
+  /api/v1/cancel-reasons/{actionType}:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getActiveCancelReasonsByActionType
+      parameters:
+        - name: actionType
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancelReasonsVwDto'
+  /api/v1/ca-branch-mapping/cas:
+    get:
+      tags:
+        - ca-branch-mapping-search-controller
+      operationId: getAssignmentCancerActivities
+      parameters:
+        - name: activeFlag
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancerActivitiesDto'
+  /api/v1/ca-branch-mapping/audit-history:
+    get:
+      tags:
+        - ca-branch-mapping-search-controller
+      operationId: getCancerActivityRuleAuditsByRuleId
+      parameters:
+        - name: caRuleId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancerActivityRuleAuditVwDto'
+  /api/v1/branches:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getBranches
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllBranchesVwDto'
+  /api/v1/boards:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getBoards
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BoardsVwDto'
+  /api/v1/award-types:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getAwardTypes
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AwardTypesVwDto'
+  /api/v1/assignment-specialists:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getAssignmentSpecialists
+      parameters:
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllSpecialistsVwDto'
+  /api/v1/appl-types:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getApplTypes
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplTypesVwDto'
+  /api/v1/actions/{actionId}:
+    get:
+      tags:
+        - gpmats-business-process-controller
+      operationId: getActionById
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionSearchVwDto'
+  /api/v1/action/{actionId}:
+    get:
+      tags:
+        - gpmats-workflow-controller
+      operationId: loadAction
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionDto'
+  /api/v1/action-statuses:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getActionStatuses
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusCodesVwDto'
+  /api/v1/action-sources:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getActionSources
+      parameters:
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActionSourcesVwDto'
+  /api/v1/action-requests/{personId}:
+    get:
+      tags:
+        - gpmats-action-request-controller
+      operationId: getActionRequestsByPersonId
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GmActionRequestsVwDto'
+  /api/v1/action-notes/{actionId}:
+    get:
+      tags:
+        - gpmats-notes-controller
+      operationId: getNotesByActionId
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotesTDto'
+  /api/v1/action-notes/person-details/{userId}:
+    get:
+      tags:
+        - gpmats-notes-controller
+      operationId: getPersonDetails
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/I2ePersonDetailsVwDto'
+  /api/v1/action-notes/note-types:
+    get:
+      tags:
+        - gpmats-notes-controller
+      operationId: getNoteTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NoteTypesTDto'
+  /api/v1/action-grant-deleted/{fullGrantNum}:
+    get:
+      tags:
+        - gpmats-search-controller
+      operationId: getActionGrantDeleted
+      parameters:
+        - name: fullGrantNum
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/whatif/remove/{wifId}:
+    delete:
+      tags:
+        - whatif-draft-controller
+      operationId: removeWhatifDraft
+      parameters:
+        - name: wifId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/v1/institution-assignments/remove:
+    delete:
+      tags:
+        - institution-rules-controller
+      operationId: removeInstitutionAssignment
+      parameters:
+        - name: instRuleId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: wifId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/v1/action-requests/{id}:
+    delete:
+      tags:
+        - gpmats-action-request-controller
+      operationId: deleteActionRequest
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/v1/action-notes/{noteId}:
+    delete:
+      tags:
+        - gpmats-notes-controller
+      operationId: deleteNoteById
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    UpdateActionDto:
+      type: object
+      properties:
+        actionId:
+          type: integer
+          format: int32
+        actionType:
+          type: string
+        actionSourceId:
+          type: integer
+          format: int32
+        specNpnId:
+          type: integer
+          format: int32
+        backupSpecNpnId:
+          type: integer
+          format: int32
+        revisionTypeId:
+          type: integer
+          format: int32
+        revisionNumber:
+          type: integer
+          format: int32
+        grantCategoryId:
+          type: integer
+          format: int32
+        projectedStartDate:
+          type: string
+        awardTypeId:
+          type: integer
+          format: int32
+        actionFy:
+          type: integer
+          format: int32
+        applicationReceiptDate:
+          type: string
+        transactionId:
+          type: integer
+          format: int32
+        readyForPgmGsSubmission:
+          type: boolean
+        releaseDate:
+          type: string
+        obligationDate:
+          type: string
+        ogaTrackings:
+          type: array
+          items:
+            type: integer
+            format: int32
+        reconcileApplId:
+          type: integer
+          format: int32
+        grantCategoryChanged:
+          type: boolean
+    ActionDto:
+      type: object
+      properties:
+        actionId:
+          type: integer
+          format: int32
+        actionFy:
+          type: integer
+          format: int32
+        applId:
+          type: integer
+          format: int32
+        fullGrantNum:
+          type: string
+          maxLength: 19
+          minLength: 0
+        applTypeCode:
+          type: string
+          maxLength: 1
+          minLength: 0
+        activityCode:
+          type: string
+          maxLength: 3
+          minLength: 0
+        adminPhsOrgCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        serialNum:
+          type: integer
+          format: int32
+        supportYear:
+          type: integer
+          format: int32
+        suffixCode:
+          type: string
+          maxLength: 4
+          minLength: 0
+        piLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        piFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdInactiveFlag:
+          type: boolean
+        pdPersonId:
+          type: integer
+          format: int32
+        pdRoleId:
+          type: integer
+          format: int32
+        pdLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        pdCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        cancerActivityCode:
+          type: string
+          maxLength: 8
+          minLength: 0
+        cancerActivityDescrip:
+          type: string
+          maxLength: 80
+          minLength: 0
+        applStatusGroupCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        applStatusCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        applStatusGroupDescrip:
+          type: string
+          maxLength: 60
+          minLength: 0
+        grantFy:
+          type: integer
+          format: int32
+        institutionName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        councilMeetingDate:
+          type: string
+          maxLength: 6
+          minLength: 0
+        irgPercentileNum:
+          type: number
+        priorityScoreNum:
+          type: integer
+          format: int32
+        officialSelectPayFlag:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        rfaPaNumber:
+          type: string
+          maxLength: 10
+          minLength: 0
+        myfFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+        autoReviewFlag:
+          type: boolean
+        actionType:
+          type: string
+          maxLength: 20
+          minLength: 0
+        grantCategoryId:
+          type: integer
+          format: int32
+        grantCategoryDesc:
+          type: string
+          maxLength: 50
+          minLength: 0
+        revisionTypeId:
+          type: integer
+          format: int32
+        revisionTypeDesc:
+          type: string
+          maxLength: 50
+          minLength: 0
+        revisionNum:
+          type: integer
+          format: int64
+        specPersonId:
+          type: integer
+          format: int32
+        specRoleId:
+          type: integer
+          format: int32
+        specLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        specFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        specFullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        branchOrgId:
+          type: integer
+          format: int32
+        branchIdentifier:
+          type: string
+        projectedStartDate:
+          type: string
+          format: date-time
+        budgetStartDate:
+          type: string
+          format: date-time
+        budgetEndDate:
+          type: string
+          format: date-time
+        releaseDate:
+          type: string
+          format: date-time
+        obligationDate:
+          type: string
+          format: date-time
+        applicationReceiptDate:
+          type: string
+          format: date-time
+        ogaTrackingId:
+          type: integer
+          format: int32
+        ogaTrackingCodes:
+          type: string
+        awardTypeId:
+          type: integer
+          format: int32
+        awardTypeDescrip:
+          type: string
+        cancelReasonId:
+          type: integer
+          format: int32
+        cancelReasonDescrip:
+          type: string
+        actionSourceId:
+          type: integer
+          format: int32
+        actionSourceDescrip:
+          type: string
+        currentActionStatusId:
+          type: integer
+          format: int32
+        currentActionStatusDate:
+          type: string
+          format: date-time
+        currentActionStatusDesc:
+          type: string
+          maxLength: 50
+          minLength: 0
+        currentActionStatusOrder:
+          type: integer
+          format: int32
+        attentionFlag:
+          type: boolean
+        operaAlertFlag:
+          type: boolean
+        attentionFlagDesc:
+          type: string
+        expeditedReviewFlag:
+          type: boolean
+        esiApplEligFlag:
+          type: boolean
+        dummyActionFlag:
+          type: boolean
+        can:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        canDescription:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        canPhsOrgCode:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        fsRequestId:
+          type: integer
+          format: int32
+        fsPlanId:
+          type: integer
+          format: int32
+        pfrId:
+          type: integer
+          format: int32
+        dayCountNum:
+          type: integer
+          format: int32
+        relatedActionCount:
+          type: integer
+          format: int64
+        pgmGsSubmittedDate:
+          type: string
+          format: date-time
+        pgmGsStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        pgmGsStatusOrder:
+          type: integer
+          format: int32
+        pgmGsSortNum:
+          type: integer
+          format: int32
+        specGsStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        specGsStatusOrder:
+          type: integer
+          format: int32
+        specGsSortNum:
+          type: integer
+          format: int32
+        reviewerPersonId:
+          type: integer
+          format: int32
+        reviewerLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        reviewerEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        reviewerFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        maaFlag:
+          type: boolean
+        boEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        boContactName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        fcoiExistsFlag:
+          type: boolean
+        latestFcoiDate:
+          type: string
+          format: date-time
+        fcoiStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        i2LastReleaseDate:
+          type: string
+          format: date-time
+        i2LastObligationDate:
+          type: string
+          format: date-time
+        completedByName:
+          type: string
+          maxLength: 80
+          minLength: 0
+        completedByEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        orginalStartDate:
+          type: string
+          format: date-time
+        newInvestigatorFlag:
+          type: boolean
+        specEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        piEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        gmReleaseStatus:
+          type: string
+          maxLength: 80
+          minLength: 0
+        nihGuideAddr:
+          type: string
+          maxLength: 100
+          minLength: 0
+        releasedBy:
+          type: string
+          maxLength: 80
+          minLength: 0
+        releasedByEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        externalOrgId:
+          type: integer
+          format: int32
+        iconDisplay:
+          type: string
+          enum:
+            - BLANK
+            - GREEN_DOT
+            - RED_CHECK
+            - BOTH
+        arcGsStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        pgmGsReadyFlag:
+          type: boolean
+        pgmGsDsFlag:
+          type: boolean
+        projectPeriodStartDate:
+          type: string
+          format: date-time
+        projectPeriodEndDate:
+          type: string
+          format: date-time
+        i2SpecFullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        i2SpecEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        impaciiDeletedFlag:
+          type: boolean
+        gmsNoteText:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        ogaTrackings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionTrackingVwDto'
+        icdApiCalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/IcdApiParametersDto'
+        transactionIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        grantDeleted:
+          type: boolean
+    ActionTrackingVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        actionId:
+          type: integer
+          format: int32
+        gitId:
+          type: integer
+          format: int32
+        code:
+          type: string
+        description:
+          type: string
+    IcdApiParametersDto:
+      type: object
+      properties:
+        transactionGroupId:
+          type: integer
+          format: int32
+        serviceName:
+          type: string
+        versionId:
+          type: string
+        roleTypeCode:
+          type: string
+        applId:
+          type: integer
+          format: int32
+        phsOrgCode:
+          type: string
+        personId:
+          type: integer
+          format: int32
+        transactionType:
+          type: string
+        newPccCode:
+          type: string
+        oldPccCode:
+          type: string
+        overwriteFlag:
+          type: string
+        progClassCode:
+          type: string
+    ActionMassUpdateDto:
+      type: object
+      properties:
+        actionId:
+          type: integer
+          format: int32
+        specNpnId:
+          type: integer
+          format: int32
+        ogaTrackingIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        statusCodeId:
+          type: integer
+          format: int32
+        specialInstructions:
+          type: string
+        statusComment:
+          type: string
+        transactionId:
+          type: integer
+          format: int32
+        removeSpecialInstruction:
+          type: boolean
+    WorkflowSubmissionDto:
+      type: object
+      properties:
+        actionId:
+          type: integer
+          format: int32
+        statusCodeId:
+          type: integer
+          format: int32
+        comments:
+          type: string
+        returnSpecInError:
+          type: boolean
+        assigneePersonId:
+          type: integer
+          format: int32
+        submissionNpnId:
+          type: integer
+          format: int32
+        submissionUserRoleCode:
+          type: string
+        submissionUserId:
+          type: string
+        cancelReasonId:
+          type: integer
+          format: int32
+        awardTypeId:
+          type: integer
+          format: int32
+        returnspecReasonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        returnSpecOtherComments:
+          type: string
+    ActionSearchVwDto:
+      type: object
+      properties:
+        actionId:
+          type: integer
+          format: int32
+        actionFy:
+          type: integer
+          format: int32
+        applId:
+          type: integer
+          format: int32
+        fullGrantNum:
+          type: string
+          maxLength: 19
+          minLength: 0
+        applTypeCode:
+          type: string
+          maxLength: 1
+          minLength: 0
+        activityCode:
+          type: string
+          maxLength: 3
+          minLength: 0
+        adminPhsOrgCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        serialNum:
+          type: integer
+          format: int32
+        supportYear:
+          type: integer
+          format: int32
+        suffixCode:
+          type: string
+          maxLength: 4
+          minLength: 0
+        piLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        piFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdInactiveFlag:
+          type: boolean
+        pdPersonId:
+          type: integer
+          format: int32
+        pdRoleId:
+          type: integer
+          format: int32
+        pdLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        pdCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        cancerActivityCode:
+          type: string
+          maxLength: 8
+          minLength: 0
+        cancerActivityDescrip:
+          type: string
+          maxLength: 80
+          minLength: 0
+        applStatusGroupCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        applStatusCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        applStatusGroupDescrip:
+          type: string
+          maxLength: 60
+          minLength: 0
+        grantFy:
+          type: integer
+          format: int32
+        institutionName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        councilMeetingDate:
+          type: string
+          maxLength: 6
+          minLength: 0
+        irgPercentileNum:
+          type: number
+        priorityScoreNum:
+          type: integer
+          format: int32
+        officialSelectPayFlag:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        rfaPaNumber:
+          type: string
+          maxLength: 10
+          minLength: 0
+        myfFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+        autoReviewFlag:
+          type: boolean
+        actionType:
+          type: string
+          maxLength: 20
+          minLength: 0
+        grantCategoryId:
+          type: integer
+          format: int32
+        grantCategoryDesc:
+          type: string
+          maxLength: 50
+          minLength: 0
+        revisionTypeId:
+          type: integer
+          format: int32
+        revisionTypeDesc:
+          type: string
+          maxLength: 50
+          minLength: 0
+        revisionNum:
+          type: integer
+          format: int64
+        specPersonId:
+          type: integer
+          format: int32
+        specRoleId:
+          type: integer
+          format: int32
+        specLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        specFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        specFullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        branchOrgId:
+          type: integer
+          format: int32
+        branchIdentifier:
+          type: string
+        projectedStartDate:
+          type: string
+          format: date-time
+        budgetStartDate:
+          type: string
+          format: date-time
+        budgetEndDate:
+          type: string
+          format: date-time
+        releaseDate:
+          type: string
+          format: date-time
+        obligationDate:
+          type: string
+          format: date-time
+        applicationReceiptDate:
+          type: string
+          format: date-time
+        ogaTrackingId:
+          type: integer
+          format: int32
+        ogaTrackingCodes:
+          type: string
+        awardTypeId:
+          type: integer
+          format: int32
+        awardTypeDescrip:
+          type: string
+        cancelReasonId:
+          type: integer
+          format: int32
+        cancelReasonDescrip:
+          type: string
+        actionSourceId:
+          type: integer
+          format: int32
+        actionSourceDescrip:
+          type: string
+        currentActionStatusId:
+          type: integer
+          format: int32
+        currentActionStatusDate:
+          type: string
+          format: date-time
+        currentActionStatusDesc:
+          type: string
+          maxLength: 50
+          minLength: 0
+        currentActionStatusOrder:
+          type: integer
+          format: int32
+        attentionFlag:
+          type: boolean
+        operaAlertFlag:
+          type: boolean
+        attentionFlagDesc:
+          type: string
+        expeditedReviewFlag:
+          type: boolean
+        esiApplEligFlag:
+          type: boolean
+        dummyActionFlag:
+          type: boolean
+        can:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        canDescription:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        canPhsOrgCode:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        fsRequestId:
+          type: integer
+          format: int32
+        fsPlanId:
+          type: integer
+          format: int32
+        pfrId:
+          type: integer
+          format: int32
+        dayCountNum:
+          type: integer
+          format: int32
+        relatedActionCount:
+          type: integer
+          format: int64
+        pgmGsSubmittedDate:
+          type: string
+          format: date-time
+        pgmGsStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        pgmGsStatusOrder:
+          type: integer
+          format: int32
+        pgmGsSortNum:
+          type: integer
+          format: int32
+        specGsStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        specGsStatusOrder:
+          type: integer
+          format: int32
+        specGsSortNum:
+          type: integer
+          format: int32
+        reviewerPersonId:
+          type: integer
+          format: int32
+        reviewerLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        reviewerEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        reviewerFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        maaFlag:
+          type: boolean
+        boEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        boContactName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        fcoiExistsFlag:
+          type: boolean
+        latestFcoiDate:
+          type: string
+          format: date-time
+        fcoiStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        i2LastReleaseDate:
+          type: string
+          format: date-time
+        i2LastObligationDate:
+          type: string
+          format: date-time
+        completedByName:
+          type: string
+          maxLength: 80
+          minLength: 0
+        completedByEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        orginalStartDate:
+          type: string
+          format: date-time
+        newInvestigatorFlag:
+          type: boolean
+        specEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        piEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        gmReleaseStatus:
+          type: string
+          maxLength: 80
+          minLength: 0
+        nihGuideAddr:
+          type: string
+          maxLength: 100
+          minLength: 0
+        releasedBy:
+          type: string
+          maxLength: 80
+          minLength: 0
+        releasedByEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        externalOrgId:
+          type: integer
+          format: int32
+        iconDisplay:
+          type: string
+          enum:
+            - BLANK
+            - GREEN_DOT
+            - RED_CHECK
+            - BOTH
+        arcGsStatus:
+          type: string
+          maxLength: 50
+          minLength: 0
+        pgmGsReadyFlag:
+          type: boolean
+        pgmGsDsFlag:
+          type: boolean
+        projectPeriodStartDate:
+          type: string
+          format: date-time
+        projectPeriodEndDate:
+          type: string
+          format: date-time
+        i2SpecFullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        i2SpecEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        impaciiDeletedFlag:
+          type: boolean
+        gmsNoteText:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        grantDeleted:
+          type: boolean
+    Column:
+      type: object
+      properties:
+        data:
+          type: string
+        name:
+          type: string
+        searchable:
+          type: boolean
+        orderable:
+          type: boolean
+        search:
+          $ref: '#/components/schemas/Search'
+    Order:
+      type: object
+      properties:
+        column:
+          type: integer
+          format: int32
+        columnName:
+          type: string
+        dir:
+          type: string
+    Search:
+      type: object
+      properties:
+        value:
+          type: string
+        regex:
+          type: boolean
+    WhatifSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+    WhatifSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WifDatasetsVwDto'
+        criteria:
+          $ref: '#/components/schemas/WhatifSearchCriteria'
+    WifDatasetsVwDto:
+      type: object
+      properties:
+        wifId:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        createdByName:
+          type: string
+        createdByEmailAddress:
+          type: string
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    WifDatasetUpdateDto:
+      type: object
+      properties:
+        wifId:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+    ReportCriteria:
+      type: object
+      properties:
+        actionFy:
+          type: integer
+          format: int32
+        actionStatusIds:
+          type: string
+        actionTypes:
+          type: string
+    WifReportCriteriaDto:
+      type: object
+      properties:
+        wifId:
+          type: integer
+          format: int32
+        criteriaTypeId:
+          type: integer
+          format: int32
+        wifProcessType:
+          type: string
+        criteriaList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportCriteria'
+    SpecialistAssignmentUpdateDto:
+      type: object
+      properties:
+        personId:
+          type: integer
+          format: int32
+        branch:
+          type: string
+        i2AssignableFlag:
+          type: boolean
+        r13Flag:
+          type: boolean
+        r13AllBranchesFlag:
+          type: boolean
+        sbirSttrFlag:
+          type: boolean
+        updateUserId:
+          type: string
+        wifId:
+          type: integer
+          format: int32
+        specRuleId:
+          type: integer
+          format: int32
+    SpecialistRulesVwDto:
+      type: object
+      properties:
+        specRuleId:
+          type: integer
+          format: int32
+        wifId:
+          type: integer
+          format: int32
+        personId:
+          type: integer
+          format: int32
+        specFullName:
+          type: string
+        specEmailAddress:
+          type: string
+        accountInactiveDate:
+          type: string
+          format: date-time
+        accountLockDate:
+          type: string
+          format: date-time
+        branch:
+          type: string
+        branchA:
+          type: boolean
+        branchB:
+          type: boolean
+        branchC:
+          type: boolean
+        branchD:
+          type: boolean
+        i2AssignableFlag:
+          type: boolean
+        r13Flag:
+          type: boolean
+        r13AllBranchFlag:
+          type: boolean
+        sbirSttrFlag:
+          type: boolean
+        ruleStartDate:
+          type: string
+          format: date-time
+        ruleEndDate:
+          type: string
+          format: date-time
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+        activeSpecialist:
+          type: boolean
+    SpecialistAssignmentSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        personIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        branches:
+          type: array
+          items:
+            type: string
+        sentToImpacII:
+          type: boolean
+        r13:
+          type: boolean
+        sbirSttr:
+          type: boolean
+        wifId:
+          type: integer
+          format: int32
+    SpecialistAssignmentSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialistRulesVwDto'
+        criteria:
+          $ref: '#/components/schemas/SpecialistAssignmentSearchCriteria'
+    GmActionSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        specPersonId:
+          type: integer
+          format: int32
+        reviewerPersonId:
+          type: integer
+          format: int32
+        competingFlag:
+          type: string
+        transferFlag:
+          type: string
+        supplementFlag:
+          type: string
+        unobligatedBalFlag:
+          type: string
+        humanSubjectsFlag:
+          type: string
+        animalSubjectsFlag:
+          type: string
+        foreignFlag:
+          type: string
+        domesticForeignFlag:
+          type: string
+        wip:
+          type: boolean
+        currentActionStatusCode:
+          type: array
+          items:
+            type: string
+        actionType:
+          type: string
+        fiscalYear:
+          type: integer
+          format: int32
+        applId:
+          type: string
+        grantType:
+          type: string
+        grantMech:
+          type: string
+        grantIc:
+          type: string
+        grantSerial:
+          type: string
+        grantYear:
+          type: string
+        grantSuffix:
+          type: string
+        grantTypes:
+          type: array
+          items:
+            type: string
+        grantMechs:
+          type: array
+          items:
+            type: string
+        piLastName:
+          type: string
+        piFirstName:
+          type: string
+        actionFys:
+          type: array
+          items:
+            type: integer
+            format: int32
+        piName:
+          type: string
+        institutionName:
+          type: string
+        pdNpeId:
+          type: integer
+          format: int32
+        externalOrgId:
+          type: integer
+          format: int32
+        pdNpeIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        specPersonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        reviwerPersonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        cancelReasonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        ogaTrackingIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        actionStatusesId:
+          type: array
+          items:
+            type: integer
+            format: int32
+        cayCodes:
+          type: array
+          items:
+            type: string
+        i2Status:
+          type: string
+        ncabFrom:
+          type: string
+        ncabTo:
+          type: string
+        irgPercentileFrom:
+          type: number
+        irgPercentileTo:
+          type: number
+        priorityScoreFrom:
+          type: integer
+          format: int32
+        priorityScoreTo:
+          type: integer
+          format: int32
+        foa:
+          type: array
+          items:
+            type: string
+        myfFlag:
+          type: string
+        earlyConcurFlag:
+          type: string
+        autoReviewFlag:
+          type: boolean
+        dummyActionFlag:
+          type: boolean
+        andOr:
+          type: string
+        ogaShowAll:
+          type: boolean
+        officiallySelectedToBePaid:
+          type: boolean
+        esiApplEligFlag:
+          type: boolean
+        budgetStartDate:
+          type: string
+          format: date-time
+        budgetEndDate:
+          type: string
+          format: date-time
+        releaseDate:
+          type: string
+          format: date-time
+        releaseEndDate:
+          type: string
+          format: date-time
+        obligationDate:
+          type: string
+          format: date-time
+        obligationEndDate:
+          type: string
+          format: date-time
+        applicationReceiptDate:
+          type: string
+          format: date-time
+        applicationReceiptEndDate:
+          type: string
+          format: date-time
+        projectedStartDateFrom:
+          type: string
+          format: date-time
+        projectedStartDateTo:
+          type: string
+          format: date-time
+        projectedEndDateFrom:
+          type: string
+          format: date-time
+        projectedEndDateTo:
+          type: string
+          format: date-time
+        actionStatusUpdatedFrom:
+          type: string
+          format: date-time
+        actionStatusUpdatedTo:
+          type: string
+          format: date-time
+        grantCategoryId:
+          type: integer
+          format: int32
+        branchOrgId:
+          type: integer
+          format: int32
+        revisionTypeId:
+          type: integer
+          format: int32
+        revisionTypeDesc:
+          type: string
+        awardTypeId:
+          type: integer
+          format: int32
+        cancelReasonId:
+          type: integer
+          format: int32
+        actionSourceId:
+          type: integer
+          format: int32
+        revisionNum:
+          type: integer
+          format: int64
+        releaseDateFlag:
+          type: boolean
+        obligationDateFlag:
+          type: boolean
+    GmActionSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionSearchVwDto'
+        criteria:
+          $ref: '#/components/schemas/GmActionSearchCriteria'
+    SearchFilterPayload:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        specPersonId:
+          type: integer
+          format: int32
+        reviewerPersonId:
+          type: integer
+          format: int32
+        fiscalYear:
+          type: integer
+          format: int32
+    InstitutionAssignmentUpdateDto:
+      type: object
+      properties:
+        instRuleId:
+          type: integer
+          format: int32
+        externalOrgId:
+          type: integer
+          format: int32
+        branch:
+          type: string
+        specPersonId:
+          type: integer
+          format: int32
+        allActivityCodesFlag:
+          type: boolean
+        p30Flag:
+          type: boolean
+        kayFlag:
+          type: boolean
+        efFlag:
+          type: boolean
+        teeFlag:
+          type: boolean
+        r50Flag:
+          type: boolean
+        snapFlag:
+          type: boolean
+        modularFlag:
+          type: boolean
+        updateUserId:
+          type: string
+        wifId:
+          type: integer
+          format: int32
+    InstitutionRulesVwDto:
+      type: object
+      properties:
+        instRuleId:
+          type: integer
+          format: int32
+        wifId:
+          type: integer
+          format: int32
+        externalOrgId:
+          type: integer
+          format: int32
+        orgName:
+          type: string
+        branch:
+          type: string
+        specPersonId:
+          type: integer
+          format: int32
+        specFullName:
+          type: string
+        specEmailAddress:
+          type: string
+        activeSpecialist:
+          type: boolean
+        accountInactiveDate:
+          type: string
+          format: date-time
+        accountLockDate:
+          type: string
+          format: date-time
+        allActivityCodesFlag:
+          type: boolean
+        p30Flag:
+          type: boolean
+        kayFlag:
+          type: boolean
+        efFlag:
+          type: boolean
+        teeFlag:
+          type: boolean
+        r50Flag:
+          type: boolean
+        snapFlag:
+          type: boolean
+        modularFlag:
+          type: boolean
+        ruleStartDate:
+          type: string
+          format: date-time
+        ruleEndDate:
+          type: string
+          format: date-time
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+    InstitutionAssignmentSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        externalOrgId:
+          type: integer
+          format: int32
+        orgName:
+          type: string
+        mechanism:
+          type: string
+        mechanismFlag:
+          type: boolean
+        modularFlag:
+          type: boolean
+        snapFlag:
+          type: boolean
+        institutionType:
+          type: string
+        specPersonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        wifId:
+          type: integer
+          format: int32
+    InstitutionAssignmentSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstitutionOrgDto'
+        criteria:
+          $ref: '#/components/schemas/InstitutionAssignmentSearchCriteria'
+    InstitutionOrgDto:
+      type: object
+      properties:
+        externalOrgId:
+          type: integer
+          format: int32
+        orgName:
+          type: string
+        assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstitutionRulesVwDto'
+    UserFiltersTDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        personId:
+          type: integer
+          format: int32
+        filterName:
+          type: string
+          maxLength: 50
+          minLength: 0
+        filterDesc:
+          type: string
+          maxLength: 250
+          minLength: 0
+        filterType:
+          type: string
+          maxLength: 10
+          minLength: 0
+        filterJson:
+          type: string
+        defaultFlag:
+          type: boolean
+        createUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        createDate:
+          type: string
+          format: date
+        lastChangeDate:
+          type: string
+          format: date
+        lastChangeUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+      required:
+        - createDate
+        - createUserId
+        - filterName
+        - filterType
+        - personId
+    FilterNameCheckPayload:
+      type: object
+      properties:
+        personId:
+          type: integer
+          format: int32
+        filterName:
+          type: string
+    CaBranchMappingUpdateDto:
+      type: object
+      properties:
+        caRuleId:
+          type: integer
+          format: int32
+        cayCode:
+          type: string
+        branch:
+          type: string
+        updateUserId:
+          type: string
+        wifId:
+          type: integer
+          format: int32
+    CaBranchMappingSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        cayCode:
+          type: string
+        branches:
+          type: array
+          items:
+            type: string
+        wifId:
+          type: integer
+          format: int32
+    CaBranchMappingSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CancerActivityRulesVwDto'
+        criteria:
+          $ref: '#/components/schemas/CaBranchMappingSearchCriteria'
+    CancerActivityRulesVwDto:
+      type: object
+      properties:
+        caRuleId:
+          type: integer
+          format: int32
+        wifId:
+          type: integer
+          format: int32
+        cancerActivityCode:
+          type: string
+        cancerActivityDescrip:
+          type: string
+        cancerActivityDisplayValue:
+          type: string
+        cancerActivityActiveFlag:
+          type: boolean
+        branch:
+          type: string
+        ruleStartDate:
+          type: string
+          format: date-time
+        ruleEndDate:
+          type: string
+          format: date-time
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+    GmActionRequestsVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        applId:
+          type: integer
+          format: int32
+        agtId:
+          type: integer
+          format: int32
+        npnId:
+          type: integer
+          format: int32
+        ggtId:
+          type: integer
+          format: int32
+        gvtId:
+          type: integer
+          format: int32
+        gasId:
+          type: integer
+          format: int32
+        actionFy:
+          type: integer
+          format: int32
+        actionSource:
+          type: string
+          maxLength: 10
+          minLength: 0
+        fullGrantNum:
+          type: string
+          maxLength: 19
+          minLength: 0
+        actionType:
+          type: string
+          maxLength: 20
+          minLength: 0
+        requestStatus:
+          type: string
+          maxLength: 20
+          minLength: 0
+        comments:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        requestorNpnId:
+          type: integer
+          format: int32
+        requestorFullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        revisionTypeCode:
+          type: string
+          maxLength: 20
+          minLength: 0
+        revisionTypeDescrip:
+          type: string
+          maxLength: 50
+          minLength: 0
+        grantCategoryCode:
+          type: string
+          maxLength: 10
+          minLength: 0
+        grantCategoryDescrip:
+          type: string
+          maxLength: 50
+          minLength: 0
+        currentActionStatusCode:
+          type: string
+          maxLength: 10
+          minLength: 0
+        pfrId:
+          type: integer
+          format: int64
+        createDate:
+          type: string
+          format: date-time
+        requestStatusMessage:
+          type: string
+          maxLength: 1000
+          minLength: 0
+        requestorEmailAddr:
+          type: string
+          maxLength: 80
+          minLength: 0
+      required:
+        - actionFy
+        - actionType
+        - applId
+        - createDate
+        - id
+        - npnId
+        - requestStatus
+        - requestorNpnId
+    GmActionRequestSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        applId:
+          type: integer
+          format: int32
+        agtId:
+          type: integer
+          format: int32
+        npnId:
+          type: integer
+          format: int32
+        ggtId:
+          type: integer
+          format: int32
+        gvtId:
+          type: integer
+          format: int32
+        gasId:
+          type: integer
+          format: int32
+        actionFy:
+          type: integer
+          format: int32
+        actionSource:
+          type: string
+        fullGrantNum:
+          type: string
+        actionType:
+          type: string
+        requestStatus:
+          type: string
+        requestorNpnId:
+          type: integer
+          format: int32
+        revisionTypeCode:
+          type: string
+        revisionTypeDescrip:
+          type: string
+        grantCategoryCode:
+          type: string
+        grantCategoryDescrip:
+          type: string
+        currentActionStatusCode:
+          type: string
+        pfrId:
+          type: integer
+          format: int64
+        hideApprovedActionsThatAreClosed:
+          type: boolean
+    GmActionRequestSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GmActionRequestsVwDto'
+        criteria:
+          $ref: '#/components/schemas/GmActionRequestSearchCriteria'
+    GmGrantsVwSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        applTypeCode:
+          type: string
+        activityCode:
+          type: string
+        adminPhsOrgCode:
+          type: string
+        serialNumber:
+          type: integer
+          format: int32
+        supportYear:
+          type: integer
+          format: int32
+        suffixCode:
+          type: string
+        actionFy:
+          type: integer
+          format: int32
+        radioGrantApplId:
+          type: integer
+          format: int64
+        revisionType:
+          type: integer
+          format: int64
+        grantCategory:
+          type: integer
+          format: int64
+        comments:
+          type: string
+        actionType:
+          type: string
+        grantSelection:
+          type: string
+        createRequest:
+          type: string
+        idRequestCreatedBy:
+          type: integer
+          format: int64
+        requestStatus:
+          type: string
+        radioGrantApplIdAndFullGrantNum:
+          type: string
+        fullGrantNum:
+          type: string
+    GmGrantsSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        criteria:
+          $ref: '#/components/schemas/GmGrantsVwSearchCriteria'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GmGrantsVwDto'
+    GmGrantsVwDto:
+      type: object
+      properties:
+        applId:
+          type: integer
+          format: int32
+        fullGrantNum:
+          type: string
+          maxLength: 19
+          minLength: 0
+        applTypeCode:
+          type: string
+          maxLength: 1
+          minLength: 0
+        activityCode:
+          type: string
+          maxLength: 3
+          minLength: 0
+        adminPhsOrgCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        serialNum:
+          type: integer
+          format: int32
+        supportYear:
+          type: integer
+          format: int32
+        suffixCode:
+          type: string
+          maxLength: 4
+          minLength: 0
+        councilMeetingDate:
+          type: string
+          maxLength: 6
+          minLength: 0
+        formattedCouncilDate:
+          type: string
+          maxLength: 25
+          minLength: 0
+        fy:
+          type: integer
+          format: int32
+        rfaPaNumber:
+          type: string
+          maxLength: 10
+          minLength: 0
+        budgetStartDate:
+          type: string
+          format: date-time
+        budgetEndDate:
+          type: string
+          format: date-time
+        applStatusGroupCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        applStatusGroupDescrip:
+          type: string
+          maxLength: 60
+          minLength: 0
+        irgPercentileNum:
+          type: number
+        priorityScoreNum:
+          type: integer
+          format: int32
+        directCostRequestedAmt:
+          type: integer
+          format: int64
+        orgName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        piLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        piFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        piMiName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        piName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        piEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        cayCode:
+          type: string
+          maxLength: 8
+          minLength: 0
+        pdNpnId:
+          type: integer
+          format: int32
+        pdNpeId:
+          type: integer
+          format: int32
+        pdLastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdFirstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdMiName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        pdCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        pdEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        lastAwdNoticeIssueDatetime:
+          type: string
+          format: date-time
+        foaGrantFlag:
+          type: boolean
+        largePaylistGrantFlag:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        arraGrantFlag:
+          type: boolean
+        newInvestigatorCode:
+          type: string
+          maxLength: 1
+          minLength: 0
+        cancelledAction:
+          type: boolean
+      required:
+        - applId
+    NoteTypesTDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 10
+          minLength: 0
+        displayValue:
+          type: string
+          maxLength: 100
+          minLength: 0
+        description:
+          type: string
+          maxLength: 100
+          minLength: 0
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        createUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        lastChangeDate:
+          type: string
+          format: date-time
+      required:
+        - code
+        - createDate
+        - createUserId
+        - description
+        - displayValue
+        - startDate
+    NotesTDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        actionId:
+          type: integer
+          format: int32
+        noteType:
+          $ref: '#/components/schemas/NoteTypesTDto'
+        createdByPersonId:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        endDateString:
+          type: string
+        noteText:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        createUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        createdByName:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        lastChangeUserName:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+        pfrId:
+          type: integer
+          format: int32
+        statusId:
+          type: integer
+          format: int32
+        followupDate:
+          type: string
+          format: date-time
+        followupDateString:
+          type: string
+        dueDate:
+          type: string
+          format: date-time
+        dueDateString:
+          type: string
+        actionRequestId:
+          type: integer
+          format: int32
+        resolvedFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+      required:
+        - actionId
+        - createDate
+        - createUserId
+        - createdByPersonId
+        - noteText
+        - noteType
+        - startDate
+    WorkflowValidationDto:
+      type: object
+      properties:
+        validation:
+          type: string
+        status:
+          type: string
+        errorCodes:
+          type: array
+          items:
+            type: string
+        errorMessages:
+          type: array
+          items:
+            type: string
+    Change:
+      type: object
+      properties:
+        columnDisplayValue:
+          type: string
+        previousValue:
+          type: string
+        newValue:
+          type: string
+    WifChangePreviewDto:
+      type: object
+      properties:
+        cancerActivityCode:
+          type: string
+        cancerActivityDisplayValue:
+          type: string
+        cancerActivityActiveFlag:
+          type: boolean
+        externalOrgId:
+          type: integer
+          format: int32
+        orgName:
+          type: string
+        specPersonId:
+          type: integer
+          format: int32
+        specFullName:
+          type: string
+        specEmailAddress:
+          type: string
+        specActiveFlag:
+          type: boolean
+        branch:
+          type: string
+        transactionType:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+        updatedByUserId:
+          type: string
+    AllSupervisorsVwDto:
+      type: object
+      properties:
+        personId:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        miName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        fullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        emailAddr:
+          type: string
+          maxLength: 80
+          minLength: 0
+        activeFlag:
+          type: boolean
+    AllSpecialistsVwDto:
+      type: object
+      properties:
+        specPersonId:
+          type: integer
+          format: int32
+        specFirstName:
+          type: string
+        specLastName:
+          type: string
+        specMiName:
+          type: string
+        specFullName:
+          type: string
+        specEmailAddr:
+          type: string
+        activeFlag:
+          type: boolean
+        branch:
+          type: string
+        i2AssignableFlag:
+          type: boolean
+    SpecialistRuleAuditVwDto:
+      type: object
+      properties:
+        specRuleAuditId:
+          type: integer
+          format: int32
+        specRuleId:
+          type: integer
+          format: int32
+        wifId:
+          type: integer
+          format: int32
+        personId:
+          type: integer
+          format: int32
+        transactionDate:
+          type: string
+          format: date-time
+        columnId:
+          type: integer
+          format: int32
+        columnDisplayValue:
+          type: string
+        previousValue:
+          type: string
+        newValue:
+          type: string
+        previousDisplayValue:
+          type: string
+        newDisplayValue:
+          type: string
+        updatedByPersonId:
+          type: integer
+          format: int32
+        updatedByName:
+          type: string
+        updatedByEmailAddress:
+          type: string
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+    RevisionTypesVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 20
+          minLength: 0
+        description:
+          type: string
+          maxLength: 50
+          minLength: 0
+        fundingChangeFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+      required:
+        - code
+        - description
+        - id
+    AllReviewersVwDto:
+      type: object
+      properties:
+        personId:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        miName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        fullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        emailAddr:
+          type: string
+          maxLength: 80
+          minLength: 0
+        activeFlag:
+          type: boolean
+    ReturnspecReasonTypesVwDto:
+      type: object
+      properties:
+        reasonId:
+          type: integer
+          format: int32
+        parentId:
+          type: integer
+          format: int32
+        code:
+          type: string
+        description:
+          type: string
+        orderNum:
+          type: integer
+          format: int32
+        endDate:
+          type: string
+          format: date-time
+    RelatedActionsVwDto:
+      type: object
+      properties:
+        actionId:
+          type: integer
+          format: int32
+        applId:
+          type: integer
+          format: int32
+        actionFy:
+          type: integer
+          format: int32
+        fullGrantNum:
+          type: string
+        serialNum:
+          type: integer
+          format: int32
+        specLastName:
+          type: string
+        specFirstName:
+          type: string
+        supplementTypeDesc:
+          type: string
+        revisionNum:
+          type: integer
+          format: int32
+        revisionTypeDesc:
+          type: string
+        actionSourceDesc:
+          type: string
+        currentActionStatusCode:
+          type: string
+        currentActionStatusDesc:
+          type: string
+        currentActionStatusDate:
+          type: string
+          format: date-time
+        relatedActionSortOrder:
+          type: integer
+          format: int32
+        reviewerPersonId:
+          type: integer
+          format: int32
+        reviewerLastName:
+          type: string
+        reviewerFirstName:
+          type: string
+        reviewerEmailAddress:
+          type: string
+        iconDisplay:
+          type: string
+          enum:
+            - BLANK
+            - GREEN_DOT
+            - RED_CHECK
+            - BOTH
+        specEmailAddress:
+          type: string
+    GrantReconciliationVwDto:
+      type: object
+      properties:
+        applId:
+          type: integer
+          format: int32
+        applTypeCode:
+          type: string
+        activityCode:
+          type: string
+        adminPhsOrgCode:
+          type: string
+        serialNum:
+          type: integer
+          format: int32
+        supportYear:
+          type: integer
+          format: int32
+        suffixCode:
+          type: string
+        fullGrantNum:
+          type: string
+        accessionNum:
+          type: integer
+          format: int64
+        orgName:
+          type: string
+        applStatusGroupDescrip:
+          type: string
+        fy:
+          type: integer
+          format: int32
+        piName:
+          type: string
+        piEmailAddress:
+          type: string
+        esiApplEligFlag:
+          type: boolean
+        rfaPaNumber:
+          type: string
+        irgPercentileNum:
+          type: number
+        priorityScoreNum:
+          type: integer
+          format: int32
+        boContactName:
+          type: string
+        boEmailAddress:
+          type: string
+        fcoiExistsFlag:
+          type: boolean
+        latestFcoiDate:
+          type: string
+          format: date-time
+        fcoiStatus:
+          type: string
+        maaFlag:
+          type: boolean
+        cancerActivityCode:
+          type: string
+        cancerActivityDescrip:
+          type: string
+        councilMeetingDate:
+          type: string
+        i2SpecFullName:
+          type: string
+        i2SpecEmailAddress:
+          type: string
+        i2LastObligationDate:
+          type: string
+          format: date-time
+        i2LastReleaseDate:
+          type: string
+          format: date-time
+        releasedBy:
+          type: string
+        releasedByEmailAddress:
+          type: string
+    PdOrgVwDto:
+      type: object
+      properties:
+        roleId:
+          type: integer
+          format: int32
+        cancerActivityCode:
+          type: string
+          maxLength: 8
+          minLength: 0
+        cancerActivityEndDate:
+          type: string
+          format: date-time
+        pdCode:
+          type: string
+          maxLength: 2
+          minLength: 0
+        pdName:
+          type: string
+          maxLength: 93
+          minLength: 0
+        personId:
+          type: integer
+          format: int32
+        orgId:
+          type: integer
+          format: int32
+        orgDesc:
+          type: string
+          maxLength: 75
+          minLength: 0
+        orgAbbrv:
+          type: string
+          maxLength: 10
+          minLength: 0
+        pdStartDate:
+          type: string
+          format: date-time
+        pdEndDate:
+          type: string
+          format: date-time
+        cancerActivityStartDate:
+          type: string
+          format: date-time
+        cancerActivityActiveFlag:
+          type: boolean
+      required:
+        - cancerActivityCode
+        - cancerActivityStartDate
+        - orgDesc
+        - orgId
+        - pdStartDate
+        - personId
+        - roleId
+    OgaTrackingCodesVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 10
+          minLength: 0
+        description:
+          type: string
+          maxLength: 100
+          minLength: 0
+      required:
+        - code
+        - description
+        - id
+    RfaPaNoticesVwDto:
+      type: object
+      properties:
+        noticeNumber:
+          type: string
+          maxLength: 13
+          minLength: 0
+        title:
+          type: string
+          maxLength: 500
+          minLength: 0
+        nihGuideAddr:
+          type: string
+          maxLength: 100
+          minLength: 0
+      required:
+        - noticeNumber
+    ActivityCodesVwDto:
+      type: object
+      properties:
+        activityCode:
+          type: string
+          maxLength: 3
+          minLength: 0
+        activityDescrip:
+          type: string
+          maxLength: 160
+          minLength: 0
+      required:
+        - activityCode
+    InstitutionRuleAuditTransactionDto:
+      type: object
+      properties:
+        transactionId:
+          type: integer
+          format: int32
+        transactionType:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time
+        instRuleId:
+          type: integer
+          format: int32
+        externalOrgId:
+          type: integer
+          format: int32
+        specPersonId:
+          type: integer
+          format: int32
+        specFullName:
+          type: string
+        specEmailAddr:
+          type: string
+        branch:
+          type: string
+        updatedByPersonId:
+          type: integer
+          format: int32
+        updatedByName:
+          type: string
+        updatedByEmailAddress:
+          type: string
+        auditRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstitutionRuleAuditVwDto'
+    InstitutionRuleAuditVwDto:
+      type: object
+      properties:
+        instRuleAuditId:
+          type: integer
+          format: int32
+        instRuleId:
+          type: integer
+          format: int32
+        wifId:
+          type: integer
+          format: int32
+        externalOrgId:
+          type: integer
+          format: int32
+        specPersonId:
+          type: integer
+          format: int32
+        specFullName:
+          type: string
+        specEmailAddr:
+          type: string
+        branch:
+          type: string
+        transactionId:
+          type: integer
+          format: int32
+        transactionType:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time
+        columnId:
+          type: integer
+          format: int32
+        columnDisplayValue:
+          type: string
+        previousValue:
+          type: string
+        newValue:
+          type: string
+        previousDisplayValue:
+          type: string
+        newDisplayValue:
+          type: string
+        updatedByPersonId:
+          type: integer
+          format: int32
+        updatedByName:
+          type: string
+        updatedByEmailAddress:
+          type: string
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+    GrantCategoriesVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 10
+          minLength: 0
+        description:
+          type: string
+          maxLength: 61
+          minLength: 0
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+      required:
+        - code
+        - id
+    StatusHistoryVwDto:
+      type: object
+      properties:
+        statusId:
+          type: integer
+          format: int32
+        actionId:
+          type: integer
+          format: int32
+        statusCode:
+          type: string
+          maxLength: 10
+          minLength: 0
+        statusDescrip:
+          type: string
+          maxLength: 50
+          minLength: 0
+        statusByName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        statusDate:
+          type: string
+          format: date-time
+        statusByEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        comments:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        cancelReasonDescription:
+          type: string
+          maxLength: 61
+          minLength: 0
+        statusDescripValue:
+          type: string
+          maxLength: 117
+          minLength: 0
+        returnedToSpecialistReasons:
+          type: array
+          items:
+            type: string
+    OperaGrantAlertsVwDto:
+      type: object
+      properties:
+        amAlertId:
+          type: integer
+          format: int32
+        applId:
+          type: integer
+          format: int32
+        amCommunityCode:
+          type: string
+          maxLength: 8
+          minLength: 0
+        title:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        publishedFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+        busRuleApplyFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+        busRuleSeverityCode:
+          type: string
+          maxLength: 3
+          minLength: 0
+        operaAlertFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+    AuditHistoryVwDto:
+      type: object
+      properties:
+        auditHistoryId:
+          type: integer
+          format: int32
+        actionId:
+          type: integer
+          format: int32
+          maximum: 10
+          minimum: 0
+        transactionDate:
+          type: string
+          format: date-time
+        columnId:
+          type: integer
+          format: int32
+        columnDisplayValue:
+          type: string
+          maxLength: 100
+          minLength: 0
+        previousDisplayValue:
+          type: string
+          maxLength: 100
+          minLength: 0
+        newDisplayValue:
+          type: string
+          maxLength: 100
+          minLength: 0
+        previuosValue:
+          type: string
+          maxLength: 100
+          minLength: 0
+        newValue:
+          type: string
+          maxLength: 100
+          minLength: 0
+        updatedByPersonId:
+          type: integer
+          format: int32
+        updatedByName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        updatedByEmailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        createUserID:
+          type: string
+          maxLength: 30
+          minLength: 0
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        lastChangeDate:
+          type: string
+          format: date-time
+      required:
+        - lastChangeDate
+    AssignmentDiscrepancyReport:
+      type: object
+      properties:
+        reportType:
+          type: string
+        assignmentName:
+          type: string
+        reportDate:
+          type: string
+          format: date-time
+        generatedBy:
+          $ref: '#/components/schemas/I2ePersonDetailsVwDto'
+        discrepancies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discrepancy'
+        institutionDiscrepancies:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstitutionDiscrepancy'
+    Discrepancy:
+      type: object
+      properties:
+        discrepancyType:
+          type: string
+          enum:
+            - CA_Inactive
+            - CA_MissingBranch
+            - Spec_Inactive
+            - Spec_MissingBranch
+            - Spec_R13
+            - Spec_SbirSttr
+        description:
+          type: string
+        discrepancyDetail:
+          type: array
+          items:
+            type: string
+    I2ePersonDetailsVwDto:
+      type: object
+      properties:
+        personId:
+          type: integer
+          format: int32
+        hhsId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        firstName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 30
+          minLength: 0
+        fullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        emailAddress:
+          type: string
+          maxLength: 80
+          minLength: 0
+        i2eUserId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        networkId:
+          type: string
+          maxLength: 30
+          minLength: 0
+        inactiveDate:
+          type: string
+          format: date-time
+        i2ProfileId:
+          type: integer
+          format: int32
+        userLockDate:
+          type: string
+          format: date-time
+      required:
+        - firstName
+        - lastName
+        - personId
+    InstitutionDiscrepancy:
+      type: object
+      properties:
+        externalOrgId:
+          type: integer
+          format: int32
+        orgName:
+          type: string
+        specialistDiscrepancy:
+          type: string
+        allBranchDiscrepancies:
+          type: array
+          items:
+            type: string
+        p30Discrepancy:
+          type: string
+        getkDiscrepancy:
+          type: string
+        getfDiscrepancy:
+          type: string
+        gettDiscrepancy:
+          type: string
+        snapBranchDiscrepancies:
+          type: array
+          items:
+            type: string
+        modularBranchDiscrepancies:
+          type: array
+          items:
+            type: string
+        rowsCount:
+          type: integer
+          format: int32
+    CancerActivitiesVwDto:
+      type: object
+      properties:
+        description:
+          type: string
+          maxLength: 80
+          minLength: 0
+        code:
+          type: string
+        orgId:
+          type: integer
+          format: int32
+        orgAbbreviation:
+          type: string
+          maxLength: 10
+          minLength: 0
+        orgDescription:
+          type: string
+          maxLength: 75
+          minLength: 0
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        orgStartDate:
+          type: string
+          format: date-time
+        orgEndDate:
+          type: string
+          format: date-time
+      required:
+        - description
+        - orgDescription
+        - orgStartDate
+        - startDate
+    CancelReasonsVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 10
+          minLength: 0
+        description:
+          type: string
+          maxLength: 61
+          minLength: 0
+        activeFlag:
+          type: boolean
+        revisionOnlyFlag:
+          type: boolean
+        actionType:
+          type: string
+          maxLength: 20
+          minLength: 0
+      required:
+        - code
+        - id
+    CancerActivitiesDto:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        createUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        updateStamp:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        text:
+          type: string
+        referralDescription:
+          type: string
+    CancerActivityRuleAuditVwDto:
+      type: object
+      properties:
+        caRuleAuditId:
+          type: integer
+          format: int32
+        caRuleId:
+          type: integer
+          format: int32
+        wifId:
+          type: integer
+          format: int32
+        branch:
+          type: string
+        transactionId:
+          type: integer
+          format: int32
+        transactionType:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time
+        columnId:
+          type: integer
+          format: int32
+        columnDisplayValue:
+          type: string
+        previousValue:
+          type: string
+        newValue:
+          type: string
+        previousDisplayValue:
+          type: string
+        newDisplayValue:
+          type: string
+        updatedByPersonId:
+          type: integer
+          format: int32
+        updatedByName:
+          type: string
+        updatedByEmailAddress:
+          type: string
+        createUserId:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        lastChangeUserId:
+          type: string
+        lastChangeDate:
+          type: string
+          format: date-time
+    AllBranchesVwDto:
+      type: object
+      properties:
+        branchOrgId:
+          type: integer
+          format: int32
+        branchAbbreviation:
+          type: string
+          maxLength: 10
+          minLength: 0
+        branchDescription:
+          type: string
+          maxLength: 75
+          minLength: 0
+        branchNum:
+          type: string
+          maxLength: 2
+          minLength: 0
+        branchChiefRoleId:
+          type: integer
+          format: int32
+        branchChiefFullName:
+          type: string
+          maxLength: 62
+          minLength: 0
+        branchActiveFlag:
+          type: boolean
+      required:
+        - branchDescription
+        - branchOrgId
+    BoardsVwDto:
+      type: object
+      properties:
+        councilMeetingDate:
+          type: string
+          maxLength: 6
+          minLength: 0
+        meetingMonth:
+          type: string
+          maxLength: 2
+          minLength: 0
+        meetingYear:
+          type: string
+          maxLength: 4
+          minLength: 0
+        formattedCouncilDate:
+          type: string
+          maxLength: 7
+          minLength: 0
+      required:
+        - meetingMonth
+        - meetingYear
+    AwardTypesVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 15
+          minLength: 0
+        description:
+          type: string
+          maxLength: 50
+          minLength: 0
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        revisionOnlyFlag:
+          type: string
+          maxLength: 1
+          minLength: 0
+      required:
+        - code
+        - description
+        - id
+    ApplTypesVwDto:
+      type: object
+      properties:
+        applTypeCode:
+          type: string
+          maxLength: 1
+          minLength: 0
+        applTypeDesc:
+          type: string
+          maxLength: 70
+          minLength: 0
+      required:
+        - applTypeCode
+    StatusCodesVwDto:
+      type: object
+      properties:
+        statusCodeId:
+          type: integer
+          format: int32
+        code:
+          type: string
+        description:
+          type: string
+    ActionSourcesVwDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+          maxLength: 10
+          minLength: 0
+        description:
+          type: string
+          maxLength: 50
+          minLength: 0
+      required:
+        - code
+        - description
+        - id

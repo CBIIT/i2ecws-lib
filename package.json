@@ -2,14 +2,20 @@
   "name": "swagger-codegen-workspace",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "vm-list": "openapi-generator-cli version-manager list"
+    "generate": "node generate.mjs",
+    "fetch": "node fetch-api.mjs",
+    "fetch-remote": "node fetch-remote-api.mjs",
+    "convert-specs": "node convert-specs.mjs",
+    "vm-list": "openapi-generator-cli version-manager list",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.31.1"
+    "@openapitools/openapi-generator-cli": "^2.31.1",
+    "js-yaml": "^4.1.1"
   }
 }

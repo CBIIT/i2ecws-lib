@@ -1,0 +1,319 @@
+# specs.yaml — i2ecws-lib generation manifest
+#
+# Drives generate.mjs. Each entry describes one OpenAPI spec and the
+# generator targets to run against it.
+#
+# Fields:
+#   name     - unique identifier; used as the output directory name
+#   spec     - path to the OpenAPI spec file (YAML) relative to repo root
+#   source   - for I2E-owned specs: source project path (relative to workspace root)
+#              may include submodule, e.g. service-workspace/sm_i2e_gpmats_ws/aggregator
+#   docs     - for external specs: wiki doc path or URL with API documentation
+#   targets  - one key per enabled generator; values are merged with defaults below
+#
+# Generator keys: typescript-angular | java-client | java-server
+
+# ---------------------------------------------------------------------------
+# Defaults — applied to every target of the matching type unless overridden
+# ---------------------------------------------------------------------------
+defaults:
+  java-client:
+    groupId: gov.nih.nci.cbiit.scimgmt
+    dateLibrary: java11
+    library: resttemplate
+    hideGenerationTimestamp: true
+    jakarta: true
+  java-server:
+    groupId: gov.nih.nci.cbiit.scimgmt
+    dateLibrary: java11
+    interfaceOnly: true
+    useSpringBoot3: true
+    hideGenerationTimestamp: true
+    jakarta: true
+  typescript-angular:
+    ngVersion: "17"
+    hideGenerationTimestamp: true
+
+# ---------------------------------------------------------------------------
+# I2E Services — all three targets
+# ---------------------------------------------------------------------------
+specs:
+
+  - name: sm_i2e_ara_ws
+    spec: api-specs/sm_i2e_ara_ws.yaml
+    source: service-workspace/sm_i2e_ara_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2earaws-lib"
+      java-client:
+        artifactId: sm_i2e_ara_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.ara.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.ara.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.ara.client.invoker
+      java-server:
+        artifactId: sm_i2e_ara_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.ara.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.ara.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.ara.server.config
+
+  - name: sm_i2e_common_ws
+    spec: api-specs/sm_i2e_common_ws.yaml
+    source: service-workspace/sm_i2e_common_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2ecommonws-lib"
+      java-client:
+        artifactId: sm_i2e_common_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.common.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.common.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.common.client.invoker
+      java-server:
+        artifactId: sm_i2e_common_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.common.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.common.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.common.server.config
+
+  - name: sm_i2e_em_ws
+    spec: api-specs/sm_i2e_em_ws.yaml
+    source: service-workspace/sm_i2e_em_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2eemws-lib"
+      java-client:
+        artifactId: sm_i2e_em_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.em.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.em.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.em.client.invoker
+      java-server:
+        artifactId: sm_i2e_em_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.em.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.em.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.em.server.config
+
+  - name: sm_i2e_fs_ws
+    spec: api-specs/sm_i2e_fs_ws.yaml
+    source: service-workspace/sm_i2e_fs_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2efsws-lib"
+      java-client:
+        artifactId: sm_i2e_fs_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.fs.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.fs.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.fs.client.invoker
+      java-server:
+        artifactId: sm_i2e_fs_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.fs.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.fs.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.fs.server.config
+
+  # Spec comes from the aggregator submodule
+  - name: sm_i2e_gpmats_ws
+    spec: api-specs/sm_i2e_gpmats_ws.yaml
+    source: service-workspace/sm_i2e_gpmats_ws/aggregator
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2egpmatsws-lib"
+      java-client:
+        artifactId: sm_i2e_gpmats_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.gpmats.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.gpmats.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.gpmats.client.invoker
+      java-server:
+        artifactId: sm_i2e_gpmats_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.gpmats.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.gpmats.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.gpmats.server.config
+
+  # Spec comes from the icdata-rest-api submodule
+  - name: sm_i2e_icd_ws
+    spec: api-specs/sm_i2e_icd_ws.yaml
+    source: service-workspace/sm_i2e_icd_ws/icdata-rest-api
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2eicdws-lib"
+      java-client:
+        artifactId: sm_i2e_icd_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.icd.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.icd.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.icd.client.invoker
+      java-server:
+        artifactId: sm_i2e_icd_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.icd.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.icd.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.icd.server.config
+
+  - name: sm_i2e_jasper_ws
+    spec: api-specs/sm_i2e_jasper_ws.yaml
+    source: service-workspace/sm_i2e_jasper_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2ejasperws-lib"
+      java-client:
+        artifactId: sm_i2e_jasper_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.jasper.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.jasper.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.jasper.client.invoker
+      java-server:
+        artifactId: sm_i2e_jasper_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.jasper.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.jasper.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.jasper.server.config
+
+  # Spec comes from the api submodule (multi-module project)
+  - name: sm_i2e_mail_service
+    spec: api-specs/sm_i2e_mail_service.yaml
+    source: service-workspace/sm_i2e_mail_service/api
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2emailsvc-lib"
+      java-client:
+        artifactId: sm_i2e_mail_service-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.mail.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.mail.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.mail.client.invoker
+      java-server:
+        artifactId: sm_i2e_mail_service-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.mail.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.mail.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.mail.server.config
+
+  - name: sm_i2e_referral_ws
+    spec: api-specs/sm_i2e_referral_ws.yaml
+    source: service-workspace/sm_i2e_referral_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2erefws-lib"
+      java-client:
+        artifactId: sm_i2e_referral_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.referral.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.referral.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.referral.client.invoker
+      java-server:
+        artifactId: sm_i2e_referral_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.referral.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.referral.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.referral.server.config
+
+  - name: sm_i2e_yg_ws
+    spec: api-specs/sm_i2e_yg_ws.yaml
+    source: service-workspace/sm_i2e_yg_ws
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/i2eygws-lib"
+      java-client:
+        artifactId: sm_i2e_yg_ws-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.yg.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.yg.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.yg.client.invoker
+      java-server:
+        artifactId: sm_i2e_yg_ws-server
+        apiPackage: gov.nih.nci.cbiit.scimgmt.yg.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.yg.server.dto
+        configPackage: gov.nih.nci.cbiit.scimgmt.yg.server.config
+
+# ---------------------------------------------------------------------------
+# External / Legacy APIs — typically java-client only
+# ---------------------------------------------------------------------------
+
+  # eRA ARA integration — used by sm_i2e_ara_ws
+  - name: ara-era
+    spec: api-specs/ara-era.yaml
+    targets:
+      typescript-angular:
+        npmName: "@cbiit/araera-lib"
+      java-client:
+        artifactId: araera-lib
+        modelNameSuffix: Dto
+        apiPackage: gov.nih.nci.cbiit.scimgmt.ara.era.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.ara.era.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.ara.era.client.invoker
+
+  # eRA PAS (Program Area System) — used by sm_near
+  - name: era-pas
+    spec: api-specs/era-pas.yaml
+    docs: i2ecws-lib/docs/guide-pas-ws.md
+    targets:
+      java-client:
+        artifactId: erapas-lib
+        modelNameSuffix: Dto
+        apiPackage: gov.nih.nci.cbiit.scimgmt.era.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.era.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.era.client.invoker
+
+  # GPMATS ITP integration
+  - name: gpmats-itp
+    spec: api-specs/gpmats-itp.yaml
+    targets:
+      java-client:
+        artifactId: itp-lib
+        modelNameSuffix: Dto
+        apiPackage: gov.nih.nci.cbiit.scimgmt.itp.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.itp.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.itp.client.invoker
+
+  # GF Document Info / Doc Viewer — used by multiple services
+  - name: gf-documentinfo
+    spec: api-specs/gf-documentinfo.yaml
+    targets:
+      java-client:
+        artifactId: docviewer-lib
+        modelNameSuffix: Dto
+        apiPackage: gov.nih.nci.cbiit.scimgmt.docviewer.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.docviewer.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.docviewer.client.invoker
+
+  # External IC Data API — upstream called by sm_i2e_icd_ws
+  - name: icdata
+    spec: api-specs/icdata.yaml
+    targets:
+      java-client:
+        artifactId: icdata-lib
+        modelNameSuffix: Dto
+        apiPackage: gov.nih.nci.cbiit.scimgmt.icdata.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.icdata.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.icdata.client.invoker
+
+  # HSS service-to-service — note: different groupId than I2E standard
+  - name: hss-s2s
+    spec: api-specs/hss-s2s.yaml
+    targets:
+      java-client:
+        groupId: gov.nih.nci.cbiit   # overrides default groupId
+        artifactId: hss-s2s-client
+        apiPackage: gov.nih.nci.cbiit.hss.client.api
+        modelPackage: gov.nih.nci.cbiit.hss.client.model
+        invokerPackage: gov.nih.nci.cbiit.hss.client.invoker
+        dateLibrary: java8           # legacy — uses java8 date types
+        serializableModel: true
+        fullJavaUtil: true
+        useBeanValidation: true
+        performBeanValidation: true
+        useTags: true
+
+  # Update Last Login API — used by sm_near (login service)
+  - name: update_last_login
+    spec: api-specs/update_last_login.yaml
+    targets:
+      java-client:
+        artifactId: login-client-lib
+        modelNameSuffix: Dto
+        apiPackage: gov.nih.nci.cbiit.scimgmt.login.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.login.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.login.client.invoker
+      java-server:
+        artifactId: login-server-lib
+        apiPackage: gov.nih.nci.cbiit.scimgmt.login.server.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.login.server.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.login.server.invoker
+        configPackage: gov.nih.nci.cbiit.scimgmt.login.server.config
+
+  # Document Upload API
+  - name: doc-upload
+    spec: api-specs/doc-upload.yaml
+    targets:
+      java-client:
+        artifactId: doc-upload-client
+        apiPackage: gov.nih.nci.cbiit.scimgmt.docupload.client.api
+        modelPackage: gov.nih.nci.cbiit.scimgmt.docupload.client.dto
+        invokerPackage: gov.nih.nci.cbiit.scimgmt.docupload.client.invoker

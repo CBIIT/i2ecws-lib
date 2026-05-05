@@ -1,9 +1,15 @@
-.idea
-node_modules
-.swagger-codegen
-package-lock.json
-.npmrc
-projects
-dist
-swagger.json
+# Dependencies
+node_modules/
+
+# Generation output
+output/
+
+# IDE files
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Legacy (removed)
+.swagger-codegen/
 /gen/
+/projects/
