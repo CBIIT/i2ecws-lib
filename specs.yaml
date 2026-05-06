@@ -30,6 +30,7 @@ defaults:
     useSpringBoot3: true
     hideGenerationTimestamp: true
     jakarta: true
+    useTags: true
   typescript-angular:
     ngVersion: "17"
     hideGenerationTimestamp: true

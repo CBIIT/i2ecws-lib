@@ -30,13 +30,13 @@ npm run generate -- --list
 
 ## Scripts
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| `generate` | `node generate.mjs` | Run code generation from `specs.yaml` |
-| `fetch` | `node fetch-api.mjs` | Copy specs from local Maven build output |
-| `fetch-remote` | `node fetch-remote-api.mjs` | Fetch specs from running dev servers |
-| `convert-specs` | `node convert-specs.mjs` | Convert any remaining JSON specs to YAML |
-| `vm-list` | `openapi-generator-cli version-manager list` | List available generator versions |
+| Script          | Command                                      | Description                              |
+|:----------------|:---------------------------------------------|:-----------------------------------------|
+| `generate`      | `node generate.mjs`                          | Run code generation from `specs.yaml`    |
+| `fetch`         | `node fetch-api.mjs`                         | Copy specs from local Maven build output |
+| `fetch-remote`  | `node fetch-remote-api.mjs`                  | Fetch specs from running dev servers     |
+| `convert-specs` | `node convert-specs.mjs`                     | Convert any remaining JSON specs to YAML |
+| `vm-list`       | `openapi-generator-cli version-manager list` | List available generator versions        |
 
 All scripts accept `--help` for usage details.
 
@@ -119,13 +119,13 @@ target service project, not committed here.
 
 ## specs.yaml — Manifest Reference
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `name` | ✅ | Unique identifier; becomes the `output/<name>/` directory |
-| `spec` | ✅ | Path to the OpenAPI spec (YAML) relative to repo root |
-| `source` | I2E specs | Local project directory (relative to workspace root) that owns this spec |
-| `docs` | External specs | Wiki doc path or URL documenting the external API |
-| `targets` | ✅ | One key per enabled generator; values merge with `defaults` |
+| Field     | Required       | Description                                                              |
+|:----------|:---------------|:-------------------------------------------------------------------------|
+| `name`    | ✅              | Unique identifier; becomes the `output/<name>/` directory                |
+| `spec`    | ✅              | Path to the OpenAPI spec (YAML) relative to repo root                    |
+| `source`  | I2E specs      | Local project directory (relative to workspace root) that owns this spec |
+| `docs`    | External specs | Wiki doc path or URL documenting the external API                        |
+| `targets` | ✅              | One key per enabled generator; values merge with `defaults`              |
 
 Generator keys: `typescript-angular` · `java-client` · `java-server`
 
@@ -140,17 +140,57 @@ Per-spec values override defaults at the key level (shallow merge).
 
 ## Template Management
 
-Custom Mustache templates live in `templates/`. Only files that **differ** from the
-openapi-generator defaults should be present.
+No custom templates are currently active. All three generators run on their built-in
+defaults. If you need to override a template, place only the changed file(s) under the
+corresponding folder — the generator falls back to built-in defaults for any file not
+present:
 
-| Folder | Generator | Purpose |
-|--------|-----------|---------|
-| `templates/typescript-angular/` | `typescript-angular` | Angular services + models |
-| `templates/java-client/` | `java` | RestTemplate client for inter-service calls |
-| `templates/java-server/` | `spring` | Server interfaces (`interfaceOnly=true`) |
+| Folder                          | Generator            | Purpose                                     |
+|:--------------------------------|:---------------------|:--------------------------------------------|
+| `templates/typescript-angular/` | `typescript-angular` | Angular services + models                   |
+| `templates/java-client/`        | `java`               | RestTemplate client for inter-service calls |
+| `templates/java-server/`        | `spring`             | Server interfaces (`interfaceOnly=true`)    |
 
 See `templates/TEMPLATE-GUIDE.md` for the customization standard and a variable
 migration table (swagger-codegen → openapi-generator Mustache variables).
+
+---
+
+## Configuring Base Paths in Consuming Services
+
+Generated `ApiClient` classes contain a hard-coded default base path from the spec's
+`servers[0].url`. **Do not modify templates to inject `@Value`** — instead, declare a
+`@Configuration` class in each consuming Spring Boot service:
+
+```java
+@Configuration
+public class MailServiceClientConfig {
+
+    @Value("${sm.mail.base-path:http://localhost/i2emailsvc}")
+    private String basePath;
+
+    @Bean
+    public ApiClient mailApiClient() {
+        return new ApiClient().setBasePath(basePath);
+    }
+
+    @Bean
+    public MailOperationsApi mailOperationsApi(ApiClient mailApiClient) {
+        return new MailOperationsApi(mailApiClient);
+    }
+}
+```
+
+Then set the property per tier in `application-<profile>.properties`:
+
+```properties
+# DEV
+sm.mail.base-path=https://ncias-d1234-v/i2emailsvc
+```
+
+Use `sm.<service-short-name>.base-path` as the convention so all client base paths are
+discoverable in one place. The default value (after the `:` in `@Value`) should be the
+`localhost` URL for local development.
 
 ---
 
