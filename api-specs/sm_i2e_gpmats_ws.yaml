@@ -628,6 +628,151 @@ paths:
             application/json:
               schema:
                 type: string
+  /api/v1/add-actions/validate-grants:
+    post:
+      tags:
+        - gpmats-add-actions-search-controller
+      operationId: validateGrants
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrantSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddActionValidationResult'
+  /api/v1/add-actions/validate-gpmats:
+    post:
+      tags:
+        - gpmats-add-actions-search-controller
+      operationId: validateGpmats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddActionGpmatsSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddActionValidationResult'
+  /api/v1/add-actions/test-email:
+    post:
+      tags:
+        - gpmats-add-actions-controller
+      operationId: testEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddActionsBatchDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/add-actions/search-grants:
+    post:
+      tags:
+        - gpmats-add-actions-search-controller
+      operationId: searchGrants
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrantSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrantSearchResults'
+  /api/v1/add-actions/search-gpmats:
+    post:
+      tags:
+        - gpmats-add-actions-search-controller
+      operationId: searchGpmats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddActionGpmatsSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddActionGpmatsSearchResults'
+  /api/v1/add-actions/export-grants:
+    post:
+      tags:
+        - gpmats-add-actions-search-controller
+      operationId: exportGrantsResults
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrantSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/add-actions/export-gpmats:
+    post:
+      tags:
+        - gpmats-add-actions-search-controller
+      operationId: exportGpmatsResults
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddActionGpmatsSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/add-actions/batch-create:
+    post:
+      tags:
+        - gpmats-add-actions-controller
+      operationId: batchAddActions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddActionsBatchDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
   /api/v1/action-requests:
     post:
       tags:
@@ -1679,6 +1824,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AuditHistoryVwDto'
+  /api/v1/existing-award-action/{applId}/{grantCategoryId}/{actionId}:
+    get:
+      tags:
+        - gpmats-business-process-controller
+      operationId: checkExstingAwardAction
+      parameters:
+        - name: applId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: grantCategoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
   /api/v1/discrepancy-report/specialist:
     get:
       tags:
@@ -2166,6 +2342,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApplTypesVwDto'
+  /api/v1/active-oga-tracking-codes:
+    get:
+      tags:
+        - gpmats-lookup-controller
+      operationId: getActiveOgaTrackingCodes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OgaTrackingCodesVwDto'
   /api/v1/actions/{actionId}:
     get:
       tags:
@@ -2704,6 +2894,8 @@ components:
           type: boolean
         attentionFlagDesc:
           type: string
+        earlyConcurFlag:
+          type: boolean
         expeditedReviewFlag:
           type: boolean
         esiApplEligFlag:
@@ -3219,6 +3411,8 @@ components:
           type: boolean
         attentionFlagDesc:
           type: string
+        earlyConcurFlag:
+          type: boolean
         expeditedReviewFlag:
           type: boolean
         esiApplEligFlag:
@@ -4316,6 +4510,589 @@ components:
         lastChangeDate:
           type: string
           format: date-time
+    GrantSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        applTypeCodes:
+          type: array
+          items:
+            type: string
+        mechanisms:
+          type: array
+          items:
+            type: string
+        i2Statuses:
+          type: array
+          items:
+            type: string
+        rfaPas:
+          type: array
+          items:
+            type: string
+        esiInvestigatorFlag:
+          type: string
+        excludeLargeGrants:
+          type: boolean
+        excludeRfaGrants:
+          type: boolean
+        ncabFrom:
+          type: string
+        ncabTo:
+          type: string
+        ic:
+          type: string
+        fyFrom:
+          type: integer
+          format: int32
+        fyTo:
+          type: integer
+          format: int32
+        irgPercentileNumFrom:
+          type: integer
+          format: int32
+        irgPercentileNumTo:
+          type: integer
+          format: int32
+        priorityScoreNumFrom:
+          type: integer
+          format: int32
+        priorityScoreNumTo:
+          type: integer
+          format: int32
+        actionType:
+          type: string
+        grantCategoryId:
+          type: integer
+          format: int32
+        noaIssueDateFrom:
+          type: string
+          format: date-time
+        noaIssueDateTo:
+          type: string
+          format: date-time
+        budgetStartDateFrom:
+          type: string
+          format: date-time
+        budgetStartDateTo:
+          type: string
+          format: date-time
+        grantType:
+          type: string
+        grantMech:
+          type: string
+        grantIc:
+          type: string
+        grantSerial:
+          type: string
+        grantYear:
+          type: string
+        grantSuffix:
+          type: string
+        applIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        commitmentsFilter:
+          type: string
+        actionFy:
+          type: integer
+          format: int32
+    AddActionGpmatsSearchCriteria:
+      type: object
+      properties:
+        draw:
+          type: integer
+          format: int32
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        search:
+          $ref: '#/components/schemas/Search'
+        specPersonId:
+          type: integer
+          format: int32
+        reviewerPersonId:
+          type: integer
+          format: int32
+        competingFlag:
+          type: string
+        transferFlag:
+          type: string
+        supplementFlag:
+          type: string
+        unobligatedBalFlag:
+          type: string
+        humanSubjectsFlag:
+          type: string
+        animalSubjectsFlag:
+          type: string
+        foreignFlag:
+          type: string
+        domesticForeignFlag:
+          type: string
+        wip:
+          type: boolean
+        currentActionStatusCode:
+          type: array
+          items:
+            type: string
+        actionType:
+          type: string
+        fiscalYear:
+          type: integer
+          format: int32
+        applId:
+          type: string
+        grantType:
+          type: string
+        grantMech:
+          type: string
+        grantIc:
+          type: string
+        grantSerial:
+          type: string
+        grantYear:
+          type: string
+        grantSuffix:
+          type: string
+        grantTypes:
+          type: array
+          items:
+            type: string
+        grantMechs:
+          type: array
+          items:
+            type: string
+        piLastName:
+          type: string
+        piFirstName:
+          type: string
+        actionFys:
+          type: array
+          items:
+            type: integer
+            format: int32
+        piName:
+          type: string
+        institutionName:
+          type: string
+        pdNpeId:
+          type: integer
+          format: int32
+        externalOrgId:
+          type: integer
+          format: int32
+        pdNpeIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        specPersonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        reviwerPersonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        cancelReasonIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        ogaTrackingIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        actionStatusesId:
+          type: array
+          items:
+            type: integer
+            format: int32
+        cayCodes:
+          type: array
+          items:
+            type: string
+        i2Status:
+          type: string
+        ncabFrom:
+          type: string
+        ncabTo:
+          type: string
+        irgPercentileFrom:
+          type: number
+        irgPercentileTo:
+          type: number
+        priorityScoreFrom:
+          type: integer
+          format: int32
+        priorityScoreTo:
+          type: integer
+          format: int32
+        foa:
+          type: array
+          items:
+            type: string
+        myfFlag:
+          type: string
+        earlyConcurFlag:
+          type: string
+        autoReviewFlag:
+          type: boolean
+        dummyActionFlag:
+          type: boolean
+        andOr:
+          type: string
+        ogaShowAll:
+          type: boolean
+        officiallySelectedToBePaid:
+          type: boolean
+        esiApplEligFlag:
+          type: boolean
+        budgetStartDate:
+          type: string
+          format: date-time
+        budgetEndDate:
+          type: string
+          format: date-time
+        releaseDate:
+          type: string
+          format: date-time
+        releaseEndDate:
+          type: string
+          format: date-time
+        obligationDate:
+          type: string
+          format: date-time
+        obligationEndDate:
+          type: string
+          format: date-time
+        applicationReceiptDate:
+          type: string
+          format: date-time
+        applicationReceiptEndDate:
+          type: string
+          format: date-time
+        projectedStartDateFrom:
+          type: string
+          format: date-time
+        projectedStartDateTo:
+          type: string
+          format: date-time
+        projectedEndDateFrom:
+          type: string
+          format: date-time
+        projectedEndDateTo:
+          type: string
+          format: date-time
+        actionStatusUpdatedFrom:
+          type: string
+          format: date-time
+        actionStatusUpdatedTo:
+          type: string
+          format: date-time
+        grantCategoryId:
+          type: integer
+          format: int32
+        branchOrgId:
+          type: integer
+          format: int32
+        revisionTypeId:
+          type: integer
+          format: int32
+        revisionTypeDesc:
+          type: string
+        awardTypeId:
+          type: integer
+          format: int32
+        cancelReasonId:
+          type: integer
+          format: int32
+        actionSourceId:
+          type: integer
+          format: int32
+        revisionNum:
+          type: integer
+          format: int64
+        releaseDateFlag:
+          type: boolean
+        obligationDateFlag:
+          type: boolean
+        applIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        actionIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+    AddActionValidationDto:
+      type: object
+      properties:
+        applId:
+          type: integer
+          format: int32
+        fullGrantNum:
+          type: string
+        applTypeCode:
+          type: string
+        activityCode:
+          type: string
+        adminPhsOrgCode:
+          type: string
+        councilMeetingDate:
+          type: string
+        grantFy:
+          type: integer
+          format: int32
+        applStatusGroupCode:
+          type: string
+        applStatusGroupDescrip:
+          type: string
+        cancerActivityCode:
+          type: string
+        pdLastName:
+          type: string
+        pdFirstName:
+          type: string
+        pdEmailAddress:
+          type: string
+        actionId:
+          type: integer
+          format: int32
+    AddActionValidationResult:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        length:
+          type: integer
+          format: int32
+        selection:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddActionValidationDto'
+        existingAwardActionApplIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        exstingWarningActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/OriginalAmendmentActionDto'
+        grantCriteria:
+          $ref: '#/components/schemas/GrantSearchCriteria'
+        gpmatsCriteria:
+          $ref: '#/components/schemas/AddActionGpmatsSearchCriteria'
+    OriginalAmendmentActionDto:
+      type: object
+      properties:
+        applId:
+          type: integer
+          format: int32
+        grantNum:
+          type: string
+        existingActionGrantNum:
+          type: string
+    AddActionsBatchDto:
+      type: object
+      properties:
+        actionFy:
+          type: string
+        actionType:
+          type: string
+        actionStatusId:
+          type: integer
+          format: int32
+        grantCategoryId:
+          type: integer
+          format: int32
+        actionSourceId:
+          type: integer
+          format: int32
+        ogaTrackingIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        revisionTypeId:
+          type: integer
+          format: int32
+        actionComments:
+          type: string
+        applIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        missingPdCaApplIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        submissionUserId:
+          type: string
+    GrantSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantSearchVwDto'
+        criteria:
+          $ref: '#/components/schemas/GrantSearchCriteria'
+    GrantSearchVwDto:
+      type: object
+      properties:
+        applId:
+          type: integer
+          format: int32
+        fullGrantNum:
+          type: string
+        applTypeCode:
+          type: string
+        activityCode:
+          type: string
+        adminPhsOrgCode:
+          type: string
+        councilMeetingDate:
+          type: string
+        grantFy:
+          type: integer
+          format: int32
+        rfaPaNumber:
+          type: string
+        budgetStartDate:
+          type: string
+          format: date-time
+        applStatusGroupCode:
+          type: string
+        applStatusGroupDescrip:
+          type: string
+        irgPercentileNum:
+          type: number
+        priorityScoreNum:
+          type: integer
+          format: int32
+        orgName:
+          type: string
+        piLastName:
+          type: string
+        piFirstName:
+          type: string
+        piName:
+          type: string
+        piEmailAddress:
+          type: string
+        cayCode:
+          type: string
+        pdLastName:
+          type: string
+        pdFirstName:
+          type: string
+        pdName:
+          type: string
+        pdEmailAddress:
+          type: string
+        foaGrantFlag:
+          type: string
+        largeGrantFlag:
+          type: string
+        esiApplEligFlag:
+          type: string
+        newInvestigatorFlag:
+          type: string
+        cancelledAction:
+          type: string
+        actualAwdNoticeIssueDate:
+          type: string
+          format: date-time
+    AddActionGpmatsSearchResults:
+      type: object
+      properties:
+        recordsTotal:
+          type: integer
+          format: int64
+        recordsFiltered:
+          type: integer
+          format: int64
+        error:
+          type: string
+        draw:
+          type: integer
+          format: int32
+        start:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionSearchVwDto'
+        searchCriteria:
+          $ref: '#/components/schemas/AddActionGpmatsSearchCriteria'
     GmActionRequestsVwDto:
       type: object
       properties:
@@ -5292,10 +6069,21 @@ components:
           type: string
           maxLength: 100
           minLength: 0
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        displayText:
+          type: string
+          maxLength: 100
+          minLength: 0
       required:
         - code
         - description
         - id
+        - startDate
     RfaPaNoticesVwDto:
       type: object
       properties:

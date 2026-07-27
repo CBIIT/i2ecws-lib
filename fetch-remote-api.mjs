@@ -19,9 +19,39 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseArgs } from 'util';
 import { userInfo } from 'os';
+import http from 'http';
 import yaml from 'js-yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Node's built-in `fetch` (undici) enforces the Fetch spec's "bad ports" list
+ * (the same blocklist browsers use, e.g. port 10080) and throws a generic
+ * "fetch failed" / "bad port" error for those ports even though the server is
+ * reachable and responds fine to a plain HTTP client. Use `http.get` directly
+ * to bypass that restriction — it only affects `fetch`, not Node's http module.
+ */
+function httpGetJson(url, headers) {
+  return new Promise((resolvePromise, reject) => {
+    const req = http.get(url, { headers }, (res) => {
+      let body = '';
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => { body += chunk; });
+      res.on('end', () => {
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          reject(new Error(`HTTP ${res.statusCode} ${res.statusMessage}`));
+          return;
+        }
+        try {
+          resolvePromise(JSON.parse(body));
+        } catch (err) {
+          reject(new Error(`Invalid JSON response: ${err.message}`));
+        }
+      });
+    });
+    req.on('error', reject);
+  });
+}
 
 const { values: args } = parseArgs({
   options: {
@@ -83,7 +113,7 @@ let succeeded = 0;
 let failed = 0;
 
 for (const [name, { port, context }] of Object.entries(targets)) {
-  const url      = `http://${DEV_HOST}:${port}/${context}/v3/api-specs-docs`;
+  const url      = `http://${DEV_HOST}:${port}/${context}/v3/api-docs`;
   const destPath = resolve(__dirname, 'api-specs', `${name}.yaml`);
 
   console.log(`\n\x1b[36m▶ ${name}\x1b[0m`);
@@ -93,18 +123,10 @@ for (const [name, { port, context }] of Object.entries(targets)) {
   if (args['dry-run']) continue;
 
   try {
-    const res = await fetch(url, {
-      headers: {
-        'Accept':  'application/json',
-        'SM_USER': SM_USER,
-      },
+    const obj = await httpGetJson(url, {
+      'Accept':  'application/json',
+      'SM_USER': SM_USER,
     });
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    }
-
-    const obj = await res.json();
     writeFileSync(destPath, yaml.dump(obj, { lineWidth: -1 }));
     console.log(`  \x1b[32m✓ Written\x1b[0m`);
     succeeded++;

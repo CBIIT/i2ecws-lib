@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: I2E Funding Selections Web Services API
   description: I2EFSWS Web Services
@@ -7,6 +7,8 @@ info:
     url: http://springdoc.org
   version: v2.1.0
 servers:
+  - url: http://localhost/i2efsws
+    description: local
   - url: https://i2e-dev.nci.nih.gov/i2efsws
     description: dev
   - url: https://i2e-test.nci.nih.gov/i2efsws
@@ -699,6 +701,25 @@ paths:
             schema:
               $ref: '#/components/schemas/WorkflowTaskDto'
         required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/v1/fs/funding-request/upload-package/{frqId}:
+    post:
+      tags:
+        - fs-workflow-controller
+      operationId: uploadPackage
+      parameters:
+        - name: frqId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: OK
@@ -3473,10 +3494,8 @@ components:
         keyType:
           type: string
         doc:
-          type: array
-          items:
-            type: string
-            format: byte
+          type: string
+          format: byte
         docType:
           type: string
         docFilename:
@@ -3568,10 +3587,8 @@ components:
         keyType:
           type: string
         doc:
-          type: array
-          items:
-            type: string
-            format: byte
+          type: string
+          format: byte
         docType:
           type: string
         docFilename:
@@ -3989,6 +4006,8 @@ components:
           format: int64
         percentSelected:
           type: boolean
+        projectedCan:
+          type: string
     FundingRequestDto:
       type: object
       properties:
@@ -4309,10 +4328,10 @@ components:
         notSelectableReason:
           type: string
         grantCans:
-          uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/FundingRequestGrantCanDto'
+          uniqueItems: true
         projectedCans:
           type: object
           additionalProperties:
@@ -4503,10 +4522,8 @@ components:
         docFilename:
           type: string
         doc:
-          type: array
-          items:
-            type: string
-            format: byte
+          type: string
+          format: byte
         docDescription:
           type: string
     PaylistDto:

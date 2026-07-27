@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: I2E Common Web Services API
   description: I2ECOMMONWS Web Services
@@ -7,6 +7,8 @@ info:
     url: http://springdoc.org
   version: v2.1.0
 servers:
+  - url: http://localhost/i2ecommonws
+    description: local
   - url: https://i2e-dev.nci.nih.gov/i2ecommonws
     description: dev
   - url: https://i2e-test.nci.nih.gov/i2ecommonws
@@ -102,6 +104,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentsDto'
+  /api/v1/documents/convert:
+    post:
+      tags:
+        - documents-controller
+      operationId: convertDocument
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+                - file
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
   /api/v1/documents/add:
     post:
       tags:
@@ -113,6 +139,11 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/UploadDocumentsDto'
+        - name: convert
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: OK
@@ -608,10 +639,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/documents/load-excluded-documents/{frqId}:
     get:
       tags:
@@ -678,10 +707,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/documents/funding-requests-summary-statement/{applId}:
     get:
       tags:
@@ -700,10 +727,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/documents/funding-requests-send-package/{frqId}/{applId}:
     get:
       tags:
@@ -755,10 +780,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/documents/funding-plan-send-package:
     get:
       tags:
@@ -854,10 +877,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/doc-viewer/funding-plan-summary-statement:
     get:
       tags:
@@ -878,10 +899,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/db-heartbeat:
     get:
       tags:
@@ -906,9 +925,6 @@ components:
           items:
             type: string
     I2eUserSettingsTDto:
-      required:
-        - createDate
-        - createUserId
       type: object
       properties:
         id:
@@ -923,19 +939,22 @@ components:
         configJson:
           type: string
         createUserId:
+          type: string
           maxLength: 30
           minLength: 0
-          type: string
         createDate:
           type: string
           format: date-time
         lastChangeUserId:
+          type: string
           maxLength: 30
           minLength: 0
-          type: string
         lastChangeDate:
           type: string
           format: date-time
+      required:
+        - createDate
+        - createUserId
     NgxPayload:
       type: object
       properties:
@@ -952,8 +971,7 @@ components:
           type: string
         additional:
           type: array
-          items:
-            type: object
+          items: {}
     DocumentsDto:
       type: object
       properties:
@@ -966,10 +984,8 @@ components:
         keyType:
           type: string
         doc:
-          type: array
-          items:
-            type: string
-            format: byte
+          type: string
+          format: byte
         docType:
           type: string
         docFilename:
@@ -1082,8 +1098,6 @@ components:
             $ref: '#/components/schemas/I2ERoles'
         oracleId:
           type: string
-        fullNameLF:
-          type: string
         npnId:
           type: integer
           format: int32
@@ -1104,11 +1118,15 @@ components:
           type: string
         i2eFullName:
           type: string
-        parentNedOrgPath:
+        activeFlag:
+          type: string
+        fullNameLF:
           type: string
         i2eMiddleName:
           type: string
-        activeFlag:
+        nciDoc:
+          type: string
+        parentNedOrgPath:
           type: string
     SecurityCredentials:
       type: object

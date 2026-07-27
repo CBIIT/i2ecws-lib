@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: I2E Referral Web Services API
   description: I2EREFWS Web Services
@@ -7,6 +7,8 @@ info:
     url: http://springdoc.org
   version: v2.1.0
 servers:
+  - url: http://localhost/i2erefws
+    description: local
   - url: https://i2e-dev.nci.nih.gov/i2erefws
     description: dev
   - url: https://i2e-test.nci.nih.gov/i2erefws
@@ -2734,16 +2736,16 @@ components:
           type: string
         hideMessages:
           type: boolean
+        hasFormerGrantNum:
+          type: boolean
+        rejected:
+          type: boolean
         studySectionName:
           type: string
         currentReferralStatusDescDisplay:
           type: string
         miniRefGrantPayload:
           $ref: '#/components/schemas/MiniRefGrantPayload'
-        hasFormerGrantNum:
-          type: boolean
-        rejected:
-          type: boolean
     ReferralApplNotifyTDto:
       type: object
       properties:
@@ -2776,14 +2778,11 @@ components:
         lastChangeUserId:
           type: string
     BoardsDto:
-      required:
-        - meetingDate
-        - meetingMonth
-        - meetingYear
       type: object
       properties:
         meetingMonth:
           type: string
+          minLength: 1
         meetingYear:
           type: string
         meetingDate:
@@ -2810,6 +2809,10 @@ components:
           format: date-time
         meetingDescription:
           type: string
+      required:
+        - meetingDate
+        - meetingMonth
+        - meetingYear
     UnreferReferralActionDto:
       type: object
       properties:
@@ -2961,15 +2964,17 @@ components:
         inactiveDate:
           type: string
           format: date-time
-        emailAddress:
-          type: string
         i2eFullNameLF:
           type: string
         i2eFullName:
           type: string
+        emailAddress:
+          type: string
         activeFlag:
           type: string
         i2eMiddleName:
+          type: string
+        nciDoc:
           type: string
         parentNedOrgPath:
           type: string
@@ -3313,6 +3318,10 @@ components:
           type: string
         comments:
           type: string
+        payType4:
+          type: boolean
+        payType4Action:
+          type: string
         actionDateDateFormat:
           type: string
         actionDateDateTimeFormat:
@@ -3322,10 +3331,6 @@ components:
         payType4RequestNumber:
           type: integer
           format: int32
-        payType4:
-          type: boolean
-        payType4Action:
-          type: string
     NciOrganizationsDto:
       type: object
       properties:

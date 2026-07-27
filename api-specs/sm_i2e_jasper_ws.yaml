@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: I2E Jasper Web Services API
   description: I2EJASPERWS Web Services
@@ -7,6 +7,8 @@ info:
     url: http://springdoc.org
   version: v2.1.0
 servers:
+  - url: http://localhost/i2ejasperws
+    description: local
   - url: https://i2e-dev.nci.nih.gov/i2ejasperws
     description: dev
   - url: https://i2e-test.nci.nih.gov/i2ejaspwerws
@@ -20,7 +22,7 @@ paths:
     get:
       tags:
         - jasper-report-controller
-      operationId: generateJasperReport_1
+      operationId: generateJasperReport
       parameters:
         - name: id
           in: query
@@ -65,7 +67,7 @@ paths:
     post:
       tags:
         - jasper-report-controller
-      operationId: generateJasperReport
+      operationId: generateJasperReport_1
       requestBody:
         content:
           application/json:
@@ -110,10 +112,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/hss-check/{applId}:
     get:
       tags:
@@ -230,10 +230,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/documents/funding-plans-word-template/{fprId}/{type}:
     get:
       tags:
@@ -257,10 +255,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
   /api/v1/documents/funding-plans-cover-page/{fprId}:
     get:
       tags:
@@ -279,10 +275,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-                  format: byte
+                type: string
+                format: byte
 components:
   schemas:
     Parameter:

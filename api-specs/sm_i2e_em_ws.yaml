@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: I2E Enterprise Maintenance Web Services API
   description: I2EEMWS Web Services
@@ -7,6 +7,8 @@ info:
     url: http://springdoc.org
   version: v2.1.0
 servers:
+  - url: http://localhost/i2eemws
+    description: local
   - url: https://i2e-dev.nci.nih.gov/i2eemws
     description: dev
   - url: https://i2e-test.nci.nih.gov/i2eemws
@@ -1451,6 +1453,8 @@ components:
           format: int32
         description:
           type: string
+        orgPath:
+          type: string
         noeOrgType:
           type: string
         inactiveDate:
@@ -1459,8 +1463,6 @@ components:
         abbreviation:
           type: string
         docAbbreviation:
-          type: string
-        orgPath:
           type: string
         docOrgId:
           type: integer
