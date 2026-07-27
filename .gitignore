@@ -13,3 +13,4 @@ output/
 .swagger-codegen/
 /gen/
 /projects/
+.m2/
